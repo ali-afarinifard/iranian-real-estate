@@ -1,0 +1,87 @@
+{
+  "common": {
+    "loading": "در حال بارگذاری...",
+    "error": "خطایی رخ داد",
+    "retry": "تلاش مجدد",
+    "save": "ذخیره",
+    "cancel": "لغو",
+    "close": "بستن",
+    "back": "بازگشت",
+    "viewAll": "مشاهده همه",
+    "search": "جستجو",
+    "filter": "فیلترها",
+    "sort": "مرتب‌سازی",
+    "apply": "اعمال",
+    "reset": "بازنشانی",
+    "noResults": "نتیجه‌ای یافت نشد"
+  },
+  "nav": {
+    "home": "خانه",
+    "browse": "جستجو",
+    "map": "نقشه",
+    "saved": "ذخیره‌شده",
+    "dashboard": "داشبورد",
+    "signIn": "ورود",
+    "signOut": "خروج"
+  },
+  "property": {
+    "forSale": "برای فروش",
+    "forRent": "برای اجاره",
+    "bedrooms": "اتاق خواب",
+    "bathrooms": "حمام",
+    "area": "متراژ",
+    "parking": "پارکینگ",
+    "floor": "طبقه",
+    "yearBuilt": "سال ساخت",
+    "viewDetails": "مشاهده جزئیات",
+    "requestViewing": "درخواست بازدید",
+    "sendMessage": "ارسال پیام",
+    "shareProperty": "اشتراک‌گذاری",
+    "savedToFavorites": "به علاقه‌مندی‌ها افزوده شد",
+    "removedFromFavorites": "از علاقه‌مندی‌ها حذف شد",
+    "status": {
+      "available": "موجود",
+      "sold": "فروخته شده",
+      "rented": "اجاره داده شده",
+      "pending": "در انتظار"
+    },
+    "type": {
+      "apartment": "آپارتمان",
+      "villa": "ویلا",
+      "penthouse": "پنت‌هاوس",
+      "office": "دفتر کار",
+      "land": "زمین"
+    }
+  },
+  "filters": {
+    "listingType": "نوع آگهی",
+    "propertyType": "نوع ملک",
+    "city": "شهر",
+    "priceRange": "محدوده قیمت",
+    "areaRange": "متراژ (م²)",
+    "features": "امکانات",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "activeFilters": "فعال",
+    "clearAll": "پاک کردن همه"
+  },
+  "home": {
+    "hero": {
+      "title": "خانه",
+      "highlight": "رویایی‌تان را بیابید.",
+      "subtitle": "بهترین آپارتمان‌ها، ویلاها و پنت‌هاوس‌ها را در سراسر هلند کشف کنید.",
+      "browseButton": "جستجوی ملک",
+      "mapButton": "نقشه تعاملی"
+    },
+    "featured": "ملک‌های ویژه",
+    "howItWorks": "نستیفای چطور کار می‌کند"
+  },
+  "dashboard": {
+    "welcome": "خوش آمدید",
+    "totalListings": "کل آگهی‌ها",
+    "forSale": "برای فروش",
+    "forRent": "برای اجاره",
+    "newThisMonth": "جدید این ماه",
+    "savedProperties": "ملک‌های ذخیره‌شده",
+    "marketDistribution": "توزیع بازار"
+  }
+}

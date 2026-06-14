@@ -1,0 +1,87 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "viewAll": "View All",
+    "search": "Search",
+    "filter": "Filters",
+    "sort": "Sort",
+    "apply": "Apply",
+    "reset": "Reset",
+    "noResults": "No results found"
+  },
+  "nav": {
+    "home": "Home",
+    "browse": "Browse",
+    "map": "Map View",
+    "saved": "Saved",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "property": {
+    "forSale": "For Sale",
+    "forRent": "For Rent",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "area": "Area",
+    "parking": "Parking",
+    "floor": "Floor",
+    "yearBuilt": "Year Built",
+    "viewDetails": "View Details",
+    "requestViewing": "Request Viewing",
+    "sendMessage": "Send Message",
+    "shareProperty": "Share",
+    "savedToFavorites": "Saved to favorites",
+    "removedFromFavorites": "Removed from saved",
+    "status": {
+      "available": "Available",
+      "sold": "Sold",
+      "rented": "Rented",
+      "pending": "Pending"
+    },
+    "type": {
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "penthouse": "Penthouse",
+      "office": "Office",
+      "land": "Land"
+    }
+  },
+  "filters": {
+    "listingType": "Listing Type",
+    "propertyType": "Property Type",
+    "city": "City",
+    "priceRange": "Price Range",
+    "areaRange": "Area (m²)",
+    "features": "Features & Amenities",
+    "sortBy": "Sort By",
+    "activeFilters": "active",
+    "clearAll": "Clear all"
+  },
+  "home": {
+    "hero": {
+      "title": "Find Your",
+      "highlight": "Perfect Home.",
+      "subtitle": "Discover premium properties across the Netherlands with real-time updates.",
+      "browseButton": "Browse Properties",
+      "mapButton": "Explore Map"
+    },
+    "featured": "Featured Properties",
+    "howItWorks": "How Nestify Works"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "totalListings": "Total Listings",
+    "forSale": "For Sale",
+    "forRent": "For Rent",
+    "newThisMonth": "New This Month",
+    "savedProperties": "Saved Properties",
+    "marketDistribution": "Market Distribution"
+  }
+}
