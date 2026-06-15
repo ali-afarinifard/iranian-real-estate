@@ -1,12 +1,4 @@
-
-@font-face {
-  font-family: "Vazirmatn";
-  src: url("/fonts/Vazirmatn/Vazirmatn-VF.woff2") format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-/* CSS Reset & Base */
+/* ─── CSS Reset & Base ───────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -21,14 +13,18 @@ html {
 }
 
 body {
-  font-family: 'Vazirmatn', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    var(--font-vazirmatn),
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
 }
 
-/* Scrollbar */
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -47,40 +43,45 @@ body {
   background: rgba(100, 116, 139, 0.7);
 }
 
-/* Focus visible*/
+/* ─── Focus visible ──────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid #1463C7;
+  outline: 2px solid #1463c7;
   outline-offset: 2px;
 }
 
-/* Selection */
+/* ─── Selection ──────────────────────────────────────────────────────────── */
 ::selection {
   background-color: rgba(20, 99, 199, 0.2);
   color: inherit;
 }
 
-/* Images & Media */
+/* ─── Images & Media ─────────────────────────────────────────────────────── */
 img,
 video {
   max-width: 100%;
   display: block;
 }
 
-/* Links */
+/* ─── Links ──────────────────────────────────────────────────────────────── */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.2;
 }
 
-/* Leaflet overrides */
+/* ─── Leaflet overrides ──────────────────────────────────────────────────── */
 .leaflet-container {
-  font-family: 'Vazirmatn', 'Inter', sans-serif !important;
+  font-family: var(--font-vazirmatn), sans-serif !important;
   z-index: 0;
 }
 
@@ -99,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
-/* Marker cluster overrides */
+/* ─── Marker cluster overrides ───────────────────────────────────────────── */
 .marker-cluster-small,
 .marker-cluster-medium,
 .marker-cluster-large {
@@ -111,22 +112,27 @@ h1, h2, h3, h4, h5, h6 {
 .marker-cluster-large div {
   background-color: rgba(20, 99, 199, 0.85) !important;
   color: #fff !important;
-  font-family: 'Vazirmatn', 'Inter', sans-serif !important;
+  font-family: var(--font-vazirmatn), sans-serif !important;
   font-weight: 700 !important;
   font-size: 13px !important;
 }
 
-/* MUI overrides */
+/* ─── MUI overrides ──────────────────────────────────────────────────────── */
 
 /* Smooth card hover image zoom */
 .MuiCard-root:hover img {
   transform: scale(1.04);
 }
 
-/* Animations */
+/* ─── Animations ─────────────────────────────────────────────────────────── */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes fadeInUp {
@@ -141,8 +147,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* Skeleton shimmer utility */
@@ -157,7 +167,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: shimmer 1.5s infinite;
 }
 
-/* Utility classes */
+/* ─── Utility classes ────────────────────────────────────────────────────── */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -171,14 +181,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, #1463C7, #F97316);
+  background: linear-gradient(90deg, #1463c7, #f97316);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* RTL support for Persian (fa) */
-[dir='rtl'] {
-  font-family: 'Vazirmatn', sans-serif;
+/* ─── RTL support for Persian (fa) ──────────────────────────────────────── */
+[dir="rtl"] {
+  font-family: var(--font-vazirmatn), sans-serif;
   letter-spacing: 0;
 }

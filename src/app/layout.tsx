@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { Providers } from "@/components/layout/Providers";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
+const vazirmatn = localFont({
+  src: "../../public/fonts/Vazirmatn/Vazirmatn-VF.woff2",
+  variable: "--font-vazirmatn",
   display: "swap",
-  variable: "--font-inter",
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {
@@ -63,9 +64,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html className={vazirmatn.variable} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://tile.openstreetmap.org"
