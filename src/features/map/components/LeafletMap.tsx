@@ -8,9 +8,9 @@ interface LeafletMapProps {
   properties: MapProperty[];
   selectedId: string | null;
   onSelectProperty: (property: MapProperty) => void;
+  onHoverProperty: (property: MapProperty | null) => void;
   colorMode: "light" | "dark";
 }
-
 
 let L: any = null;
 
@@ -18,6 +18,7 @@ export default function LeafletMap({
   properties,
   selectedId,
   onSelectProperty,
+  onHoverProperty,
   colorMode,
 }: LeafletMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,11 +29,13 @@ export default function LeafletMap({
   const propertiesRef = useRef(properties);
   const selectedIdRef = useRef(selectedId);
   const onSelectRef = useRef(onSelectProperty);
+  const onHoverRef = useRef(onHoverProperty);
   propertiesRef.current = properties;
   selectedIdRef.current = selectedId;
   onSelectRef.current = onSelectProperty;
+  onHoverRef.current = onHoverProperty;
 
-  // Step 1: Init map
+  // Init map
   useEffect(() => {
     if (readyRef.current || !containerRef.current) return;
     if ((containerRef.current as any)._leaflet_id != null) return;
@@ -42,8 +45,6 @@ export default function LeafletMap({
         const mod = await import("leaflet");
         await import("leaflet/dist/leaflet.css");
         L = mod.default ?? mod;
-
-        // Fix icon paths — use CDN so no local file needed
         delete (L.Icon.Default.prototype as any)._getIconUrl;
         L.Icon.Default.mergeOptions({
           iconUrl:
@@ -81,12 +82,12 @@ export default function LeafletMap({
       mapRef.current = map;
       readyRef.current = true;
 
-      // Render markers immediately if properties already loaded
       if (propertiesRef.current.length > 0) {
         renderMarkers(
           propertiesRef.current,
           selectedIdRef.current,
           onSelectRef.current,
+          onHoverRef.current,
         );
       }
     })();
@@ -101,20 +102,19 @@ export default function LeafletMap({
     };
   }, []);
 
-  // Step 2: Re-render markers when properties or selectedId changes
+  // Re-render markers
   useEffect(() => {
-    if (!readyRef.current || !layerGroupRef.current) return;
-    if (!properties.length) return;
-    renderMarkers(properties, selectedId, onSelectProperty);
-  }, [properties, selectedId, onSelectProperty]);
+    if (!readyRef.current || !layerGroupRef.current || !properties.length)
+      return;
+    renderMarkers(properties, selectedId, onSelectProperty, onHoverProperty);
+  }, [properties, selectedId, onSelectProperty, onHoverProperty]);
 
-  // Step 3: Pan to selected
+  // Pan to selected
   useEffect(() => {
     if (!readyRef.current || !mapRef.current || !selectedId) return;
     const prop = properties.find((p) => p.id === selectedId);
-    if (prop) {
-      mapRef.current.setView([prop.lat, prop.lng], 15, { animate: true });
-    }
+    if (prop)
+      mapRef.current.setView([prop.lat, prop.lng], 14, { animate: true });
   }, [selectedId, properties]);
 
   // Marker renderer
@@ -122,39 +122,63 @@ export default function LeafletMap({
     props: MapProperty[],
     activeId: string | null,
     onSelect: (p: MapProperty) => void,
+    onHover: (p: MapProperty | null) => void,
   ) {
     if (!layerGroupRef.current || !L) return;
-
     layerGroupRef.current.clearLayers();
 
     props.forEach((property) => {
       const isSelected = property.id === activeId;
       const isSale = property.listingType === "sale";
       const bg = isSelected ? "#EF4444" : isSale ? "#1463C7" : "#F97316";
-      const border = isSelected ? "#B91C1C" : "#fff";
-      const priceK = `€${(property.price / 1000).toFixed(0)}k${isSale ? "" : "/m"}`;
+      const shadow = isSelected
+        ? "0 4px 20px rgba(239,68,68,0.55)"
+        : isSale
+          ? "0 4px 16px rgba(20,99,199,0.45)"
+          : "0 4px 16px rgba(249,115,22,0.45)";
 
       const icon = L.divIcon({
         className: "",
-        html: `<div style="
-          background:${bg};color:#fff;
-          padding:4px 10px;border-radius:20px;
-          font-weight:700;font-size:11px;
-          font-family:Inter,sans-serif;white-space:nowrap;
-          box-shadow:0 2px 8px rgba(0,0,0,0.3);
-          border:2px solid ${border};
-          transform:${isSelected ? "scale(1.18)" : "scale(1)"};
-          cursor:pointer;
-        ">${priceK}</div>`,
-        iconAnchor: [28, 14],
+        html: `
+          <div class="nestify-marker" style="
+            position:relative;
+            display:inline-flex;
+            flex-direction:column;
+            align-items:center;
+          ">
+            <div style="
+              background:${bg};
+              color:#fff;
+              padding:6px 12px;
+              border-radius:24px;
+              font-weight:700;
+              font-size:12px;
+              font-family:Inter,sans-serif;
+              white-space:nowrap;
+              box-shadow:${shadow};
+              border:2.5px solid #fff;
+              transform:${isSelected ? "scale(1.18)" : "scale(1)"};
+              transition:transform 0.2s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
+              cursor:pointer;
+              letter-spacing:-0.01em;
+            ">€${(property.price / 1000).toFixed(0)}k${isSale ? "" : "/m"}</div>
+            <div style="
+              width:8px;height:8px;
+              background:${bg};
+              clip-path:polygon(0 0,100% 0,50% 100%);
+              margin-top:-1px;
+            "></div>
+          </div>`,
+        iconAnchor: [36, 32],
+        iconSize: [72, 32],
       });
 
       const marker = L.marker([property.lat, property.lng], { icon });
+
       marker.on("click", () => onSelect(property));
-      marker.bindTooltip(
-        `<b>${property.title}</b><br/>${property.bedrooms > 0 ? `${property.bedrooms} bed · ` : ""}${property.area}m²`,
-        { direction: "top", offset: [0, -10] },
-      );
+      marker.on("mouseover", () => onHover(property));
+      marker.on("mouseout", () => onHover(null));
+
       layerGroupRef.current.addLayer(marker);
     });
   }

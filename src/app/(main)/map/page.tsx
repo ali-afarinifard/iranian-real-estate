@@ -1,36 +1,27 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import {
   Box,
   Typography,
   Paper,
   Drawer,
-  IconButton,
-  Chip,
   CircularProgress,
   Alert,
   useMediaQuery,
   useTheme,
   Stack,
   Button,
+  Divider,
   alpha,
 } from "@mui/material";
-import {
-  CloseRounded,
-  BedRounded,
-  SquareFootRounded,
-  ArrowForwardRounded,
-} from "@mui/icons-material";
-import NextLink from "next/link";
-import NextImage from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetMapPropertiesQuery } from "@/store/api/propertiesApi";
-import { formatPrice, formatArea } from "@/lib/utils";
+import { MapHoverCard } from "@/features/map/components/MapHoverCard";
+import { MapPropertyPanel } from "@/features/map/components/MapPropertyPanel";
 import type { MapProperty } from "@/store/api/propertiesApi";
 
-// Dynamic import (Leaflet needs browser)
 const LeafletMap = dynamic(
   () => import("@/features/map/components/LeafletMap"),
   {
@@ -50,6 +41,7 @@ const LeafletMap = dynamic(
   },
 );
 
+// ── Map Page
 export default function MapPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -57,6 +49,11 @@ export default function MapPage() {
   const [selectedProperty, setSelectedProperty] = useState<MapProperty | null>(
     null,
   );
+  const [hoveredProperty, setHoveredProperty] = useState<MapProperty | null>(
+    null,
+  );
+  const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
+  const mapBoxRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, isError, refetch } = useGetMapPropertiesQuery({
     city: undefined,
@@ -65,10 +62,19 @@ export default function MapPage() {
 
   const handleSelect = useCallback((property: MapProperty) => {
     setSelectedProperty(property);
+    setHoveredProperty(null);
   }, []);
 
-  const handleClose = useCallback(() => {
-    setSelectedProperty(null);
+  const handleClose = useCallback(() => setSelectedProperty(null), []);
+
+  const handleHover = useCallback((property: MapProperty | null) => {
+    setHoveredProperty(property);
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const rect = mapBoxRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setHoverPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   }, []);
 
   return (
@@ -80,8 +86,12 @@ export default function MapPage() {
         overflow: "hidden",
       }}
     >
-      {/* Map container */}
-      <Box sx={{ flex: 1, position: "relative" }}>
+      {/* Map container*/}
+      <Box
+        ref={mapBoxRef}
+        sx={{ flex: 1, position: "relative" }}
+        onMouseMove={handleMouseMove}
+      >
         {/* Loading overlay */}
         {isLoading && (
           <Box
@@ -97,9 +107,9 @@ export default function MapPage() {
             }}
           >
             <Stack alignItems="center" spacing={2}>
-              <CircularProgress />
+              <CircularProgress size={40} />
               <Typography variant="body2" color="text.secondary">
-                Loading properties…
+                Loading listings…
               </Typography>
             </Stack>
           </Box>
@@ -131,12 +141,31 @@ export default function MapPage() {
           </Box>
         )}
 
+        {/* Leaflet map */}
         <LeafletMap
           properties={properties}
           selectedId={selectedProperty?.id ?? null}
           onSelectProperty={handleSelect}
+          onHoverProperty={handleHover}
           colorMode={theme.palette.mode}
         />
+
+        {/* Hover card */}
+        <AnimatePresence>
+          {hoveredProperty && !selectedProperty && !isMobile && (
+            <Box
+              sx={{
+                position: "absolute",
+                left: hoverPos.x + 16,
+                top: hoverPos.y - 180,
+                zIndex: 2000,
+                pointerEvents: "none",
+              }}
+            >
+              <MapHoverCard property={hoveredProperty} />
+            </Box>
+          )}
+        </AnimatePresence>
 
         {/* Legend */}
         <Paper
@@ -147,11 +176,13 @@ export default function MapPage() {
             left: 16,
             zIndex: 1000,
             px: 2,
-            py: 1.5,
-            borderRadius: 2,
+            py: 1.25,
+            borderRadius: 2.5,
             display: "flex",
             alignItems: "center",
             gap: 2,
+            backdropFilter: "blur(8px)",
+            bgcolor: alpha(theme.palette.background.paper, 0.9),
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
@@ -181,25 +212,43 @@ export default function MapPage() {
             </Typography>
           </Box>
           {properties.length > 0 && (
-            <Typography variant="caption" color="text.secondary">
-              {properties.length} listings
-            </Typography>
+            <>
+              <Divider orientation="vertical" flexItem />
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                fontWeight={500}
+              >
+                {properties.length} listings
+              </Typography>
+            </>
           )}
         </Paper>
       </Box>
 
-      {/* Desktop sidebar panel */}
-      <AnimatePresence>
+      {/* Desktop sidebar */}
+      <AnimatePresence mode="wait" initial={false}>
         {selectedProperty && !isMobile && (
           <motion.div
-            key={selectedProperty.id}
-            initial={{ x: 380, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 380, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            style={{ zIndex: 10, height: "100%" }}
+            key="sidebar-panel"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 380, opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            transition={{
+              width: { type: "tween", duration: 0.22, ease: [0.4, 0, 0.2, 1] },
+              opacity: { duration: 0.15 },
+            }}
+            style={{
+              zIndex: 10,
+              height: "100%",
+              flexShrink: 0,
+              overflow: "hidden",
+            }}
           >
-            <PropertyPanel property={selectedProperty} onClose={handleClose} />
+            <MapPropertyPanel
+              property={selectedProperty}
+              onClose={handleClose}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -211,152 +260,27 @@ export default function MapPage() {
           open={!!selectedProperty}
           onClose={handleClose}
           PaperProps={{
-            sx: { borderRadius: "20px 20px 0 0", maxHeight: "65vh" },
+            sx: { borderRadius: "20px 20px 0 0", maxHeight: "70vh" },
           }}
         >
-          {selectedProperty && (
-            <PropertyPanel
-              property={selectedProperty}
-              onClose={handleClose}
-              mobile
-            />
-          )}
+          <AnimatePresence>
+            {selectedProperty && (
+              <motion.div
+                key={selectedProperty.id}
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <MapPropertyPanel
+                  property={selectedProperty}
+                  onClose={handleClose}
+                  mobile
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Drawer>
       )}
-    </Box>
-  );
-}
-
-// Property detail panel
-function PropertyPanel({
-  property,
-  onClose,
-  mobile = false,
-}: {
-  property: MapProperty;
-  onClose: () => void;
-  mobile?: boolean;
-}) {
-  const theme = useTheme();
-
-  return (
-    <Box
-      sx={{
-        width: mobile ? "100%" : 360,
-        height: mobile ? "auto" : "100%",
-        bgcolor: "background.paper",
-        display: "flex",
-        flexDirection: "column",
-        borderLeft: mobile ? "none" : `1px solid ${theme.palette.divider}`,
-        overflow: "hidden",
-      }}
-    >
-      {/* Image */}
-      <Box sx={{ position: "relative", height: 220, flexShrink: 0 }}>
-        <NextImage
-          src={property.primaryImage.url}
-          alt={property.primaryImage.alt}
-          fill
-          sizes="360px"
-          style={{ objectFit: "cover" }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%)",
-          }}
-        />
-
-        {/* Close */}
-        <IconButton
-          size="small"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            top: 12,
-            right: 12,
-            bgcolor: alpha("#000", 0.45),
-            color: "#fff",
-            "&:hover": { bgcolor: alpha("#000", 0.65) },
-          }}
-        >
-          <CloseRounded fontSize="small" />
-        </IconButton>
-
-        {/* Price + type */}
-        <Box sx={{ position: "absolute", bottom: 12, left: 12 }}>
-          <Chip
-            label={property.listingType === "sale" ? "For Sale" : "For Rent"}
-            size="small"
-            sx={{
-              bgcolor: property.listingType === "sale" ? "#1463C7" : "#F97316",
-              color: "#fff",
-              fontWeight: 700,
-              mb: 0.75,
-            }}
-          />
-          <Typography
-            variant="h5"
-            fontWeight={800}
-            sx={{ color: "#fff", lineHeight: 1.2 }}
-          >
-            {formatPrice(property.price, property.currency as "EUR")}
-            {property.listingType === "rent" && (
-              <Typography
-                component="span"
-                variant="caption"
-                sx={{ color: "rgba(255,255,255,0.8)", ml: 0.5 }}
-              >
-                /mo
-              </Typography>
-            )}
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Info */}
-      <Box sx={{ flex: 1, p: 2.5, overflowY: "auto" }}>
-        <Typography variant="overline" color="primary.main" fontWeight={700}>
-          {property.type}
-        </Typography>
-        <Typography
-          variant="h6"
-          fontWeight={700}
-          sx={{ mt: 0.5, mb: 1.5, lineHeight: 1.3 }}
-        >
-          {property.title}
-        </Typography>
-
-        <Stack direction="row" spacing={2.5} sx={{ mb: 3 }}>
-          {property.bedrooms > 0 && (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-              <BedRounded sx={{ fontSize: 18, color: "text.secondary" }} />
-              <Typography variant="body2" fontWeight={600}>
-                {property.bedrooms} bed{property.bedrooms > 1 ? "s" : ""}
-              </Typography>
-            </Box>
-          )}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-            <SquareFootRounded sx={{ fontSize: 18, color: "text.secondary" }} />
-            <Typography variant="body2" fontWeight={600}>
-              {formatArea(property.area)}
-            </Typography>
-          </Box>
-        </Stack>
-
-        <Button
-          component={NextLink}
-          href={`/property/${property.id}`}
-          variant="contained"
-          fullWidth
-          size="large"
-          endIcon={<ArrowForwardRounded />}
-        >
-          View Full Details
-        </Button>
-      </Box>
     </Box>
   );
 }
