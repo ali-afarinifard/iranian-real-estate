@@ -39,11 +39,10 @@ import {
 } from "@/store";
 import { uiActions, filtersActions } from "@/store/slices";
 import { useGetPropertiesQuery } from "@/store/api/propertiesApi";
-import { PropertyCard } from "@/features/listings/components/PropertyCard";
-import { PropertyCardSkeleton } from "@/features/listings/components/PropertyCardSkeleton";
 import { FilterPanel } from "@/features/filters/components/FilterPanel";
 import { SORT_OPTIONS, PER_PAGE } from "@/lib/constants";
 import { countActiveFilters } from "@/lib/utils";
+import { PropertyCard, PropertyCardSkeleton } from "@/features/listings/components/PropertyCard";
 
 export default function ListingsPage() {
   const dispatch = useAppDispatch();

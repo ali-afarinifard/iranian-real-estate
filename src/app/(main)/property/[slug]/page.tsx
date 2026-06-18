@@ -42,9 +42,9 @@ import {
 } from "@/store/api/propertiesApi";
 import { useAppDispatch, useAppSelector, selectIsFavorited } from "@/store";
 import { favoritesActions, uiActions } from "@/store/slices";
-import { PropertyCard } from "@/features/listings/components/PropertyCard";
 import { formatPrice, formatArea, timeAgo } from "@/lib/utils";
 import { usePropertySSE } from "@/hooks/usePropertySSE";
+import { PropertyCard } from "@/features/listings/components/PropertyCard";
 
 interface PropertyPageProps {
   params: { slug: string };

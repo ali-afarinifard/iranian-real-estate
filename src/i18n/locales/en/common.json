@@ -16,6 +16,7 @@
     "noResults": "No results found"
   },
   "nav": {
+    "logo": "Iranian Amlak",
     "home": "Home",
     "browse": "Browse",
     "map": "Map View",
@@ -27,6 +28,8 @@
   "property": {
     "forSale": "For Sale",
     "forRent": "For Rent",
+    "new": "New",
+    "featured": "Featured",
     "bedrooms": "Bedrooms",
     "bathrooms": "Bathrooms",
     "area": "Area",
@@ -70,10 +73,38 @@
       "highlight": "Perfect Home.",
       "subtitle": "Discover premium properties across the Netherlands with real-time updates.",
       "browseButton": "Browse Properties",
-      "mapButton": "Explore Map"
+      "mapButton": "Explore Map",
+      "realEstatePlatformTitle": "🏆 #1 Real Estate Platform in Netherlands"
     },
-    "featured": "Featured Properties",
-    "howItWorks": "How Nestify Works"
+    "howItWorks": {
+      "title": "Iranian Amlak How it works",
+      "subtitle": "Find, explore, and connect with your ideal property in three steps",
+      "step1": {
+        "title": "Connect & Close",
+        "desc": "Contact the agent directly, schedule a viewing, and make your move with confidence."
+      },
+      "step2": {
+        "title": "Explore on Map",
+        "desc": "Browse listings spatially. See neighborhoods, schools, and amenities at a glance."
+      },
+      "step3": {
+        "title": "Search & Filter",
+        "desc": "Use powerful filters — price, type, location, features — to narrow down exactly what you need."
+      }
+    },
+    "featured": {
+      "handPicked": "Hand-picked",
+      "featuredProperties": "Featured Properties"
+    },
+    "stats": {
+      "marketOverview": "Market Overview",
+      "propertiesListed": "Properties Listed",
+      "citiesCovered": "Cities Covered",
+      "happyClients": "Happy Clients",
+      "avgPriceLabel": "Average Sale Price · Amsterdam",
+      "avgPriceTrend": "↑ 4.2% from last quarter",
+      "fromLastQuarter": "↑ 4.2% from last quarter"
+    }
   },
   "dashboard": {
     "welcome": "Welcome back",

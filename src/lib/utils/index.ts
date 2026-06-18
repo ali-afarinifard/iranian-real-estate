@@ -1,25 +1,25 @@
-import { PropertyFilters } from '@/types';
+import { PropertyFilters } from "@/types";
 
 // Price Formatting
 
 export function formatPrice(
   price: number,
-  currency: 'EUR' | 'USD' | 'IRR' = 'EUR',
-  locale = 'en-NL'
+  currency: "EUR" | "USD" | "IRR" = "EUR",
+  locale = "en-NL",
 ): string {
-  if (currency === 'IRR') {
-    return new Intl.NumberFormat('fa-IR', {
-      style: 'currency',
-      currency: 'IRR',
+  if (currency === "IRR") {
+    return new Intl.NumberFormat("fa-IR", {
+      style: "currency",
+      currency: "IRR",
       maximumFractionDigits: 0,
     }).format(price);
   }
 
   return new Intl.NumberFormat(locale, {
-    style: 'currency',
+    style: "currency",
     currency,
     maximumFractionDigits: 0,
-    notation: price >= 1_000_000 ? 'compact' : 'standard',
+    notation: price >= 1_000_000 ? "compact" : "standard",
   }).format(price);
 }
 
@@ -33,9 +33,9 @@ export function filtersToQueryString(filters: PropertyFilters): string {
   const params = new URLSearchParams();
 
   Object.entries(filters).forEach(([key, value]) => {
-    if (value === undefined || value === null || value === '') return;
+    if (value === undefined || value === null || value === "") return;
     if (Array.isArray(value)) {
-      if (value.length > 0) params.set(key, value.join(','));
+      if (value.length > 0) params.set(key, value.join(","));
     } else {
       params.set(key, String(value));
     }
@@ -49,10 +49,10 @@ export function queryStringToFilters(search: string): PropertyFilters {
   const filters: PropertyFilters = {};
 
   params.forEach((value, key) => {
-    const arrayKeys = ['type', 'bedrooms', 'bathrooms', 'features'];
+    const arrayKeys = ["type", "bedrooms", "bathrooms", "features"];
     if (arrayKeys.includes(key)) {
-      (filters as any)[key] = value.split(',');
-    } else if (['priceMin', 'priceMax', 'areaMin', 'areaMax'].includes(key)) {
+      (filters as any)[key] = value.split(",");
+    } else if (["priceMin", "priceMax", "areaMin", "areaMax"].includes(key)) {
       (filters as any)[key] = Number(value);
     } else {
       (filters as any)[key] = value;
@@ -64,9 +64,9 @@ export function queryStringToFilters(search: string): PropertyFilters {
 
 export function countActiveFilters(filters: PropertyFilters): number {
   return Object.entries(filters).filter(([key, value]) => {
-    if (key === 'sortBy') return false; // don't count sort
+    if (key === "sortBy") return false; // don't count sort
     if (Array.isArray(value)) return value.length > 0;
-    return value !== undefined && value !== '';
+    return value !== undefined && value !== "";
   }).length;
 }
 
@@ -75,8 +75,8 @@ export function countActiveFilters(filters: PropertyFilters): number {
 export function slugify(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
 // Date helpers
@@ -87,8 +87,8 @@ export function timeAgo(dateString: string): string {
   const diffMs = now.getTime() - date.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return 'Today';
-  if (diffDays === 1) return 'Yesterday';
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
   if (diffDays < 7) return `${diffDays} days ago`;
   if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
   if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
@@ -98,7 +98,7 @@ export function timeAgo(dateString: string): string {
 // Class names
 
 export function cn(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 // Random / Mock helpers
@@ -110,3 +110,19 @@ export function randomBetween(min: number, max: number): number {
 export function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
+export const toPersianNumber = (
+  num: number | string | null | undefined,
+): string => {
+  if (num === null || num === undefined || num === "") {
+    return "";
+  }
+
+  try {
+    return num
+      .toString()
+      .replace(/\d/g, (digit) => String.fromCharCode(1776 + parseInt(digit)));
+  } catch (error) {
+    return "";
+  }
+};

@@ -28,10 +28,9 @@ import {
   useGetFavoritesQuery,
 } from "@/store/api/propertiesApi";
 import { useAppSelector, selectUser } from "@/store";
-import { PropertyCard } from "@/features/listings/components/PropertyCard";
-import { PropertyCardSkeleton } from "@/features/listings/components/PropertyCardSkeleton";
 import { formatPrice } from "@/lib/utils";
 import { usePropertySSE } from "@/hooks/usePropertySSE";
+import { PropertyCard, PropertyCardSkeleton } from "@/features/listings/components/PropertyCard";
 
 function StatCard({
   icon,

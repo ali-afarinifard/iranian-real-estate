@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { Card, CardContent, Skeleton, Box } from "@mui/material";
 
 interface PropertyCardSkeletonProps {
   viewMode?: "grid" | "list";
 }
 
-export function PropertyCardSkeleton({
+export const PropertyCardSkeleton = memo(function PropertyCardSkeleton({
   viewMode = "grid",
 }: PropertyCardSkeletonProps) {
   if (viewMode === "list") {
@@ -59,4 +59,4 @@ export function PropertyCardSkeleton({
       </CardContent>
     </Card>
   );
-}
+});

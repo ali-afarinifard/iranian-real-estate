@@ -50,26 +50,7 @@ import {
 } from "@/store";
 import { uiActions, authActions } from "@/store/slices";
 import { useTranslation } from "react-i18next";
-
-const NAV_LINKS = [
-  { href: "/", label: "Home", icon: <HomeRounded fontSize="small" /> },
-  {
-    href: "/listings",
-    label: "Browse",
-    icon: <SearchRounded fontSize="small" />,
-  },
-  { href: "/map", label: "Map View", icon: <MapRounded fontSize="small" /> },
-  {
-    href: "/favorites",
-    label: "Saved",
-    icon: <FavoriteRounded fontSize="small" />,
-  },
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: <DashboardRounded fontSize="small" />,
-  },
-];
+import { toPersianNumber } from "@/lib/utils";
 
 export function Navbar() {
   const dispatch = useAppDispatch();
@@ -81,6 +62,32 @@ export function Navbar() {
   const favoriteCount = useAppSelector(selectFavoriteIds).length;
   const language = useAppSelector(selectLanguage);
   const { t, i18n } = useTranslation();
+
+  const isRTL = i18n.dir() === "rtl";
+
+  const NAV_LINKS = [
+    { href: "/", label: t("nav.home"), icon: <HomeRounded fontSize="small" /> },
+    {
+      href: "/listings",
+      label: t("nav.browse"),
+      icon: <SearchRounded fontSize="small" />,
+    },
+    {
+      href: "/map",
+      label: t("nav.map"),
+      icon: <MapRounded fontSize="small" />,
+    },
+    {
+      href: "/favorites",
+      label: t("nav.saved"),
+      icon: <FavoriteRounded fontSize="small" />,
+    },
+    {
+      href: "/dashboard",
+      label: t("nav.dashboard"),
+      icon: <DashboardRounded fontSize="small" />,
+    },
+  ];
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(
@@ -118,9 +125,10 @@ export function Navbar() {
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 1,
               textDecoration: "none",
-              mr: { md: 4 },
+              mr: { md: 1 },
             }}
           >
             <Box
@@ -144,7 +152,7 @@ export function Navbar() {
                 letterSpacing: "-0.03em",
               }}
             >
-              nestify
+              {t("nav.logo")}
             </Typography>
           </Box>
 
@@ -171,6 +179,16 @@ export function Navbar() {
                       color: "primary.main",
                     },
                     position: "relative",
+                    whiteSpace: "nowrap",
+                    px: "13px",
+                    py: "6px",
+                    minWidth: "unset",
+                    "& .MuiButton-startIcon": {
+                      "[dir='rtl'] &": {
+                        marginRight: "-2px",
+                        marginLeft: "6px",
+                      },
+                    },
                   }}
                 >
                   {link.label}
@@ -178,7 +196,7 @@ export function Navbar() {
                     <Box
                       sx={{
                         position: "absolute",
-                        top: 4,
+                        top: -6,
                         right: 4,
                         width: 16,
                         height: 16,
@@ -192,7 +210,12 @@ export function Navbar() {
                         justifyContent: "center",
                       }}
                     >
-                      {favoriteCount}
+                      <Typography
+                        variant="caption"
+                        sx={{ position: "relative", top: "1px" }}
+                      >
+                        {isRTL ? toPersianNumber(favoriteCount) : favoriteCount}
+                      </Typography>
                     </Box>
                   )}
                 </Button>
@@ -202,119 +225,149 @@ export function Navbar() {
 
           <Box sx={{ flex: 1 }} />
 
-          {/* Action buttons */}
-          <Tooltip title={isDark ? "Light mode" : "Dark mode"}>
-            <IconButton
-              onClick={handleToggleTheme}
-              size="small"
-              sx={{ color: "text.secondary" }}
-            >
-              {isDark ? <Brightness7Rounded /> : <Brightness4Rounded />}
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title={language === "en" ? "فارسی" : "English"}>
-            <IconButton
-              onClick={handleToggleLanguage}
-              size="small"
-              sx={{ color: "text.secondary" }}
-            >
-              <TranslateRounded />
-            </IconButton>
-          </Tooltip>
-
-          {!isMobile && (
-            <Tooltip title="Notifications">
-              <IconButton size="small" sx={{ color: "text.secondary" }}>
-                <Badge badgeContent={2} color="secondary">
-                  <NotificationsNoneRounded />
-                </Badge>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              // gap: "7px",
+            }}
+          >
+            {/* Action buttons */}
+            <Tooltip title={isDark ? "Light mode" : "Dark mode"}>
+              <IconButton
+                onClick={handleToggleTheme}
+                size="small"
+                sx={{ color: "text.secondary" }}
+              >
+                {isDark ? <Brightness7Rounded /> : <Brightness4Rounded />}
               </IconButton>
             </Tooltip>
-          )}
 
-          {/* User menu or Sign In */}
-          {isAuthenticated ? (
-            <>
-              <Tooltip title="Account">
-                <IconButton
-                  size="small"
-                  onClick={(e) => setUserMenuAnchor(e.currentTarget)}
-                  sx={{ p: 0.5 }}
-                >
-                  <Avatar
+            <Tooltip title={language === "en" ? "فارسی" : "English"}>
+              <IconButton
+                onClick={handleToggleLanguage}
+                size="small"
+                sx={{ color: "text.secondary" }}
+              >
+                <TranslateRounded />
+              </IconButton>
+            </Tooltip>
+
+            {!isMobile && (
+              <Tooltip title="Notifications">
+                <IconButton size="small" sx={{ color: "text.secondary" }}>
+                  <Badge
+                    badgeContent={isRTL ? toPersianNumber(2) : 2}
+                    color="secondary"
                     sx={{
-                      width: 32,
-                      height: 32,
-                      bgcolor: "primary.main",
-                      fontSize: "0.8rem",
-                      fontWeight: 700,
+                      "& .MuiBadge-badge": {
+                        fontSize: "12px",
+                        width: "11px",
+                        height: "21px",
+                        position: "absolute",
+                        right: "3px",
+                      },
                     }}
                   >
-                    A
-                  </Avatar>
+                    <NotificationsNoneRounded />
+                  </Badge>
                 </IconButton>
               </Tooltip>
-              <Menu
-                anchorEl={userMenuAnchor}
-                open={Boolean(userMenuAnchor)}
-                onClose={() => setUserMenuAnchor(null)}
-                PaperProps={{ sx: { mt: 1, minWidth: 180, borderRadius: 2 } }}
-              >
-                <MenuItem
-                  component={NextLink}
-                  href="/dashboard"
-                  onClick={() => setUserMenuAnchor(null)}
-                >
-                  <ListItemIcon>
-                    <DashboardRounded fontSize="small" />
-                  </ListItemIcon>
-                  Dashboard
-                </MenuItem>
-                <MenuItem
-                  component={NextLink}
-                  href="/favorites"
-                  onClick={() => setUserMenuAnchor(null)}
-                >
-                  <ListItemIcon>
-                    <FavoriteRounded fontSize="small" />
-                  </ListItemIcon>
-                  Saved Properties
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={handleLogout} sx={{ color: "error.main" }}>
-                  <ListItemIcon>
-                    <LogoutRounded fontSize="small" color="error" />
-                  </ListItemIcon>
-                  Sign Out
-                </MenuItem>
-              </Menu>
-            </>
-          ) : (
-            !isMobile && (
-              <Button
-                component={NextLink}
-                href="/auth/login"
-                variant="contained"
-                size="small"
-                startIcon={<PersonRounded />}
-                sx={{ ml: 1 }}
-              >
-                Sign In
-              </Button>
-            )
-          )}
+            )}
 
-          {/* Mobile hamburger */}
-          {isMobile && (
-            <IconButton
-              onClick={() => setMobileOpen(true)}
-              size="small"
-              sx={{ color: "text.primary" }}
-            >
-              <MenuRounded />
-            </IconButton>
-          )}
+            {/* User menu or Sign In */}
+            {isAuthenticated ? (
+              <>
+                <Tooltip title="Account">
+                  <IconButton
+                    size="small"
+                    onClick={(e) => setUserMenuAnchor(e.currentTarget)}
+                    sx={{ p: 0.5 }}
+                  >
+                    <Avatar
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        bgcolor: "primary.main",
+                        fontSize: "0.8rem",
+                        fontWeight: 700,
+                      }}
+                    >
+                      A
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  anchorEl={userMenuAnchor}
+                  open={Boolean(userMenuAnchor)}
+                  onClose={() => setUserMenuAnchor(null)}
+                  PaperProps={{ sx: { mt: 1, minWidth: 180, borderRadius: 2 } }}
+                >
+                  <MenuItem
+                    component={NextLink}
+                    href="/dashboard"
+                    onClick={() => setUserMenuAnchor(null)}
+                  >
+                    <ListItemIcon>
+                      <DashboardRounded fontSize="small" />
+                    </ListItemIcon>
+                    {t("nav.dashboard")}
+                  </MenuItem>
+                  <MenuItem
+                    component={NextLink}
+                    href="/favorites"
+                    onClick={() => setUserMenuAnchor(null)}
+                  >
+                    <ListItemIcon>
+                      <FavoriteRounded fontSize="small" />
+                    </ListItemIcon>
+                    {t("dashboard.savedProperties")}
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleLogout} sx={{ color: "error.main" }}>
+                    <ListItemIcon>
+                      <LogoutRounded fontSize="small" color="error" />
+                    </ListItemIcon>
+                    Sign Out
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              !isMobile && (
+                <Button
+                  component={NextLink}
+                  href="/auth/login"
+                  variant="contained"
+                  size="small"
+                  startIcon={<PersonRounded />}
+                  sx={{
+                    ml: 1,
+                    textWrap: "nowrap",
+                    "& .MuiButton-startIcon": {
+                      "[dir='rtl'] &": {
+                        marginRight: "-2px",
+                        marginLeft: "6px",
+                      },
+                    },
+                  }}
+                >
+                  {t("nav.signIn")}
+                </Button>
+              )
+            )}
+
+            {/* Mobile hamburger */}
+            {isMobile && (
+              <IconButton
+                onClick={() => setMobileOpen(true)}
+                size="small"
+                sx={{ color: "text.primary" }}
+              >
+                <MenuRounded />
+              </IconButton>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
 

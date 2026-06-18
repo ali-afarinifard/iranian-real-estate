@@ -13,8 +13,7 @@ import {
 import { FavoriteRounded, SearchRounded } from "@mui/icons-material";
 import NextLink from "next/link";
 import { useGetFavoritesQuery } from "@/store/api/propertiesApi";
-import { PropertyCard } from "@/features/listings/components/PropertyCard";
-import { PropertyCardSkeleton } from "@/features/listings/components/PropertyCardSkeleton";
+import { PropertyCard, PropertyCardSkeleton } from "@/features/listings/components/PropertyCard";
 
 export default function FavoritesPage() {
   const { data, isLoading, isError } = useGetFavoritesQuery();

@@ -203,12 +203,12 @@ function generateProperty(index: number): Property {
   const priceBase =
     listingType === "sale"
       ? (type === "penthouse"
-          ? 800_000
+          ? 8_000_000_000
           : type === "villa"
-            ? 500_000
-            : 200_000) +
-        (index % 15) * 50_000
-      : 1200 + (index % 10) * 400;
+            ? 5_000_000_000
+            : 2_000_000_000) +
+        (index % 15) * 500_000_000
+      : 12_000_000 + (index % 10) * 4_000_000;
 
   const createdDaysAgo = (index * 7) % 180;
   const createdAt = new Date(
