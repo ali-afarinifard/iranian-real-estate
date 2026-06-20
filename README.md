@@ -25,50 +25,6 @@ A production-grade real estate platform built as a senior frontend portfolio pro
 
 ---
 
-## 📁 Project Structure
-
-```
-src/
-├── app/                          # Next.js App Router
-│   ├── (main)/                   # Main layout group (with Navbar)
-│   │   ├── page.tsx              # Home — SSG, hero, featured
-│   │   ├── listings/page.tsx     # Listings — SSR, infinite scroll
-│   │   ├── map/page.tsx          # Map view — CSR, Leaflet
-│   │   ├── property/[slug]/      # Property detail — ISR
-│   │   ├── dashboard/page.tsx    # Dashboard — stats, saved
-│   │   └── favorites/page.tsx    # Saved properties
-│   └── auth/                     # Auth pages (no Navbar)
-├── features/                     # Feature-first organization
-│   ├── listings/components/      # PropertyCard, PropertyCardSkeleton
-│   ├── filters/components/       # FilterPanel (advanced filter drawer)
-│   ├── map/components/           # LeafletMap
-│   ├── property/                 # Property detail components
-│   └── auth/                     # Auth components
-├── store/                        # Redux store
-│   ├── api/propertiesApi.ts      # RTK Query endpoints
-│   ├── slices/index.ts           # filtersSlice, favoritesSlice, authSlice, uiSlice
-│   └── index.ts                  # Store config + typed hooks + selectors
-├── mock/                         # MSW mock layer
-│   ├── data.ts                   # 60 realistic property records
-│   ├── handlers.ts               # REST API handlers
-│   └── browser.ts                # MSW worker setup
-├── hooks/
-│   └── usePropertySSE.ts         # Real-time SSE hook
-├── lib/
-│   ├── constants/                # Cities, property types, sort options
-│   ├── utils/                    # formatPrice, formatArea, URL helpers
-│   └── validations/schemas.ts    # Zod schemas for all entities
-├── styles/
-│   ├── theme.ts                  # MUI custom theme (light/dark)
-│   └── ThemeProvider.tsx         # Theme + Emotion cache provider
-├── types/index.ts                # All TypeScript types
-└── i18n/
-    ├── config.ts                 # i18next setup
-    └── locales/en,fa/            # English + Persian translations
-```
-
----
-
 ## ✨ Key Features
 
 ### Advanced State Management
