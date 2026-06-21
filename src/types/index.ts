@@ -1,8 +1,14 @@
+// src/types/index.ts
 // ─── Property
 
-export type PropertyType = 'apartment' | 'villa' | 'office' | 'land' | 'penthouse';
-export type ListingType = 'sale' | 'rent';
-export type PropertyStatus = 'available' | 'sold' | 'rented' | 'pending';
+export type PropertyType =
+  | "apartment"
+  | "villa"
+  | "office"
+  | "land"
+  | "penthouse";
+export type ListingType = "sale" | "rent";
+export type PropertyStatus = "available" | "sold" | "rented" | "pending";
 
 export interface PropertyImage {
   id: string;
@@ -41,7 +47,7 @@ export interface Property {
   status: PropertyStatus;
   price: number;
   pricePerSqm?: number;
-  currency: 'EUR' | 'USD' | 'IRR';
+  currency: "EUR" | "USD" | "IRR";
   area: number; // sqm
   bedrooms: number;
   bathrooms: number;
@@ -68,15 +74,27 @@ export interface PropertySummary {
   listingType: ListingType;
   status: PropertyStatus;
   price: number;
-  currency: 'EUR' | 'USD' | 'IRR';
+  currency: "EUR" | "USD" | "IRR";
   area: number;
   bedrooms: number;
   bathrooms: number;
   primaryImage: PropertyImage;
-  location: Pick<PropertyLocation, 'city' | 'district' | 'lat' | 'lng'>;
+  location: Pick<PropertyLocation, "city" | "district" | "lat" | "lng">;
   isFeatured: boolean;
   isNew: boolean;
   createdAt: string;
+}
+
+export interface PropertyCardProps {
+  property: PropertySummary;
+  viewMode?: "grid" | "list";
+  index?: number;
+  onSelect?: (id: string) => void;
+}
+
+export interface PropertyCardSharedProps extends PropertyCardProps {
+  isFavorited: boolean;
+  onFavorite: (e: React.MouseEvent) => void;
 }
 
 // Filters
@@ -94,7 +112,13 @@ export interface PropertyFilters {
   bedrooms?: number[];
   bathrooms?: number[];
   features?: string[];
-  sortBy?: 'price_asc' | 'price_desc' | 'area_asc' | 'area_desc' | 'newest' | 'popular';
+  sortBy?:
+    | "price_asc"
+    | "price_desc"
+    | "area_asc"
+    | "area_desc"
+    | "newest"
+    | "popular";
 }
 
 // API Responses
@@ -122,7 +146,7 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
-  role: 'buyer' | 'seller' | 'agent' | 'admin';
+  role: "buyer" | "seller" | "agent" | "admin";
   savedProperties: string[];
   createdAt: string;
 }
@@ -135,7 +159,11 @@ export interface AuthTokens {
 
 // Real-time
 
-export type SSEEventType = 'price_update' | 'new_listing' | 'status_change' | 'view_update';
+export type SSEEventType =
+  | "price_update"
+  | "new_listing"
+  | "status_change"
+  | "view_update";
 
 export interface SSEEvent {
   type: SSEEventType;
@@ -146,13 +174,13 @@ export interface SSEEvent {
 
 // UI State
 
-export type ViewMode = 'grid' | 'list' | 'map';
-export type ColorMode = 'light' | 'dark';
-export type Language = 'en' | 'fa';
+export type ViewMode = "grid" | "list" | "map";
+export type ColorMode = "light" | "dark";
+export type Language = "en" | "fa";
 
 export interface Notification {
   id: string;
-  type: 'success' | 'error' | 'info' | 'warning';
+  type: "success" | "error" | "info" | "warning";
   title: string;
   message?: string;
   duration?: number;

@@ -9,46 +9,46 @@ export const CITIES = [
 ];
 
 export const PROPERTY_TYPES: { value: PropertyType; label: string; icon: string }[] = [
-  { value: 'apartment', label: 'Apartment', icon: 'ApartmentRounded' },
-  { value: 'villa', label: 'Villa', icon: 'HouseRounded' },
-  { value: 'office', label: 'Office', icon: 'BusinessRounded' },
-  { value: 'land', label: 'Land', icon: 'LandscapeRounded' },
-  { value: 'penthouse', label: 'Penthouse', icon: 'DomainRounded' },
+  { value: 'apartment', label: 'property.type.apartment', icon: 'ApartmentRounded' },
+  { value: 'villa', label: 'property.type.villa', icon: 'HouseRounded' },
+  { value: 'office', label: 'property.type.office', icon: 'BusinessRounded' },
+  { value: 'land', label: 'property.type.land', icon: 'LandscapeRounded' },
+  { value: 'penthouse', label: 'property.type.penthouse', icon: 'DomainRounded' },
 ];
 
 export const LISTING_TYPES: { value: ListingType; label: string }[] = [
-  { value: 'sale', label: 'For Sale' },
-  { value: 'rent', label: 'For Rent' },
+  { value: 'sale', label: 'common.filterTypeSale' },
+  { value: 'rent', label: 'common.filterTypeRent' },
 ];
 
 export const PROPERTY_FEATURES = [
-  'Swimming Pool',
-  'Parking',
-  'Garden',
-  'Balcony',
-  'Elevator',
-  'Air Conditioning',
-  'Central Heating',
-  'Storage',
-  'Gym',
-  'Security System',
-  'Smart Home',
-  'Furnished',
-  'Pet Friendly',
-  'Fireplace',
-  'Rooftop Access',
-  'Concierge',
-  'EV Charging',
-  'Solar Panels',
+  'property.features.swimmingPool',
+  'property.features.parking',
+  'property.features.garden',
+  'property.features.balcony',
+  'property.features.elevator',
+  'property.features.airConditioning',
+  'property.features.centralHeating',
+  'property.features.storage',
+  'property.features.gym',
+  'property.features.securitySystem',
+  'property.features.smartHome',
+  'property.features.furnished',
+  'property.features.petFriendly',
+  'property.features.fireplace',
+  'property.features.rooftopAccess',
+  'property.features.concierge',
+  'property.features.eVCharging',
+  'property.features.solarPanels',
 ];
 
 export const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest First' },
-  { value: 'price_asc', label: 'Price: Low to High' },
-  { value: 'price_desc', label: 'Price: High to Low' },
-  { value: 'area_asc', label: 'Size: Small to Large' },
-  { value: 'area_desc', label: 'Size: Large to Small' },
-  { value: 'popular', label: 'Most Popular' },
+  { value: 'newest', label: 'sortOptions.newestFirst' },
+  { value: 'price_asc', label: 'sortOptions.priceLowToHigh' },
+  { value: 'price_desc', label: 'sortOptions.priceHighToLow' },
+  { value: 'area_asc', label: 'sortOptions.sizeSmallToLarge' },
+  { value: 'area_desc', label: 'sortOptions.sizeLargeToSmall' },
+  { value: 'popular', label: 'sortOptions.mostPopular' },
 ];
 
 export const PRICE_RANGES = {

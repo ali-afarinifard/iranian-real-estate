@@ -6,13 +6,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import createCache from '@emotion/cache'; 
 import { CacheProvider } from '@emotion/react';
 import { useAppSelector, selectColorMode } from '@/store';
-import { createNestifyTheme } from './theme';
+import { createIrAmlakTheme } from './theme';
 
 const emotionCache = createCache({ key: 'mui', prepend: true });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const colorMode = useAppSelector(selectColorMode);
-  const theme = useMemo(() => createNestifyTheme(colorMode), [colorMode]);
+  const theme = useMemo(() => createIrAmlakTheme(colorMode), [colorMode]);
 
   return (
     <CacheProvider value={emotionCache}>

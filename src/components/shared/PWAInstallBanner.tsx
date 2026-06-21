@@ -83,7 +83,7 @@ export function PWAInstallBanner() {
         {/* Text */}
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Typography variant="subtitle2" fontWeight={700} noWrap>
-            Install Nestify
+            Install Iranian Amlak
           </Typography>
           <Typography variant="caption" color="text.secondary" noWrap>
             Add to home screen for quick access

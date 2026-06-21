@@ -9,11 +9,23 @@
     "back": "Back",
     "viewAll": "View All",
     "search": "Search",
-    "filter": "Filters",
+    "filters": "Filters",
     "sort": "Sort",
     "apply": "Apply",
     "reset": "Reset",
-    "noResults": "No results found"
+    "noResults": "No results found",
+    "propertiesLoaded": "properties loaded",
+    "propertiesSearch": "Search by title or district...",
+    "listingType": "Listing Type",
+    "filterTypeAll": "All",
+    "filterTypeSale": "For Sale",
+    "filterTypeRent": "For Rent",
+    "area": "Area ( m² )",
+    "showResults": "Show Results",
+    "activeParameters": "active",
+    "avg": "Avg.",
+    "listings": "listings",
+    "agentListings": "Listings"
   },
   "nav": {
     "logo": "Iranian Amlak",
@@ -36,12 +48,16 @@
     "parking": "Parking",
     "floor": "Floor",
     "yearBuilt": "Year Built",
+    "description": "Description",
     "viewDetails": "View Details",
     "requestViewing": "Request Viewing",
     "sendMessage": "Send Message",
     "shareProperty": "Share",
     "savedToFavorites": "Saved to favorites",
     "removedFromFavorites": "Removed from saved",
+    "listedBy": "Listed by",
+    "similarProperties": "Similar Properties",
+    "saveProperty": "Save Property",
     "status": {
       "available": "Available",
       "sold": "Sold",
@@ -54,6 +70,32 @@
       "penthouse": "Penthouse",
       "office": "Office",
       "land": "Land"
+    },
+    "features": {
+      "swimmingPool": "Swimming Pool",
+      "parking": "Parking",
+      "garden": "Garden",
+      "balcony": "Balcony",
+      "elevator": "Elevator",
+      "airConditioning": "Air Conditioning",
+      "centralHeating": "Central Heating",
+      "storage": "Storage",
+      "gym": "Gym",
+      "securitySystem": "Security System",
+      "smartHome": "Smart Home",
+      "furnished": "Furnished",
+      "petFriendly": "Pet Friendly",
+      "fireplace": "Fireplace",
+      "rooftopAccess": "Rooftop Access",
+      "concierge": "Concierge",
+      "eVCharging": "EV Charging",
+      "solarPanels": "Solar Panels"
+    },
+    "slug": {
+      "backToListings": "Back to Listings",
+      "propertyNotFound": "Property not found.",
+      "browseAllListings": "Browse all listings"
+
     }
   },
   "filters": {
@@ -65,16 +107,25 @@
     "features": "Features & Amenities",
     "sortBy": "Sort By",
     "activeFilters": "active",
-    "clearAll": "Clear all"
+    "clearAll": "Clear all",
+    "allCities": "All Cities"
+  },
+  "sortOptions": {
+    "newestFirst": "Newest First",
+    "priceLowToHigh": "Price: Low to High",
+    "priceHighToLow": "Price: High to Low",
+    "sizeSmallToLarge": "Size: Small to Large",
+    "sizeLargeToSmall": "Size: Large to Small",
+    "mostPopular": "Most Popular"
   },
   "home": {
     "hero": {
       "title": "Find Your",
       "highlight": "Perfect Home.",
-      "subtitle": "Discover premium properties across the Netherlands with real-time updates.",
+      "subtitle": "Discover premium properties across the Iran with real-time updates.",
       "browseButton": "Browse Properties",
       "mapButton": "Explore Map",
-      "realEstatePlatformTitle": "🏆 #1 Real Estate Platform in Netherlands"
+      "realEstatePlatformTitle": "🏆 #1 Real Estate Platform in Iran"
     },
     "howItWorks": {
       "title": "Iranian Amlak How it works",
@@ -106,8 +157,21 @@
       "fromLastQuarter": "↑ 4.2% from last quarter"
     }
   },
+  "listings": {
+    "heading": "Browse Properties",
+    "error": "Failed to load properties. Please try again."
+  },
+  "map": {
+    "clickDetails": "Click for details",
+    "beds": "Beds",
+    "type": "Type",
+    "viewFullDetails": "View Full Details",
+    "contactAgent": "Contact Agent"
+  },
   "dashboard": {
     "welcome": "Welcome back",
+    "whatshappening": "Here's what's happening in the market today.",
+    "browseMarket": "Browse Market",
     "totalListings": "Total Listings",
     "forSale": "For Sale",
     "forRent": "For Rent",

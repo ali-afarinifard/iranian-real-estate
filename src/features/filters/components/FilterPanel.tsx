@@ -37,8 +37,9 @@ import {
   PROPERTY_FEATURES,
   CITIES,
 } from "@/lib/constants";
-import { countActiveFilters } from "@/lib/utils";
+import { countActiveFilters, toPersianNumber } from "@/lib/utils";
 import { PropertyFilters } from "@/types";
+import { useTranslation } from "react-i18next";
 
 const BEDROOMS = [1, 2, 3, 4, 5];
 const PRICE_MAX_SALE = 5_000_000;
@@ -50,7 +51,10 @@ export function FilterPanel() {
   const filters = useAppSelector(selectCurrentFilters);
   const isDirty = useAppSelector(selectFiltersDirty);
   const open = useAppSelector(selectFilterDrawerOpen);
+  const { t, i18n } = useTranslation();
   const activeCount = countActiveFilters(filters);
+
+  const isRTL = i18n.dir() === "rtl";
 
   const update = useCallback(
     (patch: Partial<PropertyFilters>) => {
@@ -78,9 +82,18 @@ export function FilterPanel() {
             variant="outlined"
             startIcon={<FilterListRounded />}
             onClick={() => dispatch(uiActions.setFilterDrawer(true))}
-            sx={{ borderRadius: 2, fontWeight: 600 }}
+            sx={{
+              borderRadius: 2,
+              fontWeight: 600,
+              "& .MuiButton-startIcon": {
+                "[dir='rtl'] &": {
+                  marginRight: "-2px",
+                  marginLeft: "6px",
+                },
+              },
+            }}
           >
-            Filters
+            {t("common.filters")}
           </Button>
         </Badge>
       </Tooltip>
@@ -92,7 +105,7 @@ export function FilterPanel() {
         onClose={() => dispatch(uiActions.setFilterDrawer(false))}
         PaperProps={{
           sx: {
-            width: { xs: "100vw", sm: 380 },
+            width: { xs: "100vw", sm: 420 },
             p: 0,
             display: "flex",
             flexDirection: "column",
@@ -118,11 +131,11 @@ export function FilterPanel() {
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <FilterListRounded color="primary" />
             <Typography variant="h6" fontWeight={700}>
-              Filters
+              {t("common.filters")}
             </Typography>
             {activeCount > 0 && (
               <Chip
-                label={`${activeCount} active`}
+                label={`${isRTL ? toPersianNumber(activeCount) : activeCount} ${":"} ${t("common.activeParameters")}`}
                 size="small"
                 color="primary"
               />
@@ -156,29 +169,27 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 1.5 }}
             >
-              Listing Type
+              {t("common.listingType")}
             </Typography>
-            <Stack direction="row" spacing={1}>
-              {[{ value: undefined, label: "All" }, ...LISTING_TYPES].map(
-                (lt) => (
-                  <Chip
-                    key={lt.label}
-                    label={lt.label}
-                    onClick={() =>
-                      update({
-                        listingType: lt.value as PropertyFilters["listingType"],
-                      })
-                    }
-                    variant={
-                      filters.listingType === lt.value ? "filled" : "outlined"
-                    }
-                    color={
-                      filters.listingType === lt.value ? "primary" : "default"
-                    }
-                    sx={{ fontWeight: 600, flex: 1 }}
-                  />
-                ),
-              )}
+            <Stack direction="row" gap={1}>
+              {[
+                { value: undefined, label: t("common.filterTypeAll") },
+                ...LISTING_TYPES,
+              ].map((lt) => (
+                <Chip
+                  key={lt.label}
+                  label={t(lt.label)}
+                  onClick={() =>
+                    update({
+                      listingType: lt.value as PropertyFilters["listingType"],
+                    })
+                  }
+                  variant={
+                    filters.listingType === lt.value ? "filled" : "outlined"
+                  }
+                  sx={{ fontWeight: 600, flex: 1 }}
+                />
+              ))}
             </Stack>
           </Box>
 
@@ -193,7 +204,7 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 1.5 }}
             >
-              Property Type
+              {t("filters.propertyType")}
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
               {PROPERTY_TYPES.map((pt) => {
@@ -201,7 +212,7 @@ export function FilterPanel() {
                 return (
                   <Chip
                     key={pt.value}
-                    label={pt.label}
+                    label={t(pt.label)}
                     onClick={() => {
                       const current = filters.type ?? [];
                       update({
@@ -211,7 +222,6 @@ export function FilterPanel() {
                       });
                     }}
                     variant={active ? "filled" : "outlined"}
-                    color={active ? "primary" : "default"}
                     sx={{ fontWeight: 600 }}
                   />
                 );
@@ -230,7 +240,7 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 1.5 }}
             >
-              City
+              {t("filters.city")}
             </Typography>
             <FormControl fullWidth size="small">
               <Select
@@ -240,7 +250,7 @@ export function FilterPanel() {
                 sx={{ borderRadius: 2 }}
               >
                 <MenuItem value="">
-                  <em>All Cities</em>
+                  <em>{t("filters.allCities")}</em>
                 </MenuItem>
                 {CITIES.map((c) => (
                   <MenuItem key={c.value} value={c.value}>
@@ -262,7 +272,7 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 0.5 }}
             >
-              Price Range
+              {t("filters.priceRange")}
             </Typography>
             <Typography
               variant="caption"
@@ -303,12 +313,12 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 0.5 }}
             >
-              Area (m²)
+              {t("common.area")}
             </Typography>
             <Typography
               variant="caption"
               color="text.secondary"
-              sx={{ mb: 2, display: "block" }}
+              sx={{ mb: 2, display: "block", direction: "ltr" }}
             >
               {filters.areaMin ?? 0} m² — {filters.areaMax ?? AREA_MAX}+ m²
             </Typography>
@@ -342,9 +352,9 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 1.5 }}
             >
-              Bedrooms
+              {t("property.bedrooms")}
             </Typography>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" gap={1}>
               {[
                 { label: "Any", value: undefined },
                 ...BEDROOMS.map((b) => ({
@@ -359,7 +369,7 @@ export function FilterPanel() {
                 return (
                   <Chip
                     key={opt.label}
-                    label={opt.label}
+                    label={isRTL ? toPersianNumber(opt.label) : opt.label}
                     size="small"
                     onClick={() => {
                       if (opt.value === undefined) {
@@ -374,7 +384,6 @@ export function FilterPanel() {
                       }
                     }}
                     variant={isActive ? "filled" : "outlined"}
-                    color={isActive ? "primary" : "default"}
                     sx={{ fontWeight: 600, minWidth: 40 }}
                   />
                 );
@@ -393,7 +402,7 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 1.5 }}
             >
-              Features & Amenities
+              {t("filters.features")}
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
               {PROPERTY_FEATURES.slice(0, 12).map((feat) => {
@@ -401,7 +410,7 @@ export function FilterPanel() {
                 return (
                   <Chip
                     key={feat}
-                    label={feat}
+                    label={t(feat)}
                     size="small"
                     onClick={() => {
                       const current = filters.features ?? [];
@@ -431,7 +440,7 @@ export function FilterPanel() {
               display="block"
               sx={{ mb: 1.5 }}
             >
-              Sort By
+              {t("filters.sortBy")}
             </Typography>
             <FormControl fullWidth size="small">
               <Select
@@ -445,7 +454,7 @@ export function FilterPanel() {
               >
                 {SORT_OPTIONS.map((s) => (
                   <MenuItem key={s.value} value={s.value}>
-                    {s.label}
+                    {t(s.label)}
                   </MenuItem>
                 ))}
               </Select>
@@ -473,8 +482,16 @@ export function FilterPanel() {
             onClick={handleReset}
             disabled={activeCount === 0}
             startIcon={<RestartAltRounded />}
+            sx={{
+              "& .MuiButton-startIcon": {
+                "[dir='rtl'] &": {
+                  marginRight: "-2px",
+                  marginLeft: "6px",
+                },
+              },
+            }}
           >
-            Reset
+            {t("common.reset")}
           </Button>
           <Button
             variant="contained"
@@ -482,7 +499,7 @@ export function FilterPanel() {
             onClick={handleApply}
             disabled={!isDirty}
           >
-            Show Results
+            {t("common.showResults")}
           </Button>
         </Box>
       </Drawer>

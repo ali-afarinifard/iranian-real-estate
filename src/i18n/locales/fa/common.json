@@ -9,11 +9,23 @@
     "back": "بازگشت",
     "viewAll": "مشاهده همه",
     "search": "جستجو",
-    "filter": "فیلترها",
+    "filters": "فیلتر",
     "sort": "مرتب‌سازی",
     "apply": "اعمال",
     "reset": "بازنشانی",
-    "noResults": "نتیجه‌ای یافت نشد"
+    "noResults": "نتیجه‌ای یافت نشد",
+    "propertiesLoaded": "خانه پیدا شد",
+    "propertiesSearch": "جستجو بر اساس عنوان یا منطقه ...",
+    "listingType": "نوع نمایش",
+    "filterTypeAll": "همه",
+    "filterTypeSale": "فروش",
+    "filterTypeRent": "اجاره",
+    "area": "مساحت ( m² )",
+    "showResults": "نمایش نتایج",
+    "activeParameters": "تعداد پارامتر",
+    "avg": "میانگین .",
+    "listings": "ملک",
+    "agentListings": "آگهی ثبت شده است"
   },
   "nav": {
     "logo": "املاک ایرانیان",
@@ -30,18 +42,22 @@
     "forRent": "اجاره",
     "new": "جدید",
     "featured": "برگزیده",
-    "bedrooms": "اتاق خواب",
+    "bedrooms": "تعداد اتاق خواب",
     "bathrooms": "حمام",
     "area": "متراژ",
     "parking": "پارکینگ",
     "floor": "طبقه",
     "yearBuilt": "سال ساخت",
+    "description": "توضیحات",
     "viewDetails": "مشاهده جزئیات",
     "requestViewing": "درخواست بازدید",
     "sendMessage": "ارسال پیام",
     "shareProperty": "اشتراک‌گذاری",
     "savedToFavorites": "به علاقه‌مندی‌ها افزوده شد",
     "removedFromFavorites": "از علاقه‌مندی‌ها حذف شد",
+    "listedBy": "ثبت‌شده توسط",
+    "similarProperties": "آگهی‌های مشابه",
+    "saveProperty": "ذخیره ملک",
     "status": {
       "available": "موجود",
       "sold": "فروخته شده",
@@ -54,18 +70,52 @@
       "penthouse": "پنت‌هاوس",
       "office": "دفتر کار",
       "land": "زمین"
+    },
+    "features": {
+      "swimmingPool": "استخر",
+      "parking": "پارکینگ",
+      "garden": "باغچه",
+      "balcony": "بالکن",
+      "elevator": "آسانسور",
+      "airConditioning": "کولر گازی",
+      "centralHeating": "گرمایش مرکزی",
+      "storage": "انباری",
+      "gym": "سالن ورزشی",
+      "securitySystem": "سیستم امنیتی",
+      "smartHome": "خانه هوشمند",
+      "furnished": "مبله",
+      "petFriendly": "حیوان‌خانگی مجاز",
+      "fireplace": "شومینه",
+      "rooftopAccess": "دسترسی به پشت‌بام",
+      "concierge": "نگهبان",
+      "eVCharging": "شارژر خودروی برقی",
+      "solarPanels": "پنل‌های خورشیدی"
+    },
+    "slug": {
+      "backToListings": "برگشت به لیست",
+      "propertyNotFound": "هیچ ملکی یافت نشد",
+      "browseAllListings": "جستجوی همه‌ی آگهی‌ها"
     }
   },
   "filters": {
     "listingType": "نوع آگهی",
     "propertyType": "نوع ملک",
     "city": "شهر",
-    "priceRange": "محدوده قیمت",
+    "priceRange": "بازه قیمتی",
     "areaRange": "متراژ (م²)",
     "features": "امکانات",
-    "sortBy": "مرتب‌سازی بر اساس",
+    "sortBy": "نمایش بر اساس",
     "activeFilters": "فعال",
-    "clearAll": "پاک کردن همه"
+    "clearAll": "پاک کردن همه",
+    "allCities": "تمام شهرها"
+  },
+  "sortOptions": {
+    "newestFirst": "جدیدترین",
+    "priceLowToHigh": "قیمت: از کمترین به بیشترین",
+    "priceHighToLow": "قیمت: از بیشترین به کمترین",
+    "sizeSmallToLarge": "سایز: از کوچک به بزرگ",
+    "sizeLargeToSmall": "سایز: از بزرگ به کوچک",
+    "mostPopular": "محبوب‌ترین‌ها"
   },
   "home": {
     "hero": {
@@ -105,12 +155,30 @@
       "fromLastQuarter": "↑ 4.2% نسبت به فصل گذشته"
     }
   },
+  "listings": {
+    "heading": "جستجوی املاک",
+    "error": "هیچ میکی پیدا نشد. مجدد تلاش کنید"
+  },
+  "map": {
+    "clickDetails": "جزییات ملک",
+    "beds": "اتاق",
+    "type": "نوع",
+    "viewFullDetails": "مشاهده جزییات",
+    "contactAgent": "تماس با مشاور"
+  },
+  "favorites": {
+    "noSavedProperties": "لیست علاقه‌مندی‌ها خالی است",
+    "browseListingsTapHeartIcon": "برای ذخیره ملک مورد علاقه خود، در بخش لیست املاک، بر روی آیکون قلب کلیک شود",
+    "browseProperties": "جستجو در املاک"
+  },
   "dashboard": {
     "welcome": "خوش آمدید",
-    "totalListings": "کل آگهی‌ها",
+    "whatshappening": "امروز بیا ببینیم در این مارکت چه اتفاقاتی افتاده.",
+    "browseMarket": "جستجو در مارکت",
+    "totalListings": "لیست آگهی‌ها",
     "forSale": "فروش",
     "forRent": "اجاره",
-    "newThisMonth": "جدید این ماه",
+    "newThisMonth": "آگهی‌های جدید در این ماه",
     "savedProperties": "ملک‌های ذخیره‌شده",
     "marketDistribution": "توزیع بازار"
   }

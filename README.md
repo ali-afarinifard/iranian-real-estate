@@ -1,4 +1,4 @@
-# Nestify — Real Estate Platform
+# Iranian Amlak — Real Estate Platform
 
 A production-grade real estate platform built as a senior frontend portfolio project, demonstrating mastery of modern React/Next.js ecosystem.
 
@@ -136,7 +136,7 @@ All endpoints are typed via Zod schemas in `src/lib/validations/schemas.ts`.
 In production: change `NEXT_PUBLIC_API_URL` in `.env.local` to your real backend URL and set `NEXT_PUBLIC_USE_MSW=false`.
 
 ```env
-NEXT_PUBLIC_API_URL=https://api.nestify.nl
+NEXT_PUBLIC_API_URL=https://api.iranian-amlak.nl
 NEXT_PUBLIC_USE_MSW=false
 ```
 

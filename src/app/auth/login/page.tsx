@@ -143,7 +143,7 @@ export default function LoginPage() {
                 color="text.primary"
                 sx={{ letterSpacing: "-0.03em" }}
               >
-                nestify
+                Iranian Amlak
               </Typography>
             </Box>
             <Typography variant="h5" fontWeight={800} gutterBottom>

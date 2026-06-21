@@ -1,3 +1,4 @@
+// src/lib/mock/handlers.ts
 import { http, HttpResponse, delay } from 'msw';
 import { MOCK_PROPERTIES, MOCK_PROPERTY_SUMMARIES } from './data';
 import { PropertyFilters, PropertySummary } from '@/types';

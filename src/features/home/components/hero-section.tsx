@@ -168,7 +168,7 @@ export const HeroSection = memo(function HeroSection() {
                       "& .MuiChip-label": {
                         position: "relative",
                         top: !isRTL ? "1px" : undefined,
-                      },
+                      }
                     }}
                   />
                 ))}

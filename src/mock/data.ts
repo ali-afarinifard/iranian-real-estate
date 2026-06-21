@@ -9,36 +9,36 @@ import {
 const AGENT_POOL = [
   {
     id: "agent-1",
-    name: "Sophie van der Berg",
+    name: "سارا محمدی",
     avatar:
       "https://images.unsplash.com/photo-1494790108755-2616b612b550?w=100&h=100&fit=crop&crop=face",
-    phone: "+31 20 123 4567",
-    email: "sophie@nestify.nl",
-    agency: "Nestify Realty Amsterdam",
+    phone: "۰۲۱-۲۲۳۴۵۶۷۸",
+    email: "sara@iraniamlak.ir",
+    agency: "ایران ملک - تهران",
     rating: 4.9,
-    totalListings: 47,
+    totalListings: 54,
   },
   {
     id: "agent-2",
-    name: "Lars Eriksen",
+    name: "علی رضایی",
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-    phone: "+31 20 234 5678",
-    email: "lars@nestify.nl",
-    agency: "Nestify Realty Rotterdam",
+    phone: "۰۲۱-۸۸۷۷۶۶۵۵",
+    email: "ali@mellakaran.ir",
+    agency: "ملک‌کاران - اصفهان",
     rating: 4.7,
-    totalListings: 31,
+    totalListings: 38,
   },
   {
     id: "agent-3",
-    name: "Amara Osei",
+    name: "نیلوفر احمدی",
     avatar:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face",
-    phone: "+31 20 345 6789",
-    email: "amara@nestify.nl",
-    agency: "Nestify Realty Utrecht",
+    phone: "۰۷۱-۳۲۲۱۴۵۶۷",
+    email: "nilufar@shirazملک.ir",
+    agency: "دیوار ملک - شیراز",
     rating: 4.8,
-    totalListings: 23,
+    totalListings: 29,
   },
 ];
 
@@ -68,28 +68,26 @@ const PROPERTY_IMAGES: Record<string, string[]> = {
   ],
 };
 
-// ── Stable, fixed locations (no randomness — deterministic per index) ─────────
 const LOCATIONS: Array<{
   district: string;
   city: string;
   lat: number;
   lng: number;
 }> = [
-  { district: "Jordaan", city: "Amsterdam", lat: 52.3738, lng: 4.8836 },
-  { district: "De Pijp", city: "Amsterdam", lat: 52.354, lng: 4.8953 },
-  { district: "Oud-West", city: "Amsterdam", lat: 52.3639, lng: 4.8736 },
-  { district: "Centrum", city: "Amsterdam", lat: 52.3731, lng: 4.8922 },
-  { district: "Amsterdam-Noord", city: "Amsterdam", lat: 52.3982, lng: 4.907 },
-  { district: "Watergraafsmeer", city: "Amsterdam", lat: 52.353, lng: 4.9369 },
-  { district: "Buitenveldert", city: "Amsterdam", lat: 52.3361, lng: 4.8686 },
-  { district: "IJburg", city: "Amsterdam", lat: 52.3524, lng: 5.0052 },
-  { district: "Kralingen", city: "Rotterdam", lat: 51.9202, lng: 4.5006 },
-  { district: "Hillegersberg", city: "Rotterdam", lat: 51.9482, lng: 4.4764 },
-  { district: "Centrum", city: "Rotterdam", lat: 51.9225, lng: 4.4792 },
-  { district: "Delfshaven", city: "Rotterdam", lat: 51.9156, lng: 4.4626 },
+  { district: "الهیه", city: "تهران", lat: 35.8058, lng: 51.4274 },
+  { district: "نیاوران", city: "تهران", lat: 35.8196, lng: 51.4646 },
+  { district: "جردن", city: "تهران", lat: 35.7667, lng: 51.4095 },
+  { district: "ولنجک", city: "تهران", lat: 35.8321, lng: 51.4052 },
+  { district: "زعفرانیه", city: "تهران", lat: 35.7968, lng: 51.4556 },
+  { district: "سعادت‌آباد", city: "تهران", lat: 35.7825, lng: 51.3734 },
+  { district: "پاسداران", city: "تهران", lat: 35.7801, lng: 51.4795 },
+  { district: "شهرک غرب", city: "تهران", lat: 35.7624, lng: 51.3582 },
+  { district: "چهارباغ", city: "اصفهان", lat: 32.6546, lng: 51.668 },
+  { district: "جلفا", city: "اصفهان", lat: 32.6434, lng: 51.6652 },
+  { district: "قصردشت", city: "شیراز", lat: 29.6312, lng: 52.5318 },
+  { district: "صادقیه", city: "تهران", lat: 35.7387, lng: 51.3427 },
 ];
 
-// Small deterministic offsets per index so markers don't overlap exactly
 const OFFSETS = [
   [0.0, 0.0],
   [0.003, 0.004],
@@ -125,48 +123,48 @@ const STATUSES: PropertyStatus[] = [
 ];
 
 const FEATURES_POOL = [
-  "Swimming Pool",
-  "Parking",
-  "Garden",
-  "Balcony",
-  "Elevator",
-  "Air Conditioning",
-  "Central Heating",
-  "Storage",
-  "Gym",
-  "Security System",
-  "Smart Home",
-  "Furnished",
-  "Pet Friendly",
-  "Fireplace",
-  "Rooftop Access",
-  "Concierge",
-  "EV Charging",
+  "property.features.swimmingPool",
+  "property.features.parking",
+  "property.features.garden",
+  "property.features.balcony",
+  "property.features.elevator",
+  "property.features.airConditioning",
+  "property.features.centralHeating",
+  "property.features.storage",
+  "property.features.gym",
+  "property.features.securitySystem",
+  "property.features.smartHome",
+  "property.features.furnished",
+  "property.features.petFriendly",
+  "property.features.fireplace",
+  "property.features.rooftopAccess",
+  "property.features.concierge",
+  "property.features.eVCharging",
 ];
 
 const TITLES: Record<PropertyType, string[]> = {
   apartment: [
-    "Modern Canal View Apartment",
-    "Bright Studio",
-    "Renovated Family Apartment",
-    "Designer Loft with Exposed Brick",
-    "Quiet Courtyard Apartment",
+    "آپارتمان مدرن با دید کامل شهر",
+    "آپارتمان روشن نوساز",
+    "آپارتمان خانوادگی بازسازی‌شده",
+    "لافت طراحی‌شده با متریال لوکس",
+    "آپارتمان آرام با حیاط اختصاصی",
   ],
   villa: [
-    "Detached Family Villa",
-    "Contemporary Villa with Pool",
-    "Classic Dutch Villa",
+    "ویلای مستقل خانوادگی",
+    "ویلای مدرن با استخر",
+    "ویلای کلاسیک با باغچه",
   ],
   office: [
-    "Open-Plan Office Space",
-    "Premium Business Suite",
-    "Creative Co-working Hub",
+    "فضای اداری اوپن‌پلن",
+    "سوئیت تجاری درجه یک",
+    "مرکز کار اشتراکی خلاق",
   ],
-  land: ["Buildable Land Parcel", "Prime Development Opportunity"],
+  land: ["زمین مسکونی آماده ساخت", "موقعیت استثنایی جهت سرمایه‌گذاری"],
   penthouse: [
-    "Sky-High Penthouse Suite",
-    "Panoramic Rooftop Penthouse",
-    "Luxury Penthouse with Terrace",
+    "پنت‌هاوس با تراس ۳۶۰ درجه",
+    "پنت‌هاوس پانوراما روف‌تاپ",
+    "پنت‌هاوس لوکس با تراس خصوصی",
   ],
 };
 
@@ -180,8 +178,38 @@ function pickFeatures(index: number, count: number): string[] {
   for (let i = 0; i < count; i++) {
     result.push(FEATURES_POOL[(index + i * 3) % FEATURES_POOL.length]);
   }
-  return [...new Set(result)]; // dedupe
+  return [...new Set(result)];
 }
+
+const STREET_NAMES = [
+  "خیابان ولیعصر",
+  "خیابان شریعتی",
+  "بلوار الهیه",
+  "خیابان مطهری",
+  "بلوار آفریقا",
+  "خیابان فرشته",
+  "بلوار میرداماد",
+  "خیابان سعدی",
+  "خیابان چهارباغ عباسی",
+  "بلوار قدس",
+  "خیابان زند",
+  "بلوار کشاورز",
+];
+
+const POSTAL_CODES = [
+  "1966714571",
+  "1591634151",
+  "1946743511",
+  "1969613111",
+  "1998863111",
+  "1946843141",
+  "8174848151",
+  "7134736411",
+  "7194878611",
+  "1997845311",
+  "1946943651",
+  "1459763141",
+];
 
 function generateProperty(index: number): Property {
   const type = pick(TYPES, index);
@@ -217,41 +245,45 @@ function generateProperty(index: number): Property {
 
   const titleList = TITLES[type] ?? TITLES.apartment;
   const title = titleList[index % titleList.length];
-  const slug = `${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${index + 1}`;
+  const slug = `${title
+    .replace(/\s+/g, "-")
+    .replace(/[^\u0600-\u06FFa-z0-9\-]/gi, "")}-${index + 1}`;
 
   const propertyImages = images.map((url, i) => ({
     id: `img-${index}-${i}`,
     url,
-    alt: `${type} interior ${i + 1}`,
+    alt: `تصویر ${i + 1} از ${title}`,
     isPrimary: i === 0,
   }));
+
+  const streetName = STREET_NAMES[index % STREET_NAMES.length];
 
   return {
     id: `prop-${String(index + 1).padStart(4, "0")}`,
     title,
     slug,
-    description: `This stunning ${type} in ${locBase.district} offers ${area}m² of modern living space with exceptional natural light and high-end finishes throughout.`,
+    description: `این ${type === "apartment" ? "آپارتمان" : type === "villa" ? "ویلا" : type === "penthouse" ? "پنت‌هاوس" : type === "office" ? "دفتر اداری" : "زمین"} زیبا در محله ${locBase.district} با ${area} متر مربع فضای زندگی، دارای نور طبیعی فوق‌العاده، متریال لوکس و امکانات کامل می‌باشد.`,
     type,
     listingType,
     status,
     price: priceBase,
     pricePerSqm: Math.round(priceBase / area),
-    currency: "EUR",
+    currency: "IRR",
     area,
     bedrooms,
     bathrooms,
     parkingSpots: type === "land" ? 0 : index % 3,
     floor: ["apartment", "penthouse"].includes(type) ? index % 12 : undefined,
     totalFloors: ["apartment", "penthouse"].includes(type) ? 12 : undefined,
-    yearBuilt: 1950 + (index % 74),
+    yearBuilt: 1370 + (index % 34),
     images: propertyImages,
     location: {
-      address: `${(index + 1) * 10} ${locBase.district}straat`,
+      address: `${streetName}، پلاک ${(index + 1) * 10}`,
       city: locBase.city,
       district: locBase.district,
       lat: locBase.lat + offset[0],
       lng: locBase.lng + offset[1],
-      zipCode: `${1000 + (index % 999)} AB`,
+      zipCode: POSTAL_CODES[index % POSTAL_CODES.length],
     },
     agent,
     features: pickFeatures(index, 4 + (index % 5)),
@@ -263,7 +295,6 @@ function generateProperty(index: number): Property {
   };
 }
 
-// Generate 60 stable properties
 export const MOCK_PROPERTIES: Property[] = Array.from({ length: 60 }, (_, i) =>
   generateProperty(i),
 );

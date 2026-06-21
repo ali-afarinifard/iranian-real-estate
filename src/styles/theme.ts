@@ -41,7 +41,7 @@ const NEUTRAL = {
 };
 
 // ─── Theme factor
-export function createNestifyTheme(mode: PaletteMode) {
+export function createIrAmlakTheme(mode: PaletteMode) {
   const isDark = mode === "dark";
 
   return createTheme({
