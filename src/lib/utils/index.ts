@@ -1,21 +1,33 @@
-import { PropertyFilters } from "@/types";
+import type { PropertyFilters } from "@/types";
 
-// Price Formatting
+const numberFormatCache = new Map<string, Intl.NumberFormat>();
 
+function getNumberFormat(
+  locale: string,
+  options: Intl.NumberFormatOptions,
+): Intl.NumberFormat {
+  const key = `${locale}:${JSON.stringify(options)}`;
+  if (!numberFormatCache.has(key)) {
+    numberFormatCache.set(key, new Intl.NumberFormat(locale, options));
+  }
+  return numberFormatCache.get(key)!;
+}
+
+// ── Price Formatting
 export function formatPrice(
   price: number,
   currency: "EUR" | "USD" | "IRR" = "EUR",
   locale = "en-NL",
 ): string {
   if (currency === "IRR") {
-    return new Intl.NumberFormat("fa-IR", {
+    return getNumberFormat("fa-IR", {
       style: "currency",
       currency: "IRR",
       maximumFractionDigits: 0,
     }).format(price);
   }
 
-  return new Intl.NumberFormat(locale, {
+  return getNumberFormat(locale, {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
@@ -23,16 +35,33 @@ export function formatPrice(
   }).format(price);
 }
 
-export function formatArea(area: number): string {
-  return `${area.toLocaleString()} m²`;
+export function formatArea(area: number, locale = "en-NL"): string {
+  return `${area.toLocaleString(locale)} m²`;
 }
 
-// URL / Filter Helpers
+// ── URL / Filter Helpers
+const ARRAY_FILTER_KEYS = new Set<keyof PropertyFilters>([
+  "type",
+  "bedrooms",
+  "bathrooms",
+  "features",
+]);
+const NUMBER_FILTER_KEYS = new Set<keyof PropertyFilters>([
+  "priceMin",
+  "priceMax",
+  "areaMin",
+  "areaMax",
+]);
 
 export function filtersToQueryString(filters: PropertyFilters): string {
   const params = new URLSearchParams();
 
-  Object.entries(filters).forEach(([key, value]) => {
+  (
+    Object.entries(filters) as [
+      keyof PropertyFilters,
+      PropertyFilters[keyof PropertyFilters],
+    ][]
+  ).forEach(([key, value]) => {
     if (value === undefined || value === null || value === "") return;
     if (Array.isArray(value)) {
       if (value.length > 0) params.set(key, value.join(","));
@@ -48,14 +77,18 @@ export function queryStringToFilters(search: string): PropertyFilters {
   const params = new URLSearchParams(search);
   const filters: PropertyFilters = {};
 
-  params.forEach((value, key) => {
-    const arrayKeys = ["type", "bedrooms", "bathrooms", "features"];
-    if (arrayKeys.includes(key)) {
-      (filters as any)[key] = value.split(",");
-    } else if (["priceMin", "priceMax", "areaMin", "areaMax"].includes(key)) {
-      (filters as any)[key] = Number(value);
+  params.forEach((value, rawKey) => {
+    const key = rawKey as keyof PropertyFilters;
+
+    if (ARRAY_FILTER_KEYS.has(key)) {
+      (filters[key] as string[]) = value.split(",");
+    } else if (NUMBER_FILTER_KEYS.has(key)) {
+      const num = Number(value);
+      if (!Number.isNaN(num)) {
+        (filters[key] as number) = num;
+      }
     } else {
-      (filters as any)[key] = value;
+      (filters[key] as string) = value;
     }
   });
 
@@ -63,15 +96,19 @@ export function queryStringToFilters(search: string): PropertyFilters {
 }
 
 export function countActiveFilters(filters: PropertyFilters): number {
-  return Object.entries(filters).filter(([key, value]) => {
-    if (key === "sortBy") return false; // don't count sort
+  return (
+    Object.entries(filters) as [
+      keyof PropertyFilters,
+      PropertyFilters[keyof PropertyFilters],
+    ][]
+  ).filter(([key, value]) => {
+    if (key === "sortBy") return false;
     if (Array.isArray(value)) return value.length > 0;
     return value !== undefined && value !== "";
   }).length;
 }
 
-// Slug / ID
-
+// ── Slug / ID
 export function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -79,50 +116,93 @@ export function slugify(text: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-// Date helpers
+// ── Date Helpers
+type TimeAgoLocale = "en" | "fa";
 
-export function timeAgo(dateString: string): string {
+const TIME_AGO_LABELS: Record<
+  TimeAgoLocale,
+  {
+    today: string;
+    yesterday: string;
+    daysAgo: (n: number) => string;
+    weeksAgo: (n: number) => string;
+    monthsAgo: (n: number) => string;
+    yearsAgo: (n: number) => string;
+  }
+> = {
+  en: {
+    today: "Today",
+    yesterday: "Yesterday",
+    daysAgo: (n) => `${n} days ago`,
+    weeksAgo: (n) => `${n} weeks ago`,
+    monthsAgo: (n) => `${n} months ago`,
+    yearsAgo: (n) => `${n} years ago`,
+  },
+  fa: {
+    today: "امروز",
+    yesterday: "دیروز",
+    daysAgo: (n) => `${toPersianNumber(n)} روز پیش`,
+    weeksAgo: (n) => `${toPersianNumber(n)} هفته پیش`,
+    monthsAgo: (n) => `${toPersianNumber(n)} ماه پیش`,
+    yearsAgo: (n) => `${toPersianNumber(n)} سال پیش`,
+  },
+};
+
+export function timeAgo(
+  dateString: string,
+  locale: TimeAgoLocale = "en",
+): string {
   const date = new Date(dateString);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (Number.isNaN(date.getTime())) return "";
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-  return `${Math.floor(diffDays / 365)} years ago`;
+  const diffMs = Date.now() - date.getTime();
+  const diffDays = Math.floor(diffMs / 86_400_000);
+  const labels = TIME_AGO_LABELS[locale];
+
+  if (diffDays === 0) return labels.today;
+  if (diffDays === 1) return labels.yesterday;
+  if (diffDays < 7) return labels.daysAgo(diffDays);
+  if (diffDays < 30) return labels.weeksAgo(Math.floor(diffDays / 7));
+  if (diffDays < 365) return labels.monthsAgo(Math.floor(diffDays / 30));
+  return labels.yearsAgo(Math.floor(diffDays / 365));
 }
 
-// Class names
-
+// ── Class Names
 export function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
-// Random / Mock helpers
-
+// ── Random / Mock Helpers
 export function randomBetween(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function pickRandom<T>(arr: T[]): T {
+export function pickRandom<T>(arr: readonly T[]): T | undefined {
+  if (arr.length === 0) return undefined;
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export const toPersianNumber = (
-  num: number | string | null | undefined,
-): string => {
-  if (num === null || num === undefined || num === "") {
-    return "";
-  }
+// ── Persian Number
+const PERSIAN_DIGITS = [
+  "۰",
+  "۱",
+  "۲",
+  "۳",
+  "۴",
+  "۵",
+  "۶",
+  "۷",
+  "۸",
+  "۹",
+] as const;
 
-  try {
-    return num
-      .toString()
-      .replace(/\d/g, (digit) => String.fromCharCode(1776 + parseInt(digit)));
-  } catch (error) {
-    return "";
-  }
-};
+export function toPersianNumber(
+  num: number | string | null | undefined,
+): string {
+  if (num === null || num === undefined || num === "") return "";
+
+  return String(num).replace(
+    /\d/g,
+    (digit) => PERSIAN_DIGITS[parseInt(digit, 10)],
+  );
+}

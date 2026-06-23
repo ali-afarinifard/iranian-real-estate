@@ -329,7 +329,7 @@ export function Navbar() {
                     <ListItemIcon>
                       <LogoutRounded fontSize="small" color="error" />
                     </ListItemIcon>
-                    Sign Out
+                    {t("nav.signOut")}
                   </MenuItem>
                 </Menu>
               </>

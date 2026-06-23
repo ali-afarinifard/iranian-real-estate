@@ -2,12 +2,12 @@
 import React from "react";
 import { Box, LinearProgress, Paper, Typography, alpha } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { DashboardStats } from "../dashboard-stat.types";
+import { IDashboardStats } from "../dashboard-stat.types";
 import { useTranslation } from "react-i18next";
 import { toPersianNumber } from "@/lib/utils";
 
 interface DashboardMarketDistributionProps {
-  stats: DashboardStats;
+  stats: IDashboardStats;
 }
 
 interface DistributionRowProps {

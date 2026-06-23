@@ -8,7 +8,7 @@ import {
 import {
   CloseRounded, GetAppRounded, HomeRounded,
 } from '@mui/icons-material';
-import { usePWAInstall } from '@/hooks/usePWAInstall';
+import { usePWAInstall } from '@/hooks/use-pwa-install';
 
 export function PWAInstallBanner() {
   const { isInstallable, isInstalled, promptInstall } = usePWAInstall();

@@ -25,11 +25,11 @@ import {
   selectViewMode,
 } from "@/store";
 import { filtersActions, uiActions } from "@/store/slices";
-import { FilterPanel } from "@/features/filters/components/FilterPanel";
 import { SORT_OPTIONS } from "@/lib/constants";
 import { useSearchDebounce } from "../../hooks/use-search-debounce";
 import type { ViewMode } from "@/types";
 import { useTranslation } from "react-i18next";
+import { FilterPanel } from "@/features/filters";
 
 export function ListingsToolbar() {
   const dispatch = useAppDispatch();

@@ -1,6 +1,5 @@
 {
   "common": {
-    "loading": "در حال بارگذاری...",
     "error": "خطایی رخ داد",
     "retry": "تلاش مجدد",
     "save": "ذخیره",
@@ -25,7 +24,25 @@
     "activeParameters": "تعداد پارامتر",
     "avg": "میانگین .",
     "listings": "ملک",
-    "agentListings": "آگهی ثبت شده است"
+    "agentListings": "آگهی ثبت شده است",
+    "loading": "درحال بارگذاری"
+  },
+  "auth": {
+    "login": {
+      "emailLabel": "آدرس ایمیل",
+      "passwordLabel": "رمز عبور",
+      "showPassword": "نمایش رمز عبور",
+      "hidePassword": "پنهان کردن رمز عبور",
+      "submitButton": "ورود",
+      "submitting": "در حال ورود…",
+      "noAccount": "حساب کاربری ندارید؟",
+      "createAccount": "ثبت‌نام کنید",
+      "welcomeBack": "خوش آمدید",
+      "subtitle": "برای دسترسی به ملک‌های ذخیره‌شده و پیشنهادهای شخصی وارد شوید.",
+      "errorNetwork": "خطای شبکه. لطفاً دوباره تلاش کنید.",
+      "errorDefault": "ورود ناموفق بود. لطفاً دوباره تلاش کنید.",
+      "successWelcome": "خوش برگشتی، {{name}}!"
+    }
   },
   "nav": {
     "logo": "املاک ایرانیان",
@@ -58,6 +75,7 @@
     "listedBy": "ثبت‌شده توسط",
     "similarProperties": "آگهی‌های مشابه",
     "saveProperty": "ذخیره ملک",
+    "perMonth": "ماهانه",
     "status": {
       "available": "موجود",
       "sold": "فروخته شده",
@@ -106,7 +124,7 @@
     "features": "امکانات",
     "sortBy": "نمایش بر اساس",
     "activeFilters": "فعال",
-    "clearAll": "پاک کردن همه",
+    "clearAll": "بازنشانی",
     "allCities": "تمام شهرها"
   },
   "sortOptions": {
@@ -157,7 +175,7 @@
   },
   "listings": {
     "heading": "جستجوی املاک",
-    "error": "هیچ میکی پیدا نشد. مجدد تلاش کنید"
+    "error": "هیچ ملکی پیدا نشد. مجدد تلاش کنید"
   },
   "map": {
     "clickDetails": "جزییات ملک",
@@ -168,8 +186,10 @@
   },
   "favorites": {
     "noSavedProperties": "لیست علاقه‌مندی‌ها خالی است",
-    "browseListingsTapHeartIcon": "برای ذخیره ملک مورد علاقه خود، در بخش لیست املاک، بر روی آیکون قلب کلیک شود",
-    "browseProperties": "جستجو در املاک"
+    "browseListingsTapHeartIcon": "برای ذخیره ملک مورد علاقه خود، در بخش لیست املاک، بر روی آیکون قلب کلیک کنید",
+    "browseProperties": "جستجو در املاک",
+    "removedFavorite": "از لیست علاقه‌مندی‌ها حذف شد",
+    "addedFavorite": "به لیست علاقه‌مندی‌ها اضافه شد"
   },
   "dashboard": {
     "welcome": "خوش آمدید",
@@ -181,5 +201,19 @@
     "newThisMonth": "آگهی‌های جدید در این ماه",
     "savedProperties": "ملک‌های ذخیره‌شده",
     "marketDistribution": "توزیع بازار"
+  },
+  "sse": {
+    "priceUpdate": {
+      "title": "تغییر قیمت",
+      "message": "قیمت یکی از ملک‌هایی که بازدید کردید تغییر کرد."
+    },
+    "newListing": {
+      "title": "آگهی جدید!",
+      "message": "یک ملک جدید در بازار ثبت شد."
+    },
+    "statusChange": {
+      "title": "تغییر وضعیت",
+      "message": "وضعیت یکی از ملک‌ها به‌روزرسانی شد."
+    }
   }
 }

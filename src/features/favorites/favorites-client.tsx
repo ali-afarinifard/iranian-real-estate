@@ -2,14 +2,22 @@
 
 import React from "react";
 import { Alert, Box, Typography } from "@mui/material";
-import { useGetFavoritesQuery } from "@/store/api/propertiesApi";
+import { useAppSelector, selectFavoriteIds } from "@/store";
 import { FavoritesGrid } from "./favorites-grid";
 import { useTranslation } from "react-i18next";
+import { useGetPropertiesQuery } from "@/store/api/propertiesApi";
 
 export function FavoritesClient() {
-  const { data, isLoading, isError } = useGetFavoritesQuery();
-  const {t} = useTranslation();
-  const properties = data?.data ?? [];
+  const { t } = useTranslation();
+  const favoriteIds = useAppSelector(selectFavoriteIds);
+
+  const { data, isLoading, isError } = useGetPropertiesQuery({
+    page: 1,
+    perPage: 100,
+  });
+
+  const favoriteProperties =
+    data?.data.filter((p) => favoriteIds.includes(p.id)) ?? [];
 
   return (
     <>
@@ -24,7 +32,7 @@ export function FavoritesClient() {
           {t("listings.error")}
         </Alert>
       )}
-      <FavoritesGrid properties={properties} isLoading={isLoading} />
+      <FavoritesGrid properties={favoriteProperties} isLoading={isLoading} />
     </>
   );
 }

@@ -5,10 +5,12 @@ import { Chip, Stack } from "@mui/material";
 import { useAppDispatch, useAppSelector, selectFilters } from "@/store";
 import { filtersActions } from "@/store/slices";
 import { countActiveFilters } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export function ListingsFilterChips() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector(selectFilters);
+  const {t} = useTranslation();
   const activeFilterCount = countActiveFilters(filters);
 
   if (activeFilterCount === 0) return null;
@@ -56,7 +58,7 @@ export function ListingsFilterChips() {
       )}
 
       <Chip
-        label="Clear all"
+        label={t("filters.clearAll")}
         size="small"
         color="error"
         variant="outlined"

@@ -30,6 +30,14 @@ export function FavoritesEmpty() {
         variant="contained"
         startIcon={<SearchRounded />}
         size="large"
+        sx={{
+          "& .MuiButton-startIcon": {
+            "[dir='rtl'] &": {
+              marginRight: "-2px",
+              marginLeft: "6px",
+            },
+          },
+        }}
       >
         {t("favorites.browseProperties")}
       </Button>

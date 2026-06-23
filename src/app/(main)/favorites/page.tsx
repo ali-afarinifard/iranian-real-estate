@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import type { Metadata } from "next";
 import { FavoritesClient } from "@/features/favorites";
 

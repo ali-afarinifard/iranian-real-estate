@@ -1,11 +1,11 @@
 import React from "react";
 import { Alert, Box, Button } from "@mui/material";
 
-interface MapErrorOverlayProps {
+interface IMapErrorOverlayProps {
   onRetry: () => void;
 }
 
-export function MapErrorOverlay({ onRetry }: MapErrorOverlayProps) {
+export function MapErrorOverlay({ onRetry }: IMapErrorOverlayProps) {
   return (
     <Box
       sx={{

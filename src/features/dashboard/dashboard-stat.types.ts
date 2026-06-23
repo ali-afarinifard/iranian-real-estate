@@ -1,4 +1,4 @@
-export interface DashboardStats {
+export interface IDashboardStats {
   totalListings: number;
   forSale: number;
   forRent: number;

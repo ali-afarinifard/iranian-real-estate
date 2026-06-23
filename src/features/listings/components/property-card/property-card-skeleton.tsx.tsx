@@ -3,13 +3,13 @@
 import React, { memo } from "react";
 import { Card, CardContent, Skeleton, Box } from "@mui/material";
 
-interface PropertyCardSkeletonProps {
+interface IPropertyCardSkeletonProps {
   viewMode?: "grid" | "list";
 }
 
 export const PropertyCardSkeleton = memo(function PropertyCardSkeleton({
   viewMode = "grid",
-}: PropertyCardSkeletonProps) {
+}: IPropertyCardSkeletonProps) {
   if (viewMode === "list") {
     return (
       <Card sx={{ display: "flex", height: 180, overflow: "hidden" }}>

@@ -1,46 +1,51 @@
 import {
-  Property,
-  PropertySummary,
+  IProperty,
+  IPropertySummary,
   PropertyType,
   ListingType,
   PropertyStatus,
+  ILocalizedString,
 } from "@/types";
+
+// ─── Agents
 
 const AGENT_POOL = [
   {
     id: "agent-1",
-    name: "سارا محمدی",
+    name: { fa: "سارا محمدی", en: "Sara Mohammadi" },
     avatar:
       "https://images.unsplash.com/photo-1494790108755-2616b612b550?w=100&h=100&fit=crop&crop=face",
     phone: "۰۲۱-۲۲۳۴۵۶۷۸",
     email: "sara@iraniamlak.ir",
-    agency: "ایران ملک - تهران",
+    agency: { fa: "ایران ملک - تهران", en: "Iran Amlak - Tehran" },
     rating: 4.9,
     totalListings: 54,
   },
   {
     id: "agent-2",
-    name: "علی رضایی",
+    name: { fa: "علی رضایی", en: "Ali Rezaei" },
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
     phone: "۰۲۱-۸۸۷۷۶۶۵۵",
     email: "ali@mellakaran.ir",
-    agency: "ملک‌کاران - اصفهان",
+    agency: { fa: "ملک‌کاران - اصفهان", en: "Mellakaran - Isfahan" },
     rating: 4.7,
     totalListings: 38,
   },
   {
     id: "agent-3",
-    name: "نیلوفر احمدی",
+    name: { fa: "نیلوفر احمدی", en: "Nilufar Ahmadi" },
     avatar:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face",
     phone: "۰۷۱-۳۲۲۱۴۵۶۷",
-    email: "nilufar@shirazملک.ir",
-    agency: "دیوار ملک - شیراز",
+    email: "nilufar@divarmelk.ir",
+    agency: { fa: "دیوار ملک - شیراز", en: "Divar Melk - Shiraz" },
     rating: 4.8,
     totalListings: 29,
   },
 ];
+
+// ─── Images
 
 const PROPERTY_IMAGES: Record<string, string[]> = {
   apartment: [
@@ -68,24 +73,90 @@ const PROPERTY_IMAGES: Record<string, string[]> = {
   ],
 };
 
-const LOCATIONS: Array<{
-  district: string;
-  city: string;
+// ─── Locations 
+// Bilingual now — district/city are LocalizedString so the UI can show
+// the English name when the active language is "en".
+
+interface ILocationEntry {
+  district: ILocalizedString;
+  city: ILocalizedString;
   lat: number;
   lng: number;
-}> = [
-  { district: "الهیه", city: "تهران", lat: 35.8058, lng: 51.4274 },
-  { district: "نیاوران", city: "تهران", lat: 35.8196, lng: 51.4646 },
-  { district: "جردن", city: "تهران", lat: 35.7667, lng: 51.4095 },
-  { district: "ولنجک", city: "تهران", lat: 35.8321, lng: 51.4052 },
-  { district: "زعفرانیه", city: "تهران", lat: 35.7968, lng: 51.4556 },
-  { district: "سعادت‌آباد", city: "تهران", lat: 35.7825, lng: 51.3734 },
-  { district: "پاسداران", city: "تهران", lat: 35.7801, lng: 51.4795 },
-  { district: "شهرک غرب", city: "تهران", lat: 35.7624, lng: 51.3582 },
-  { district: "چهارباغ", city: "اصفهان", lat: 32.6546, lng: 51.668 },
-  { district: "جلفا", city: "اصفهان", lat: 32.6434, lng: 51.6652 },
-  { district: "قصردشت", city: "شیراز", lat: 29.6312, lng: 52.5318 },
-  { district: "صادقیه", city: "تهران", lat: 35.7387, lng: 51.3427 },
+}
+
+const LOCATIONS: ILocationEntry[] = [
+  {
+    district: { fa: "الهیه", en: "Elahieh" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.8058,
+    lng: 51.4274,
+  },
+  {
+    district: { fa: "نیاوران", en: "Niavaran" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.8196,
+    lng: 51.4646,
+  },
+  {
+    district: { fa: "جردن", en: "Jordan" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.7667,
+    lng: 51.4095,
+  },
+  {
+    district: { fa: "ولنجک", en: "Velenjak" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.8321,
+    lng: 51.4052,
+  },
+  {
+    district: { fa: "زعفرانیه", en: "Zafaranieh" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.7968,
+    lng: 51.4556,
+  },
+  {
+    district: { fa: "سعادت‌آباد", en: "Saadat Abad" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.7825,
+    lng: 51.3734,
+  },
+  {
+    district: { fa: "پاسداران", en: "Pasdaran" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.7801,
+    lng: 51.4795,
+  },
+  {
+    district: { fa: "شهرک غرب", en: "Shahrak-e Gharb" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.7624,
+    lng: 51.3582,
+  },
+  {
+    district: { fa: "چهارباغ", en: "Chaharbagh" },
+    city: { fa: "اصفهان", en: "Isfahan" },
+    lat: 32.6546,
+    lng: 51.668,
+  },
+  {
+    district: { fa: "جلفا", en: "Jolfa" },
+    city: { fa: "اصفهان", en: "Isfahan" },
+    lat: 32.6434,
+    lng: 51.6652,
+  },
+  {
+    district: { fa: "قصردشت", en: "Ghasrodasht" },
+    city: { fa: "شیراز", en: "Shiraz" },
+    lat: 29.6312,
+    lng: 52.5318,
+  },
+  {
+    district: { fa: "صادقیه", en: "Sadeghieh" },
+    city: { fa: "تهران", en: "Tehran" },
+    lat: 35.7387,
+    lng: 51.3427,
+  },
 ];
 
 const OFFSETS = [
@@ -102,6 +173,8 @@ const OFFSETS = [
   [0.007, 0.002],
   [-0.003, 0.007],
 ];
+
+// ─── Enum pools
 
 const TYPES: PropertyType[] = [
   "apartment",
@@ -142,58 +215,155 @@ const FEATURES_POOL = [
   "property.features.eVCharging",
 ];
 
-const TITLES: Record<PropertyType, string[]> = {
+// ─── Bilingual titles
+
+interface ITitleEntry {
+  fa: string;
+  en: string;
+  slug: string;
+}
+
+const TITLES: Record<PropertyType, ITitleEntry[]> = {
   apartment: [
-    "آپارتمان مدرن با دید کامل شهر",
-    "آپارتمان روشن نوساز",
-    "آپارتمان خانوادگی بازسازی‌شده",
-    "لافت طراحی‌شده با متریال لوکس",
-    "آپارتمان آرام با حیاط اختصاصی",
+    {
+      fa: "آپارتمان مدرن با دید کامل شهر",
+      en: "Modern Apartment with Full City View",
+      slug: "modern-apartment-full-city-view",
+    },
+    {
+      fa: "آپارتمان روشن نوساز",
+      en: "Bright Newly Built Apartment",
+      slug: "bright-newly-built-apartment",
+    },
+    {
+      fa: "آپارتمان خانوادگی بازسازی‌شده",
+      en: "Renovated Family Apartment",
+      slug: "renovated-family-apartment",
+    },
+    {
+      fa: "لافت طراحی‌شده با متریال لوکس",
+      en: "Designer Loft with Luxury Finishes",
+      slug: "designer-loft-luxury-finishes",
+    },
+    {
+      fa: "آپارتمان آرام با حیاط اختصاصی",
+      en: "Quiet Apartment with Private Courtyard",
+      slug: "quiet-apartment-private-courtyard",
+    },
   ],
   villa: [
-    "ویلای مستقل خانوادگی",
-    "ویلای مدرن با استخر",
-    "ویلای کلاسیک با باغچه",
+    {
+      fa: "ویلای مستقل خانوادگی",
+      en: "Detached Family Villa",
+      slug: "detached-family-villa",
+    },
+    {
+      fa: "ویلای مدرن با استخر",
+      en: "Modern Villa with Swimming Pool",
+      slug: "modern-villa-swimming-pool",
+    },
+    {
+      fa: "ویلای کلاسیک با باغچه",
+      en: "Classic Villa with Garden",
+      slug: "classic-villa-garden",
+    },
   ],
   office: [
-    "فضای اداری اوپن‌پلن",
-    "سوئیت تجاری درجه یک",
-    "مرکز کار اشتراکی خلاق",
+    {
+      fa: "فضای اداری اوپن‌پلن",
+      en: "Open-Plan Office Space",
+      slug: "open-plan-office-space",
+    },
+    {
+      fa: "سوئیت تجاری درجه یک",
+      en: "Premium Business Suite",
+      slug: "premium-business-suite",
+    },
+    {
+      fa: "مرکز کار اشتراکی خلاق",
+      en: "Creative Co-working Hub",
+      slug: "creative-coworking-hub",
+    },
   ],
-  land: ["زمین مسکونی آماده ساخت", "موقعیت استثنایی جهت سرمایه‌گذاری"],
+  land: [
+    {
+      fa: "زمین مسکونی آماده ساخت",
+      en: "Residential Land Ready to Build",
+      slug: "residential-land-ready-build",
+    },
+    {
+      fa: "موقعیت استثنایی جهت سرمایه‌گذاری",
+      en: "Prime Investment Development Land",
+      slug: "prime-investment-development-land",
+    },
+  ],
   penthouse: [
-    "پنت‌هاوس با تراس ۳۶۰ درجه",
-    "پنت‌هاوس پانوراما روف‌تاپ",
-    "پنت‌هاوس لوکس با تراس خصوصی",
+    {
+      fa: "پنت‌هاوس با تراس ۳۶۰ درجه",
+      en: "Penthouse with 360° Rooftop Terrace",
+      slug: "penthouse-360-rooftop-terrace",
+    },
+    {
+      fa: "پنت‌هاوس پانوراما روف‌تاپ",
+      en: "Panoramic Rooftop Penthouse",
+      slug: "panoramic-rooftop-penthouse",
+    },
+    {
+      fa: "پنت‌هاوس لوکس با تراس خصوصی",
+      en: "Luxury Penthouse with Private Terrace",
+      slug: "luxury-penthouse-private-terrace",
+    },
   ],
 };
 
-// Seeded helpers (deterministic, index-based)
-function pick<T>(arr: T[], index: number): T {
-  return arr[index % arr.length];
+// ─── Bilingual descriptions
+
+function buildDescription(
+  type: PropertyType,
+  district: ILocalizedString,
+  area: number,
+): ILocalizedString {
+  const typeMapFa: Record<PropertyType, string> = {
+    apartment: "آپارتمان",
+    villa: "ویلا",
+    penthouse: "پنت‌هاوس",
+    office: "دفتر اداری",
+    land: "زمین",
+  };
+  const typeMapEn: Record<PropertyType, string> = {
+    apartment: "apartment",
+    villa: "villa",
+    penthouse: "penthouse",
+    office: "office space",
+    land: "land parcel",
+  };
+
+  return {
+    fa: `این ${typeMapFa[type]} زیبا در محله ${district.fa} با ${area} متر مربع فضای زندگی، دارای نور طبیعی فوق‌العاده، متریال لوکس و امکانات کامل می‌باشد.`,
+    en: `This stunning ${typeMapEn[type]} in ${district.en ?? district.fa} offers ${area} m² of modern living space with exceptional natural light, high-end finishes, and full amenities throughout.`,
+  };
 }
 
-function pickFeatures(index: number, count: number): string[] {
-  const result: string[] = [];
-  for (let i = 0; i < count; i++) {
-    result.push(FEATURES_POOL[(index + i * 3) % FEATURES_POOL.length]);
-  }
-  return [...new Set(result)];
+// ─── Address data 
+
+interface IStreetEntry {
+  fa: string;
+  en: string;
 }
 
-const STREET_NAMES = [
-  "خیابان ولیعصر",
-  "خیابان شریعتی",
-  "بلوار الهیه",
-  "خیابان مطهری",
-  "بلوار آفریقا",
-  "خیابان فرشته",
-  "بلوار میرداماد",
-  "خیابان سعدی",
-  "خیابان چهارباغ عباسی",
-  "بلوار قدس",
-  "خیابان زند",
-  "بلوار کشاورز",
+const STREET_NAMES: IStreetEntry[] = [
+  { fa: "خیابان ولیعصر", en: "Valiasr St." },
+  { fa: "خیابان شریعتی", en: "Shariati St." },
+  { fa: "بلوار الهیه", en: "Elahieh Blvd." },
+  { fa: "خیابان مطهری", en: "Motahari St." },
+  { fa: "بلوار آفریقا", en: "Africa Blvd." },
+  { fa: "خیابان فرشته", en: "Fereshteh St." },
+  { fa: "بلوار میرداماد", en: "Mirdamad Blvd." },
+  { fa: "خیابان سعدی", en: "Saadi St." },
+  { fa: "خیابان چهارباغ عباسی", en: "Chaharbagh Abbasi St." },
+  { fa: "بلوار قدس", en: "Ghods Blvd." },
+  { fa: "خیابان زند", en: "Zand St." },
+  { fa: "بلوار کشاورز", en: "Keshavarz Blvd." },
 ];
 
 const POSTAL_CODES = [
@@ -211,7 +381,31 @@ const POSTAL_CODES = [
   "1459763141",
 ];
 
-function generateProperty(index: number): Property {
+// ─── Helpers
+
+function pick<T>(arr: T[], index: number): T {
+  return arr[index % arr.length];
+}
+
+function pickFeatures(index: number, count: number): string[] {
+  const result: string[] = [];
+  for (let i = 0; i < count; i++) {
+    result.push(FEATURES_POOL[(index + i * 3) % FEATURES_POOL.length]);
+  }
+  return [...new Set(result)];
+}
+
+function buildAddress(streetIndex: number, plot: number): ILocalizedString {
+  const street = STREET_NAMES[streetIndex % STREET_NAMES.length];
+  return {
+    fa: `${street.fa}، پلاک ${plot}`,
+    en: `${street.en}, No. ${plot}`,
+  };
+}
+
+// ─── Generator 
+
+function generateProperty(index: number): IProperty {
   const type = pick(TYPES, index);
   const listingType = pick(LISTING_TYPES, index);
   const status = pick(STATUSES, index);
@@ -228,6 +422,7 @@ function generateProperty(index: number): Property {
   const area =
     type === "land" ? 200 + (index % 10) * 180 : 45 + (index % 20) * 18;
 
+  // Price in Tomans — realistic Iranian market ranges
   const priceBase =
     listingType === "sale"
       ? (type === "penthouse"
@@ -243,26 +438,26 @@ function generateProperty(index: number): Property {
     Date.now() - createdDaysAgo * 86_400_000,
   ).toISOString();
 
-  const titleList = TITLES[type] ?? TITLES.apartment;
-  const title = titleList[index % titleList.length];
-  const slug = `${title
-    .replace(/\s+/g, "-")
-    .replace(/[^\u0600-\u06FFa-z0-9\-]/gi, "")}-${index + 1}`;
+  const titleEntry = pick(TITLES[type] ?? TITLES.apartment, index);
+
+  // Slug: ASCII only, index-suffixed for uniqueness — mirrors what a real backend generates
+  const slug = `${titleEntry.slug}-${index + 1}`;
+
+  const title: ILocalizedString = { fa: titleEntry.fa, en: titleEntry.en };
+  const description = buildDescription(type, locBase.district, area);
 
   const propertyImages = images.map((url, i) => ({
     id: `img-${index}-${i}`,
     url,
-    alt: `تصویر ${i + 1} از ${title}`,
+    alt: titleEntry.en, // Always English for HTML alt (accessibility + SEO)
     isPrimary: i === 0,
   }));
-
-  const streetName = STREET_NAMES[index % STREET_NAMES.length];
 
   return {
     id: `prop-${String(index + 1).padStart(4, "0")}`,
     title,
     slug,
-    description: `این ${type === "apartment" ? "آپارتمان" : type === "villa" ? "ویلا" : type === "penthouse" ? "پنت‌هاوس" : type === "office" ? "دفتر اداری" : "زمین"} زیبا در محله ${locBase.district} با ${area} متر مربع فضای زندگی، دارای نور طبیعی فوق‌العاده، متریال لوکس و امکانات کامل می‌باشد.`,
+    description,
     type,
     listingType,
     status,
@@ -275,10 +470,10 @@ function generateProperty(index: number): Property {
     parkingSpots: type === "land" ? 0 : index % 3,
     floor: ["apartment", "penthouse"].includes(type) ? index % 12 : undefined,
     totalFloors: ["apartment", "penthouse"].includes(type) ? 12 : undefined,
-    yearBuilt: 1370 + (index % 34),
+    yearBuilt: 1370 + (index % 34), // Jalali year — backend stores & returns as-is
     images: propertyImages,
     location: {
-      address: `${streetName}، پلاک ${(index + 1) * 10}`,
+      address: buildAddress(index % STREET_NAMES.length, (index + 1) * 10),
       city: locBase.city,
       district: locBase.district,
       lat: locBase.lat + offset[0],
@@ -295,14 +490,16 @@ function generateProperty(index: number): Property {
   };
 }
 
-export const MOCK_PROPERTIES: Property[] = Array.from({ length: 60 }, (_, i) =>
+// ─── Exports
+
+export const MOCK_PROPERTIES: IProperty[] = Array.from({ length: 60 }, (_, i) =>
   generateProperty(i),
 );
 
-export const MOCK_PROPERTY_SUMMARIES: PropertySummary[] = MOCK_PROPERTIES.map(
+export const MOCK_PROPERTY_SUMMARIES: IPropertySummary[] = MOCK_PROPERTIES.map(
   (p) => ({
     id: p.id,
-    title: p.title,
+    title: p.title, // LocalizedString
     slug: p.slug,
     type: p.type,
     listingType: p.listingType,

@@ -1,6 +1,5 @@
 {
   "common": {
-    "loading": "Loading...",
     "error": "Something went wrong",
     "retry": "Try again",
     "save": "Save",
@@ -25,7 +24,25 @@
     "activeParameters": "active",
     "avg": "Avg.",
     "listings": "listings",
-    "agentListings": "Listings"
+    "agentListings": "Listings",
+    "loading": "Loading..."
+  },
+  "auth": {
+    "login": {
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "showPassword": "Show Password",
+      "hidePassword": "Hide Password",
+      "submitButton": "Login",
+      "submitting": "Login...",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create one",
+      "welcomeBack": "Welcome back",
+      "subtitle": "Sign in to access your saved properties and personalized recommendations",
+      "errorNetwork": "Network Error, Please Try Again...",
+      "errorDefault": "login has crashed, Please Try Again",
+      "successWelcome": "Welcome, {{name}}!"
+    }
   },
   "nav": {
     "logo": "Iranian Amlak",
@@ -58,6 +75,7 @@
     "listedBy": "Listed by",
     "similarProperties": "Similar Properties",
     "saveProperty": "Save Property",
+    "perMonth": "mo",
     "status": {
       "available": "Available",
       "sold": "Sold",
@@ -95,7 +113,6 @@
       "backToListings": "Back to Listings",
       "propertyNotFound": "Property not found.",
       "browseAllListings": "Browse all listings"
-
     }
   },
   "filters": {
@@ -168,6 +185,13 @@
     "viewFullDetails": "View Full Details",
     "contactAgent": "Contact Agent"
   },
+  "favorites": {
+    "noSavedProperties": "No Saved Properties",
+    "browseListingsTapHeartIcon": "To save a property, tap the heart icon while browsing listings",
+    "browseProperties": "Browse Properties",
+    "removedFavorite": "Removed from saved",
+    "addedFavorite": "Saved to favorites"
+  },
   "dashboard": {
     "welcome": "Welcome back",
     "whatshappening": "Here's what's happening in the market today.",
@@ -178,5 +202,19 @@
     "newThisMonth": "New This Month",
     "savedProperties": "Saved Properties",
     "marketDistribution": "Market Distribution"
+  },
+  "sse": {
+    "priceUpdate": {
+      "title": "Price Update",
+      "message": "A property you viewed has changed price."
+    },
+    "newListing": {
+      "title": "New Listing!",
+      "message": "A new property just hit the market."
+    },
+    "statusChange": {
+      "title": "Status Changed",
+      "message": "A property status has been updated."
+    }
   }
 }

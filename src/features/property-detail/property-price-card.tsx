@@ -1,7 +1,6 @@
 "use client";
-
 import React from "react";
-import { Box, Button, Paper, Stack, Tooltip, Typography } from "@mui/material";
+import { Button, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import {
   FavoriteBorderRounded,
   FavoriteRounded,
@@ -11,21 +10,20 @@ import {
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector, selectIsFavorited } from "@/store";
 import { favoritesActions, uiActions } from "@/store/slices";
-import { formatPrice } from "@/lib/utils";
-import type { Property } from "@/types";
+import { formatTomanPrice } from "@/lib/localize";
+import type { IProperty, Language } from "@/types";
 import { useTranslation } from "react-i18next";
 
-interface PropertyPriceCardProps {
-  property: Property;
+interface IPropertyPriceCardProps {
+  property: IProperty;
 }
 
-export function PropertyPriceCard({ property }: PropertyPriceCardProps) {
+export function PropertyPriceCard({ property }: IPropertyPriceCardProps) {
   const dispatch = useAppDispatch();
   const isFavorited = useAppSelector(selectIsFavorited(property.id));
   const { t, i18n } = useTranslation();
-
   const isRent = property.listingType === "rent";
-  const isRTL = i18n.dir() === "rtl";
+  const lang = i18n.language as Language;
 
   const handleFavorite = () => {
     dispatch(favoritesActions.toggleFavorite(property.id));
@@ -48,19 +46,19 @@ export function PropertyPriceCard({ property }: PropertyPriceCardProps) {
       transition={{ delay: 0.2 }}
     >
       <Typography variant="h3" fontWeight={900} color="primary.main">
-        {formatPrice(property.price, property.currency)}
+        {formatTomanPrice(property.price, lang)}
         {isRent && (
           <Typography component="span" variant="h6" color="text.secondary">
-            {isRTL ? " / ماهانه" : " /mo"}
+            {" "}
+            / {t("property.perMonth")}
           </Typography>
         )}
       </Typography>
       {property.pricePerSqm && (
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          {formatPrice(property.pricePerSqm, property.currency)} / m²
+          {formatTomanPrice(property.pricePerSqm, lang)} / m²
         </Typography>
       )}
-
       <Stack spacing={1.5}>
         <Button
           variant="contained"

@@ -13,10 +13,13 @@ export const PropertyCard = memo(function PropertyCard({
   viewMode = "grid",
   index = 0,
   onSelect,
-}: PropertyCardProps) {
+  isFavorited: isFavoritedProp,
+}: PropertyCardProps & { isFavorited?: boolean }) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const isFavorited = useAppSelector(selectIsFavorited(property.id));
+  const isFavoritedFromStore = useAppSelector(selectIsFavorited(property.id));
+
+  const isFavorited = isFavoritedProp ?? isFavoritedFromStore;
 
   const handleFavorite = useCallback(
     (e: React.MouseEvent) => {

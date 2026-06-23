@@ -9,7 +9,7 @@ import {
   useGetFavoritesQuery,
 } from "@/store/api/propertiesApi";
 import { useAppSelector, selectUser } from "@/store";
-import { usePropertySSE } from "@/hooks/usePropertySSE";
+import { usePropertySSE } from "@/hooks/use-property-see";
 import { DashboardStatsGrid } from "./dashboard-stats-grid";
 import { DashboardMarketDistribution } from "./dashboard-market-distribution";
 import { DashboardSavedProperties } from "./dashboard-saved-properties";

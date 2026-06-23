@@ -1,4 +1,4 @@
-/* ─── CSS Reset & Base ───────────────────────────────────────────────────── */
+/* CSS Reset & Base*/
 *,
 *::before,
 *::after {
@@ -8,6 +8,7 @@
 }
 
 html {
+  overflow-x: hidden;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
@@ -24,7 +25,7 @@ body {
   min-height: 100vh;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -43,32 +44,32 @@ body {
   background: rgba(100, 116, 139, 0.7);
 }
 
-/* ─── Focus visible ──────────────────────────────────────────────────────── */
+/* Focus visible */
 :focus-visible {
   outline: 2px solid #1463c7;
   outline-offset: 2px;
 }
 
-/* ─── Selection ──────────────────────────────────────────────────────────── */
+/* Selection */
 ::selection {
   background-color: rgba(20, 99, 199, 0.2);
   color: inherit;
 }
 
-/* ─── Images & Media ─────────────────────────────────────────────────────── */
+/* Images & Media */
 img,
 video {
   max-width: 100%;
   display: block;
 }
 
-/* ─── Links ──────────────────────────────────────────────────────────────── */
+/* Links */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* ─── Typography ─────────────────────────────────────────────────────────── */
+/* Typography */
 h1,
 h2,
 h3,
@@ -79,7 +80,7 @@ h6 {
   line-height: 1.2;
 }
 
-/* ─── Leaflet overrides ──────────────────────────────────────────────────── */
+/* Leaflet overrides */
 .leaflet-container {
   font-family: var(--font-vazirmatn), sans-serif !important;
   z-index: 0;
@@ -100,7 +101,7 @@ h6 {
   display: none;
 }
 
-/* ─── Marker cluster overrides ───────────────────────────────────────────── */
+/* Marker cluster overrides */
 .marker-cluster-small,
 .marker-cluster-medium,
 .marker-cluster-large {
@@ -117,14 +118,14 @@ h6 {
   font-size: 13px !important;
 }
 
-/* ─── MUI overrides ──────────────────────────────────────────────────────── */
+/* MUI overrides */
 
 /* Smooth card hover image zoom */
 .MuiCard-root:hover img {
   transform: scale(1.04);
 }
 
-/* ─── Animations ─────────────────────────────────────────────────────────── */
+/* Animations */
 @keyframes pulse {
   0%,
   100% {
@@ -167,7 +168,7 @@ h6 {
   animation: shimmer 1.5s infinite;
 }
 
-/* ─── Utility classes ────────────────────────────────────────────────────── */
+/* Utility classes */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -187,8 +188,7 @@ h6 {
   background-clip: text;
 }
 
-/* ─── RTL support for Persian (fa) ──────────────────────────────────────── */
+/* RTL support for Persian (fa) */
 [dir="rtl"] {
-  font-family: var(--font-vazirmatn), sans-serif;
   letter-spacing: 0;
 }

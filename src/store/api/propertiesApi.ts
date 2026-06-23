@@ -1,33 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
+import type {
   Property,
   PropertySummary,
+  MapProperty,
   PaginatedResponse,
-  PropertyFilters,
+  GetPropertiesArgs,
 } from "@/types";
 import { API_BASE_URL, PER_PAGE } from "@/lib/constants";
 import { filtersToQueryString } from "@/lib/utils";
-
-export interface GetPropertiesArgs {
-  filters?: PropertyFilters;
-  page?: number;
-  perPage?: number;
-}
-
-export interface MapProperty {
-  id: string;
-  title: string;
-  price: number;
-  currency: "EUR" | "USD" | "IRR";
-  type: string;
-  listingType: string;
-  status: string;
-  lat: number;
-  lng: number;
-  primaryImage: { id: string; url: string; alt: string; isPrimary: boolean };
-  bedrooms: number;
-  area: number;
-}
 
 export const propertiesApi = createApi({
   reducerPath: "propertiesApi",
@@ -60,7 +40,6 @@ export const propertiesApi = createApi({
               { type: "PropertyList", id: "LIST" },
             ]
           : [{ type: "PropertyList", id: "LIST" }],
-      // Merge pages for infinite scroll
       serializeQueryArgs: ({ queryArgs }) => {
         const { filters, perPage } = queryArgs;
         return JSON.stringify({ filters, perPage });
@@ -83,7 +62,7 @@ export const propertiesApi = createApi({
       providesTags: [{ type: "FeaturedProperties", id: "FEATURED" }],
     }),
 
-    // Map data — lightweight
+    // Map data — lightweight, only MapProperty fields
     getMapProperties: builder.query<{ data: MapProperty[] }, { city?: string }>(
       {
         query: ({ city }) => `/properties/map${city ? `?city=${city}` : ""}`,
@@ -119,7 +98,7 @@ export const propertiesApi = createApi({
       providesTags: [{ type: "Stats", id: "STATS" }],
     }),
 
-    // Favorites
+    // Favorites — فقط برای initial sync استفاده میشه
     getFavorites: builder.query<{ data: PropertySummary[] }, void>({
       query: () => "/favorites",
       providesTags: [{ type: "Favorites", id: "LIST" }],
@@ -133,7 +112,6 @@ export const propertiesApi = createApi({
         url: `/favorites/${propertyId}`,
         method: "POST",
       }),
-      invalidatesTags: [{ type: "Favorites", id: "LIST" }],
     }),
 
     removeFavorite: builder.mutation<
@@ -144,7 +122,6 @@ export const propertiesApi = createApi({
         url: `/favorites/${propertyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Favorites", id: "LIST" }],
     }),
   }),
 });

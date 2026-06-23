@@ -13,20 +13,26 @@ import {
 import { BedRounded, SquareFootRounded } from "@mui/icons-material";
 import NextImage from "next/image";
 import { motion } from "framer-motion";
-import type { MapProperty } from "@/store/api/propertiesApi";
-import { formatPrice, formatArea, toPersianNumber } from "@/lib/utils";
+import { formatTomanPrice } from "@/lib/localize";
+import { formatArea, toPersianNumber } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { localize } from "@/lib/localize";
+import { IMapProperty } from "@/types";
+import type { Language } from "@/types";
 
-interface MapHoverCardProps {
-  property: MapProperty;
+interface IMapHoverCardProps {
+  property: IMapProperty;
 }
 
-export function MapHoverCard({ property }: MapHoverCardProps) {
+export function MapHoverCard({ property }: IMapHoverCardProps) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
 
   const isSale = property.listingType === "sale";
   const isRTL = i18n.dir() === "rtl";
+  const lang = i18n.language as Language;
+
+  const titleText = localize(property.title);
 
   return (
     <motion.div
@@ -85,14 +91,14 @@ export function MapHoverCard({ property }: MapHoverCardProps) {
               lineHeight: 1.1,
             }}
           >
-            {formatPrice(property.price, property.currency as "EUR")}
+            {formatTomanPrice(property.price, lang)}
             {!isSale && (
               <Typography
                 component="span"
                 variant="caption"
                 sx={{ color: "rgba(255,255,255,0.8)", ml: 0.5 }}
               >
-                /mo
+                {isRTL ? " / ماهانه" : " /mo"}
               </Typography>
             )}
           </Typography>
@@ -105,7 +111,7 @@ export function MapHoverCard({ property }: MapHoverCardProps) {
             noWrap
             sx={{ mb: 0.5 }}
           >
-            {property.title}
+            {titleText}
           </Typography>
           <Stack direction="row" gap={1.5} alignItems="center">
             {property.bedrooms > 0 && (

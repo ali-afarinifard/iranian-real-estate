@@ -6,15 +6,15 @@ import NextLink from "next/link";
 import {
   PropertyCard,
   PropertyCardSkeleton,
-} from "@/features/listings/components/PropertyCard";
-import type { PropertySummary } from "@/types";
+} from "@/features/listings/components/property-card";
+import type { IPropertySummary } from "@/types";
 import { useTranslation } from "react-i18next";
 import { toPersianNumber } from "@/lib/utils";
 
 const PREVIEW_COUNT = 3;
 
-interface DashboardSavedPropertiesProps {
-  properties: PropertySummary[];
+interface IDashboardSavedPropertiesProps {
+  properties: IPropertySummary[];
   isLoading: boolean;
 }
 
@@ -48,7 +48,7 @@ function SavedPropertiesEmpty() {
 export function DashboardSavedProperties({
   properties,
   isLoading,
-}: DashboardSavedPropertiesProps) {
+}: IDashboardSavedPropertiesProps) {
   const { t, i18n } = useTranslation();
   const preview = properties.slice(0, PREVIEW_COUNT);
 

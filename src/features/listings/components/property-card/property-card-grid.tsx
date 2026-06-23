@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo, memo } from "react";
-import NextLink from "next/link";
 import NextImage from "next/image";
 import {
   Card,
@@ -25,9 +24,17 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { formatPrice, formatArea, timeAgo, toPersianNumber } from "@/lib/utils";
+import { formatArea } from "@/lib/utils";
+import {
+  formatTomanPrice,
+  formatRelativeTime,
+  toPersianDigits,
+} from "@/lib/localize";
 import { TYPE_LABEL_KEYS, CARD_IMAGE_SIZES } from "./property-card.constants";
 import type { PropertyCardProps } from "./property-card.types";
+import type { Language } from "@/types";
+import { useLocalize } from "@/hooks/use-localize";
+import { useRouter } from "next/navigation";
 
 const GRID_ANIMATION = {
   initial: { opacity: 0, y: 20 },
@@ -46,7 +53,6 @@ function getTransition(index: number) {
 export const PropertyCardGrid = memo(function PropertyCardGrid({
   property,
   index = 0,
-  onSelect,
   isFavorited,
   onFavorite,
 }: PropertyCardProps & {
@@ -54,17 +60,18 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
   onFavorite: (e: React.MouseEvent) => void;
 }) {
   const theme = useTheme();
+  const router = useRouter();
   const { t, i18n } = useTranslation();
+  const localize = useLocalize();
   const [imgLoaded, setImgLoaded] = useState(false);
 
   const isRTL = i18n.dir() === "rtl";
+  const lang = i18n.language as Language;
 
-  const formattedPrice = useMemo(() => {
-    const formatted = new Intl.NumberFormat(isRTL ? "fa-IR" : "en-US").format(
-      property.price,
-    );
-    return isRTL ? `${formatted} تومان` : `${formatted} T`;
-  }, [property.price, isRTL]);
+  const formattedPrice = useMemo(
+    () => formatTomanPrice(property.price, lang),
+    [property.price, lang],
+  );
 
   const formattedArea = useMemo(
     () => formatArea(property.area),
@@ -76,31 +83,13 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
     [property.type, t],
   );
 
-  const createdAgo = useMemo(() => {
-    if (isRTL) {
-      const diffMs =
-        new Date().getTime() - new Date(property.createdAt).getTime();
-      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const createdAgo = useMemo(
+    () => formatRelativeTime(property.createdAt, lang),
+    [property.createdAt, lang],
+  );
 
-      if (diffDays <= 0) return "امروز";
-
-      if (diffDays < 7) {
-        return toPersianNumber(`${diffDays} روز پیش`);
-      }
-
-      if (diffDays < 30) {
-        const diffWeeks = Math.floor(diffDays / 7);
-        return toPersianNumber(`${diffWeeks} هفته پیش`);
-      }
-
-      const diffMonths = Math.floor(diffDays / 30);
-      return toPersianNumber(`${diffMonths} ماه پیش`);
-    }
-
-    return timeAgo(property.createdAt);
-  }, [property.createdAt, isRTL]);
-
-  const imageAlt = property.primaryImage.alt || property.title;
+  const localizedTitle = localize(property.title);
+  const imageAlt = property.primaryImage.alt || localizedTitle;
   const transition = useMemo(() => getTransition(index), [index]);
 
   const forSaleLabel = t("property.forSale");
@@ -112,15 +101,18 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
   return (
     <motion.article {...GRID_ANIMATION} transition={transition}>
       <Card
-        component={NextLink}
-        href={`/property/${property.slug}`}
-        onClick={() => onSelect?.(property.id)}
-        aria-label={`${typeLabel} – ${property.title}`}
+        onClick={() => router.push(`/property/${property.slug}`)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") router.push(`/property/${property.slug}`);
+        }}
         sx={{
           textDecoration: "none",
           color: "inherit",
           display: "block",
           height: "100%",
+          cursor: "pointer",
           "&:focus-visible": {
             outline: `2px solid ${theme.palette.primary.main}`,
             outlineOffset: 2,
@@ -233,7 +225,7 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
                     transform: "scale(1.1)",
                   },
                   "&:focus-visible": {
-                    outline: `2px solid #fff`,
+                    outline: "2px solid #fff",
                     outlineOffset: 2,
                   },
                   transition: "all 0.2s",
@@ -253,8 +245,8 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
             sx={{
               position: "absolute",
               bottom: 12,
-              left: isRTL ? "undefined" : 12,
-              right: isRTL ? 12 : "undefined",
+              left: isRTL ? undefined : 12,
+              right: isRTL ? 12 : undefined,
             }}
           >
             <Typography
@@ -267,7 +259,7 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
                 direction: isRTL ? "rtl" : "ltr",
               }}
             >
-              {isRTL ? toPersianNumber(formattedPrice) : formattedPrice}
+              {formattedPrice}
               {property.listingType === "rent" && (
                 <Typography
                   component="span"
@@ -307,7 +299,7 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
               WebkitBoxOrient: "vertical",
             }}
           >
-            {property.title}
+            {localizedTitle}
           </Typography>
 
           <Box
@@ -318,7 +310,8 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
               aria-hidden="true"
             />
             <Typography variant="caption" color="text.secondary" noWrap>
-              {property.location.district}, {property.location.city}
+              {localize(property.location.district)},{" "}
+              {localize(property.location.city)}
             </Typography>
           </Box>
 
@@ -348,7 +341,7 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
                   aria-label={`${property.bedrooms} ${t("property.bedrooms")}`}
                 >
                   {isRTL
-                    ? toPersianNumber(property.bedrooms)
+                    ? toPersianDigits(property.bedrooms)
                     : property.bedrooms}
                 </Typography>
               </Box>
@@ -367,7 +360,7 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
                   aria-label={`${property.bathrooms} ${t("property.bathrooms")}`}
                 >
                   {isRTL
-                    ? toPersianNumber(property.bathrooms)
+                    ? toPersianDigits(property.bathrooms)
                     : property.bathrooms}
                 </Typography>
               </Box>
@@ -384,7 +377,7 @@ export const PropertyCardGrid = memo(function PropertyCardGrid({
                 fontWeight={600}
                 aria-label={`${t("property.area")} ${formattedArea}`}
               >
-                {isRTL ? toPersianNumber(formattedArea) : formattedArea}
+                {isRTL ? toPersianDigits(formattedArea) : formattedArea}
               </Typography>
             </Box>
             <Typography

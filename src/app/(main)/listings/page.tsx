@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Typography, Box } from "@mui/material";
+import { Container } from "@mui/material";
 import type { Metadata } from "next";
 import { ListingsClient } from "@/features/listings/components/listings-page";
 

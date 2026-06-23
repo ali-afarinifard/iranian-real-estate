@@ -18,20 +18,19 @@ import {
   SquareFootRounded,
   LocationOnRounded,
   ArrowForwardRounded,
-  FavoriteRounded,
-  FavoriteBorderRounded,
   PhoneRounded,
 } from "@mui/icons-material";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { useAppDispatch, useAppSelector, selectIsFavorited } from "@/store";
-import { favoritesActions, uiActions } from "@/store/slices";
-import { formatPrice, toPersianNumber } from "@/lib/utils";
-import type { MapProperty } from "@/store/api/propertiesApi";
+import { formatTomanPrice } from "@/lib/localize";
+import { toPersianNumber } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { useLocalize } from "@/hooks/use-localize";
+import { IMapProperty } from "@/types";
+import type { Language } from "@/types";
 
-interface MapPropertyPanelProps {
-  property: MapProperty;
+interface IMapPropertyPanelProps {
+  property: IMapProperty;
   onClose: () => void;
   mobile?: boolean;
 }
@@ -40,25 +39,14 @@ export function MapPropertyPanel({
   property,
   onClose,
   mobile = false,
-}: MapPropertyPanelProps) {
+}: IMapPropertyPanelProps) {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
-  const isFav = useAppSelector(selectIsFavorited(property.id));
   const { t, i18n } = useTranslation();
+  const localize = useLocalize();
 
   const isSale = property.listingType === "sale";
   const isRTL = i18n.dir() === "rtl";
-
-  const handleFav = () => {
-    dispatch(favoritesActions.toggleFavorite(property.id));
-    dispatch(
-      uiActions.addNotification({
-        type: isFav ? "info" : "success",
-        title: isFav ? "Removed from saved" : "Saved to favorites",
-        duration: 2500,
-      }),
-    );
-  };
+  const lang = i18n.language as Language;
 
   return (
     <Box
@@ -96,25 +84,8 @@ export function MapPropertyPanel({
             position: "absolute",
             top: 12,
             right: 12,
-            display: "flex",
-            gap: 1,
           }}
         >
-          <IconButton
-            size="small"
-            onClick={handleFav}
-            sx={{
-              bgcolor: alpha("#000", 0.4),
-              color: isFav ? "#EF4444" : "#fff",
-              "&:hover": { bgcolor: alpha("#000", 0.6) },
-            }}
-          >
-            {isFav ? (
-              <FavoriteRounded fontSize="small" />
-            ) : (
-              <FavoriteBorderRounded fontSize="small" />
-            )}
-          </IconButton>
           <IconButton
             size="small"
             onClick={onClose}
@@ -130,7 +101,7 @@ export function MapPropertyPanel({
 
         {/* Badges + price */}
         <Box sx={{ position: "absolute", bottom: 16, left: 16 }}>
-          <Stack direction="row" spacing={0.75} sx={{ mb: 1 }}>
+          <Stack direction="row" gap={0.75} sx={{ mb: 1 }}>
             <Chip
               label={isSale ? t("dashboard.forSale") : t("dashboard.forRent")}
               size="small"
@@ -141,7 +112,7 @@ export function MapPropertyPanel({
               }}
             />
             <Chip
-              label={t(property.type)}
+              label={t(`property.type.${property.type}`)}
               size="small"
               sx={{
                 bgcolor: alpha("#fff", 0.2),
@@ -156,14 +127,14 @@ export function MapPropertyPanel({
             fontWeight={900}
             sx={{ color: "#fff", lineHeight: 1.1, textAlign: "left" }}
           >
-            {formatPrice(property.price, property.currency as "EUR")}
+            {formatTomanPrice(property.price, lang)}
             {!isSale && (
               <Typography
                 component="span"
                 variant="body2"
                 sx={{ color: "rgba(255,255,255,0.75)", ml: 0.75 }}
               >
-                /month
+                {isRTL ? "/ماه" : "/month"}
               </Typography>
             )}
           </Typography>
@@ -177,7 +148,7 @@ export function MapPropertyPanel({
           fontWeight={800}
           sx={{ mb: 0.5, lineHeight: 1.3 }}
         >
-          {property.title}
+          {localize(property.title)}
         </Typography>
 
         {/* Stats row */}
@@ -274,7 +245,7 @@ export function MapPropertyPanel({
               fontWeight={800}
               sx={{ textTransform: "capitalize" }}
             >
-              {property.type}
+              {t(`property.type.${property.type}`)}
             </Typography>
           </Box>
         </Stack>

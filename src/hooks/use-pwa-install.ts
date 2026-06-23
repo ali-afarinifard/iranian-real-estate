@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-interface BeforeInstallPromptEvent extends Event {
+interface IBeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
     outcome: "accepted" | "dismissed";
@@ -13,7 +13,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export function usePWAInstall() {
   const [installPrompt, setInstallPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+    useState<IBeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isInstallable, setIsInstallable] = useState(false);
 
@@ -25,7 +25,7 @@ export function usePWAInstall() {
 
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
-      setInstallPrompt(e as BeforeInstallPromptEvent);
+      setInstallPrompt(e as IBeforeInstallPromptEvent);
       setIsInstallable(true);
     };
 

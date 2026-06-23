@@ -1,13 +1,14 @@
-import type { PropertySummary } from "@/types";
+import type { IPropertySummary } from "@/types";
 
-export interface PropertyCardProps {
-  property: PropertySummary;
+export interface IPropertyCardProps {
+  property: IPropertySummary;
   viewMode?: "grid" | "list";
   index?: number;
   onSelect?: (id: string) => void;
+  isFavorited?: boolean;
 }
 
-export interface PropertyCardImageProps {
+export interface IPropertyCardImageProps {
   src: string;
   alt: string;
   isNew: boolean;

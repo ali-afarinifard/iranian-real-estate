@@ -2,13 +2,13 @@
 
 import React from "react";
 import { Alert, Box, Button, Container, Divider, Grid } from "@mui/material";
-import { ArrowBackRounded, ArrowForwardRounded, UsbRounded } from "@mui/icons-material";
+import { ArrowBackRounded, ArrowForwardRounded } from "@mui/icons-material";
 import NextLink from "next/link";
 import {
   useGetPropertyBySlugQuery,
   useGetSimilarPropertiesQuery,
 } from "@/store/api/propertiesApi";
-import { usePropertySSE } from "@/hooks/usePropertySSE";
+import { usePropertySSE } from "@/hooks/use-property-see";
 import { PropertyDetailSkeleton } from "./property-detail-skeleton";
 import { PropertyGallery } from "./property-gallery";
 import { PropertyInfo } from "./property-info";
@@ -18,11 +18,11 @@ import { PropertySimilar } from "./property-similar";
 import { PropertyAgentCard } from "./property-agent-card";
 import { useTranslation } from "react-i18next";
 
-interface PropertyClientProps {
+interface IPropertyClientProps {
   slug: string;
 }
 
-export function PropertyClient({ slug }: PropertyClientProps) {
+export function PropertyClient({ slug }: IPropertyClientProps) {
   const {
     data: property,
     isLoading,

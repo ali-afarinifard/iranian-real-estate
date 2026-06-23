@@ -1,82 +1,94 @@
-import { PropertyType, ListingType } from '@/types';
+import { PropertyType, ListingType } from "@/types";
 
 export const CITIES = [
-  { value: 'amsterdam', label: 'Amsterdam', lat: 52.3676, lng: 4.9041 },
-  { value: 'rotterdam', label: 'Rotterdam', lat: 51.9225, lng: 4.4792 },
-  { value: 'the-hague', label: 'The Hague', lat: 52.0705, lng: 4.3007 },
-  { value: 'utrecht', label: 'Utrecht', lat: 52.0907, lng: 5.1214 },
-  { value: 'eindhoven', label: 'Eindhoven', lat: 51.4416, lng: 5.4697 },
+  { value: "amsterdam", label: "Amsterdam", lat: 52.3676, lng: 4.9041 },
+  { value: "rotterdam", label: "Rotterdam", lat: 51.9225, lng: 4.4792 },
+  { value: "the-hague", label: "The Hague", lat: 52.0705, lng: 4.3007 },
+  { value: "utrecht", label: "Utrecht", lat: 52.0907, lng: 5.1214 },
+  { value: "eindhoven", label: "Eindhoven", lat: 51.4416, lng: 5.4697 },
 ];
 
-export const PROPERTY_TYPES: { value: PropertyType; label: string; icon: string }[] = [
-  { value: 'apartment', label: 'property.type.apartment', icon: 'ApartmentRounded' },
-  { value: 'villa', label: 'property.type.villa', icon: 'HouseRounded' },
-  { value: 'office', label: 'property.type.office', icon: 'BusinessRounded' },
-  { value: 'land', label: 'property.type.land', icon: 'LandscapeRounded' },
-  { value: 'penthouse', label: 'property.type.penthouse', icon: 'DomainRounded' },
+export const PROPERTY_TYPES: {
+  value: PropertyType;
+  label: string;
+  icon: string;
+}[] = [
+  {
+    value: "apartment",
+    label: "property.type.apartment",
+    icon: "ApartmentRounded",
+  },
+  { value: "villa", label: "property.type.villa", icon: "HouseRounded" },
+  { value: "office", label: "property.type.office", icon: "BusinessRounded" },
+  { value: "land", label: "property.type.land", icon: "LandscapeRounded" },
+  {
+    value: "penthouse",
+    label: "property.type.penthouse",
+    icon: "DomainRounded",
+  },
 ];
 
 export const LISTING_TYPES: { value: ListingType; label: string }[] = [
-  { value: 'sale', label: 'common.filterTypeSale' },
-  { value: 'rent', label: 'common.filterTypeRent' },
+  { value: "sale", label: "common.filterTypeSale" },
+  { value: "rent", label: "common.filterTypeRent" },
 ];
 
 export const PROPERTY_FEATURES = [
-  'property.features.swimmingPool',
-  'property.features.parking',
-  'property.features.garden',
-  'property.features.balcony',
-  'property.features.elevator',
-  'property.features.airConditioning',
-  'property.features.centralHeating',
-  'property.features.storage',
-  'property.features.gym',
-  'property.features.securitySystem',
-  'property.features.smartHome',
-  'property.features.furnished',
-  'property.features.petFriendly',
-  'property.features.fireplace',
-  'property.features.rooftopAccess',
-  'property.features.concierge',
-  'property.features.eVCharging',
-  'property.features.solarPanels',
+  "property.features.swimmingPool",
+  "property.features.parking",
+  "property.features.garden",
+  "property.features.balcony",
+  "property.features.elevator",
+  "property.features.airConditioning",
+  "property.features.centralHeating",
+  "property.features.storage",
+  "property.features.gym",
+  "property.features.securitySystem",
+  "property.features.smartHome",
+  "property.features.furnished",
+  "property.features.petFriendly",
+  "property.features.fireplace",
+  "property.features.rooftopAccess",
+  "property.features.concierge",
+  "property.features.eVCharging",
+  "property.features.solarPanels",
 ];
 
 export const SORT_OPTIONS = [
-  { value: 'newest', label: 'sortOptions.newestFirst' },
-  { value: 'price_asc', label: 'sortOptions.priceLowToHigh' },
-  { value: 'price_desc', label: 'sortOptions.priceHighToLow' },
-  { value: 'area_asc', label: 'sortOptions.sizeSmallToLarge' },
-  { value: 'area_desc', label: 'sortOptions.sizeLargeToSmall' },
-  { value: 'popular', label: 'sortOptions.mostPopular' },
+  { value: "newest", label: "sortOptions.newestFirst" },
+  { value: "price_asc", label: "sortOptions.priceLowToHigh" },
+  { value: "price_desc", label: "sortOptions.priceHighToLow" },
+  { value: "area_asc", label: "sortOptions.sizeSmallToLarge" },
+  { value: "area_desc", label: "sortOptions.sizeLargeToSmall" },
+  { value: "popular", label: "sortOptions.mostPopular" },
 ];
 
 export const PRICE_RANGES = {
   sale: [
-    { min: 0, max: 250000, label: 'Under €250K' },
-    { min: 250000, max: 500000, label: '€250K - €500K' },
-    { min: 500000, max: 1000000, label: '€500K - €1M' },
-    { min: 1000000, max: 2000000, label: '€1M - €2M' },
-    { min: 2000000, max: undefined, label: 'Over €2M' },
+    { min: 0, max: 250000, label: "Under €250K" },
+    { min: 250000, max: 500000, label: "€250K - €500K" },
+    { min: 500000, max: 1000000, label: "€500K - €1M" },
+    { min: 1000000, max: 2000000, label: "€1M - €2M" },
+    { min: 2000000, max: undefined, label: "Over €2M" },
   ],
   rent: [
-    { min: 0, max: 1000, label: 'Under €1,000/mo' },
-    { min: 1000, max: 2000, label: '€1,000 - €2,000' },
-    { min: 2000, max: 4000, label: '€2,000 - €4,000' },
-    { min: 4000, max: undefined, label: 'Over €4,000' },
+    { min: 0, max: 1000, label: "Under €1,000/mo" },
+    { min: 1000, max: 2000, label: "€1,000 - €2,000" },
+    { min: 2000, max: 4000, label: "€2,000 - €4,000" },
+    { min: 4000, max: undefined, label: "Over €4,000" },
   ],
 };
 
 export const PER_PAGE = 12;
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '/api';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
 export const MSW_DELAY = 600; // ms — simulates realistic network latency
 
 export const MAP_CONFIG = {
-  defaultCenter: [52.3676, 4.9041] as [number, number], // Amsterdam
-  defaultZoom: 12,
+  defaultCenter: [35.6892, 51.389] as [number, number], // Tehran
+  defaultZoom: 11,
   maxZoom: 18,
-  tileLayer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  attribution: '© OpenStreetMap contributors',
+  tileLayer: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  attribution: "© OpenStreetMap contributors",
 };

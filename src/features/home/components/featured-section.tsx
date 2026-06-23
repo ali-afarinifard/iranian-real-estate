@@ -5,7 +5,7 @@ import { ArrowForwardRounded } from "@mui/icons-material";
 import NextLink from "next/link";
 import { FeaturedSectionClient } from "./featured-section.client";
 import { useTranslation } from "react-i18next";
-import { PropertyCardSkeleton } from "@/features/listings/components/PropertyCard";
+import { PropertyCardSkeleton } from "@/features/listings/components/property-card";
 
 function FeaturedSkeleton() {
   return (

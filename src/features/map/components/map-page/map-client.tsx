@@ -11,15 +11,15 @@ import {
 } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useGetMapPropertiesQuery } from "@/store/api/propertiesApi";
-import { MapPropertyPanel } from "@/features/map/components/MapPropertyPanel";
+import { MapPropertyPanel } from "@/features/map/components/map-property-panel";
 import { MapLoadingOverlay } from "./map-loading-overlay";
 import { MapErrorOverlay } from "./map-error-overlay";
 import { MapLegend } from "./map-legend";
 import { MapHoverCard } from "./map-hover-card";
-import type { MapProperty } from "@/store/api/propertiesApi";
+import { MapProperty } from "@/types";
 
 const LeafletMap = dynamic(
-  () => import("@/features/map/components/LeafletMap"),
+  () => import("@/features/map/components/leaflet-map/leaflet-map"),
   {
     ssr: false,
     loading: () => (

@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { Box, Typography, alpha } from "@mui/material";
 import NextImage from "next/image";
 import { motion } from "framer-motion";
-import type { PropertyImage } from "@/types";
+import type { IPropertyImage } from "@/types";
 
-interface PropertyGalleryProps {
-  images: PropertyImage[];
+interface IPropertyGalleryProps {
+  images: IPropertyImage[];
 }
 
-export function PropertyGallery({ images }: PropertyGalleryProps) {
+export function PropertyGallery({ images }: IPropertyGalleryProps) {
   const [activeImage, setActiveImage] = useState(0);
 
   return (

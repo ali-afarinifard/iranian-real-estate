@@ -3,7 +3,7 @@
 import React, { memo } from "react";
 import { Grid } from "@mui/material";
 import { useGetFeaturedPropertiesQuery } from "@/store/api/propertiesApi";
-import { PropertyCard, PropertyCardSkeleton } from "@/features/listings/components/PropertyCard";
+import { PropertyCard, PropertyCardSkeleton } from "@/features/listings/components/property-card";
 
 const MAX_FEATURED = 6;
 

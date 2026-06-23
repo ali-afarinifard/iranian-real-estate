@@ -2,17 +2,20 @@
 import React from "react";
 import { Avatar, Box, Button, Paper, Stack, Typography } from "@mui/material";
 import { EmailRounded, PhoneRounded } from "@mui/icons-material";
-import type { PropertyAgent } from "@/types";
+import type { IPropertyAgent } from "@/types";
 import { useTranslation } from "react-i18next";
-import { toPersianNumber } from "@/lib/utils";
+import { toPersianDigits } from "@/lib/localize";
+import { useLocalize } from "@/hooks/use-localize";
 
-interface PropertyAgentCardProps {
-  agent: PropertyAgent;
+interface IPropertyAgentCardProps {
+  agent: IPropertyAgent;
 }
 
-export function PropertyAgentCard({ agent }: PropertyAgentCardProps) {
+export function PropertyAgentCard({ agent }: IPropertyAgentCardProps) {
   const { t, i18n } = useTranslation();
+  const localize = useLocalize();
   const isRTL = i18n.dir() === "rtl";
+
   return (
     <Paper elevation={2} sx={{ p: 3, borderRadius: 3 }}>
       <Typography
@@ -21,9 +24,7 @@ export function PropertyAgentCard({ agent }: PropertyAgentCardProps) {
         fontWeight={700}
         gutterBottom
         display="block"
-        sx={{
-          fontSize: "13px",
-        }}
+        sx={{ fontSize: "13px" }}
       >
         {t("property.listedBy")}
       </Typography>
@@ -31,19 +32,20 @@ export function PropertyAgentCard({ agent }: PropertyAgentCardProps) {
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2.5 }}>
         <Avatar src={agent.avatar} sx={{ width: 52, height: 52 }} />
         <Box>
-          <Typography fontWeight={700}>{agent.name}</Typography>
+          {/* LocalizedString — picks fa or en based on active language */}
+          <Typography fontWeight={700}>{localize(agent.name)}</Typography>
           <Typography variant="caption" color="text.secondary">
-            {agent.agency}
+            {localize(agent.agency)}
           </Typography>
           <Box
             sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.25 }}
           >
             <Typography variant="caption" color="warning.main" fontWeight={700}>
-              ★ {isRTL ? toPersianNumber(agent.rating) : agent.rating}
+              ★ {isRTL ? toPersianDigits(String(agent.rating)) : agent.rating}
             </Typography>
             <Typography variant="caption" color="text.secondary">
               {isRTL
-                ? `· ${toPersianNumber(agent.totalListings)} ${t("common.agentListings")}`
+                ? `· ${toPersianDigits(String(agent.totalListings))} ${t("common.agentListings")}`
                 : `· ${agent.totalListings} ${t("common.agentListings")}`}
             </Typography>
           </Box>
@@ -56,7 +58,7 @@ export function PropertyAgentCard({ agent }: PropertyAgentCardProps) {
           fullWidth
           startIcon={<PhoneRounded />}
           size="small"
-          dir="ltr"
+          dir="ltr" // Phone numbers always LTR
         >
           {agent.phone}
         </Button>

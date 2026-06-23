@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import { PropertyCard } from "@/features/listings/components/PropertyCard";
-import type { PropertySummary } from "@/types";
+import { PropertyCard } from "@/features/listings/components/property-card";
+import type { IPropertySummary } from "@/types";
 import { useTranslation } from "react-i18next";
 
-interface PropertySimilarProps {
-  properties: PropertySummary[];
+interface IPropertySimilarProps {
+  properties: IPropertySummary[];
 }
 
-export function PropertySimilar({ properties }: PropertySimilarProps) {
+export function PropertySimilar({ properties }: IPropertySimilarProps) {
+  const { t } = useTranslation();
+
   if (!properties.length) return null;
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.dir() === "rtl";
 
   return (
     <Box sx={{ mt: 6 }}>

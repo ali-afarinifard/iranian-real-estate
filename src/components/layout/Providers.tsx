@@ -6,6 +6,7 @@ import { store } from "@/store";
 import { I18nProvider } from "./I18nProvider";
 import { ThemeProvider } from "@/styles/ThemeProvider";
 import { NotificationStack } from "@/components/shared/NotificationStack";
+import { useTranslation } from "react-i18next";
 
 async function initMSW(): Promise<void> {
   if (typeof window === "undefined") return;
@@ -37,7 +38,10 @@ function getMSWPromise() {
 }
 
 function MSWWrapper({ children }: { children: React.ReactNode }) {
+  const { t, i18n } = useTranslation();
   const [ready, setReady] = useState(false);
+
+  const isRTL = i18n.dir() === "rtl";
 
   useEffect(() => {
     getMSWPromise().then(() => setReady(true));
@@ -47,6 +51,7 @@ function MSWWrapper({ children }: { children: React.ReactNode }) {
     // Show a minimal full-page loader while MSW boots
     return (
       <div
+        dir={isRTL ? "rtl" : "ltr"}
         style={{
           minHeight: "100vh",
           display: "flex",
@@ -57,7 +62,7 @@ function MSWWrapper({ children }: { children: React.ReactNode }) {
           color: "#64748B",
         }}
       >
-        Loading…
+        {t("common.loading")}
       </div>
     );
   }

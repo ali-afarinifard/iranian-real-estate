@@ -81,7 +81,7 @@ export const HeroSection = memo(function HeroSection() {
         sx={{ position: "relative", zIndex: 1, py: { xs: 8, md: 12 } }}
       >
         <Grid container spacing={4} alignItems="center">
-          {/* Left: headline + CTA */}
+          {/* headline + CTA */}
           <Grid item xs={12} md={7}>
             <motion.div {...HERO_ANIMATION}>
               <Chip
@@ -231,7 +231,7 @@ export const HeroSection = memo(function HeroSection() {
             </motion.div>
           </Grid>
 
-          {/* Right: stats panel */}
+          {/* stats panel */}
           <Grid item xs={12} md={5}>
             <motion.div {...STATS_ANIMATION}>
               <HeroStats />

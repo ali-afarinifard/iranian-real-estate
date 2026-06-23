@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Providers } from "@/components/layout/Providers";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
+import { AppInitializer } from "@/components/app-initializer";
 
 const vazirmatn = localFont({
   src: "../../public/fonts/Vazirmatn/Vazirmatn-VF.woff2",
@@ -122,7 +123,10 @@ export default function RootLayout({
       </head>
       <body>
         <NextTopLoader color="#1463C7" showSpinner={false} />
-        <Providers>{children}</Providers>
+        <Providers>
+          <AppInitializer />
+          {children}
+        </Providers>
       </body>
     </html>
   );

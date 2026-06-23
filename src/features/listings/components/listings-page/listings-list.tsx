@@ -5,12 +5,12 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import {
   PropertyCard,
   PropertyCardSkeleton,
-} from "@/features/listings/components/PropertyCard";
-import type { PropertySummary } from "@/types";
+} from "@/features/listings/components/property-card";
+import type { IPropertySummary } from "@/types";
 import { useLoadMore } from "@/hooks/use-load-more";
 
-interface ListingsListProps {
-  properties: PropertySummary[];
+interface IListingsListProps {
+  properties: IPropertySummary[];
   isLoading: boolean;
   isFetching: boolean;
   hasMore: boolean;
@@ -23,7 +23,7 @@ export function ListingsList({
   isFetching,
   hasMore,
   onLoadMore,
-}: ListingsListProps) {
+}: IListingsListProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const sentinelRef = useLoadMore({

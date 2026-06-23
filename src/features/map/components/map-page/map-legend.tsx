@@ -5,16 +5,16 @@ import { useTheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import { toPersianNumber } from "@/lib/utils";
 
-interface MapLegendProps {
+interface IMapLegendProps {
   count: number;
 }
 
-interface LegendDotProps {
+interface ILegendDotProps {
   color: string;
   label: string;
 }
 
-function LegendDot({ color, label }: LegendDotProps) {
+function LegendDot({ color, label }: ILegendDotProps) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
       <Box
@@ -27,7 +27,7 @@ function LegendDot({ color, label }: LegendDotProps) {
   );
 }
 
-export function MapLegend({ count }: MapLegendProps) {
+export function MapLegend({ count }: IMapLegendProps) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";

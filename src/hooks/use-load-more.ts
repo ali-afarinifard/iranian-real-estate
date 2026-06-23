@@ -1,13 +1,13 @@
 "use client"
 import { useEffect, useRef } from "react";
 
-interface UseLoadMoreOptions {
+interface IUseLoadMoreOptions {
   onLoadMore: () => void;
   enabled: boolean;
   root?: React.RefObject<HTMLElement>;
 }
 
-export function useLoadMore({ onLoadMore, enabled, root }: UseLoadMoreOptions) {
+export function useLoadMore({ onLoadMore, enabled, root }: IUseLoadMoreOptions) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const enabledRef = useRef(enabled);
   enabledRef.current = enabled;

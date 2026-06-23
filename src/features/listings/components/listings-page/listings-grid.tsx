@@ -4,15 +4,15 @@ import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import {
   PropertyCard,
   PropertyCardSkeleton,
-} from "@/features/listings/components/PropertyCard";
+} from "@/features/listings/components/property-card";
 import { PER_PAGE } from "@/lib/constants";
-import type { PropertySummary } from "@/types";
+import type { IPropertySummary } from "@/types";
 import { useLoadMore } from "@/hooks/use-load-more";
 import { useTranslation } from "react-i18next";
 import { toPersianNumber } from "@/lib/utils";
 
-interface ListingsGridProps {
-  properties: PropertySummary[];
+interface IListingsGridProps {
+  properties: IPropertySummary[];
   isLoading: boolean;
   isFetching: boolean;
   hasMore: boolean;
@@ -27,7 +27,7 @@ export function ListingsGrid({
   hasMore,
   total,
   onLoadMore,
-}: ListingsGridProps) {
+}: IListingsGridProps) {
   const sentinelRef = useLoadMore({
     onLoadMore,
     enabled: hasMore && !isFetching,

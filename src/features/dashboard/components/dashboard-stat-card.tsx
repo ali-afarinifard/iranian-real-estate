@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Paper, Typography, alpha } from "@mui/material";
 import { motion } from "framer-motion";
 
-export interface StatCardProps {
+export interface IStatCardProps {
   icon: React.ReactNode;
   label: string;
   value: string | number;
@@ -16,7 +16,7 @@ export function DashboardStatCard({
   value,
   sub,
   color,
-}: StatCardProps) {
+}: IStatCardProps) {
   return (
     <Paper
       elevation={2}

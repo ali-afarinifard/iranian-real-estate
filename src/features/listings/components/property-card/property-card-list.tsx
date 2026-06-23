@@ -25,9 +25,12 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { formatPrice, formatArea } from "@/lib/utils";
+import { formatArea } from "@/lib/utils";
+import { formatTomanPrice, toPersianDigits } from "@/lib/localize";
 import { TYPE_LABEL_KEYS, CARD_IMAGE_SIZES } from "./property-card.constants";
 import type { PropertyCardProps } from "./property-card.types";
+import type { Language } from "@/types";
+import { useLocalize } from "@/hooks/use-localize";
 
 function getTransition(index: number) {
   return { delay: index * 0.04, duration: 0.3 };
@@ -44,24 +47,30 @@ export const PropertyCardList = memo(function PropertyCardList({
   onFavorite: (e: React.MouseEvent) => void;
 }) {
   const theme = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const localize = useLocalize();
   const [imgLoaded, setImgLoaded] = useState(false);
 
+  const isRTL = i18n.dir() === "rtl";
+  const lang = i18n.language as Language;
+
   const formattedPrice = useMemo(
-    () => formatPrice(property.price, property.currency),
-    [property.price, property.currency],
+    () => formatTomanPrice(property.price, lang),
+    [property.price, lang],
   );
+
   const formattedArea = useMemo(
     () => formatArea(property.area),
     [property.area],
   );
+
   const typeLabel = useMemo(
     () => String(t(TYPE_LABEL_KEYS[property.type] ?? "", property.type)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [property.type, t],
   );
 
-  const imageAlt = property.primaryImage.alt || property.title;
+  const localizedTitle = localize(property.title);
+  const imageAlt = property.primaryImage.alt || localizedTitle;
   const transition = useMemo(() => getTransition(index), [index]);
 
   const forSaleLabel = t("property.forSale");
@@ -81,7 +90,7 @@ export const PropertyCardList = memo(function PropertyCardList({
         component={NextLink}
         href={`/property/${property.slug}`}
         onClick={() => onSelect?.(property.id)}
-        aria-label={`${typeLabel} – ${property.title}`}
+        aria-label={`${typeLabel} – ${localizedTitle}`}
         sx={{
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
@@ -151,7 +160,7 @@ export const PropertyCardList = memo(function PropertyCardList({
             />
             {property.isNew && (
               <Chip
-                label="New"
+                label={t("property.new")}
                 size="small"
                 color="success"
                 sx={{ fontWeight: 700, fontSize: "0.7rem" }}
@@ -186,30 +195,32 @@ export const PropertyCardList = memo(function PropertyCardList({
               >
                 {typeLabel}
               </Typography>
-              {/* SEO: h3 for the listing title */}
               <Typography
                 variant="h6"
                 fontWeight={700}
                 component="h3"
                 sx={{ lineHeight: 1.3, mt: 0.25 }}
               >
-                {property.title}
+                {localizedTitle}
               </Typography>
             </Box>
-            <Tooltip title={favoriteAriaLabel}>
-              <IconButton
-                size="small"
-                onClick={onFavorite}
-                aria-label={favoriteAriaLabel}
-                sx={{ ml: 1 }}
-              >
-                {isFavorited ? (
-                  <FavoriteRounded color="error" fontSize="small" />
-                ) : (
-                  <FavoriteBorderRounded fontSize="small" />
-                )}
-              </IconButton>
-            </Tooltip>
+            <Box onClick={(e) => e.preventDefault()}>
+              {" "}
+              <Tooltip title={favoriteAriaLabel}>
+                <IconButton
+                  size="small"
+                  onClick={onFavorite}
+                  aria-label={favoriteAriaLabel}
+                  sx={{ ml: 1 }}
+                >
+                  {isFavorited ? (
+                    <FavoriteRounded color="error" fontSize="small" />
+                  ) : (
+                    <FavoriteBorderRounded fontSize="small" />
+                  )}
+                </IconButton>
+              </Tooltip>
+            </Box>
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
@@ -218,14 +229,15 @@ export const PropertyCardList = memo(function PropertyCardList({
               aria-hidden="true"
             />
             <Typography variant="caption" color="text.secondary">
-              {property.location.district}, {property.location.city}
+              {localize(property.location.district)},{" "}
+              {localize(property.location.city)}
             </Typography>
           </Box>
 
           <Stack
             component="dl"
             direction="row"
-            spacing={2}
+            gap={2}
             sx={{ mt: "auto", m: 0 }}
           >
             {property.bedrooms > 0 && (
@@ -240,7 +252,10 @@ export const PropertyCardList = memo(function PropertyCardList({
                   color="text.secondary"
                   aria-label={`${property.bedrooms} ${t("property.bedrooms")}`}
                 >
-                  {property.bedrooms} {t("property.bedrooms")}
+                  {isRTL
+                    ? toPersianDigits(property.bedrooms)
+                    : property.bedrooms}{" "}
+                  {t("property.bedrooms")}
                 </Typography>
               </Box>
             )}
@@ -256,7 +271,10 @@ export const PropertyCardList = memo(function PropertyCardList({
                   color="text.secondary"
                   aria-label={`${property.bathrooms} ${t("property.bathrooms")}`}
                 >
-                  {property.bathrooms} {t("property.bathrooms")}
+                  {isRTL
+                    ? toPersianDigits(property.bathrooms)
+                    : property.bathrooms}{" "}
+                  {t("property.bathrooms")}
                 </Typography>
               </Box>
             )}
@@ -270,7 +288,7 @@ export const PropertyCardList = memo(function PropertyCardList({
                 variant="caption"
                 color="text.secondary"
               >
-                {formattedArea}
+                {isRTL ? toPersianDigits(formattedArea) : formattedArea}
               </Typography>
             </Box>
             <Box sx={{ ml: "auto" }}>
@@ -288,7 +306,7 @@ export const PropertyCardList = memo(function PropertyCardList({
                     variant="caption"
                     color="text.secondary"
                   >
-                    /mo
+                    {isRTL ? " / ماهانه" : " /mo"}
                   </Typography>
                 )}
               </Typography>

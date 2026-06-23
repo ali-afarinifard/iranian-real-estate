@@ -1,17 +1,18 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import { Box, Chip, Typography } from "@mui/material";
 import { CheckCircleRounded } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
-interface PropertyFeaturesProps {
+interface IPropertyFeaturesProps {
   features: string[];
 }
 
-export function PropertyFeatures({ features }: PropertyFeaturesProps) {
-  if (!features.length) return null;
+export function PropertyFeatures({ features }: IPropertyFeaturesProps) {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
+  
+  if (!features.length) return null;
 
   return (
     <Box sx={{ mb: 3 }}>

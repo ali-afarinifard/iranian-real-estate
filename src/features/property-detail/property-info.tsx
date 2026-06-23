@@ -11,12 +11,15 @@ import {
   VisibilityRounded,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { formatArea, timeAgo, toPersianNumber } from "@/lib/utils";
-import type { Property } from "@/types";
+import { formatArea, toPersianNumber } from "@/lib/utils";
+import { formatRelativeTime, toPersianDigits } from "@/lib/localize";
+import type { IProperty } from "@/types";
 import { useTranslation } from "react-i18next";
+import type { Language } from "@/types";
+import { useLocalize } from "@/hooks/use-localize";
 
-interface PropertyInfoProps {
-  property: Property;
+interface IPropertyInfoProps {
+  property: IProperty;
 }
 
 const STATUS_COLORS = {
@@ -26,9 +29,11 @@ const STATUS_COLORS = {
   rented: "error",
 } as const;
 
-export function PropertyInfo({ property }: PropertyInfoProps) {
+export function PropertyInfo({ property }: IPropertyInfoProps) {
   const { t, i18n } = useTranslation();
+  const localize = useLocalize();
   const isRTL = i18n.dir() === "rtl";
+  const lang = i18n.language as Language;
 
   return (
     <motion.div
@@ -48,9 +53,9 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
           sx={{ fontWeight: 700 }}
         />
         <Chip
-          label={property.status}
+          label={t(`property.status.${property.status}`)}
           color={STATUS_COLORS[property.status] ?? "default"}
-          sx={{ fontWeight: 700, textTransform: "capitalize" }}
+          sx={{ fontWeight: 700 }}
         />
         {property.isNew && (
           <Chip
@@ -64,21 +69,28 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
       {/* Title + location */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="overline" color="primary.main" fontWeight={700}>
-          {property.type} · {property.location.district}
+          {t(`property.type.${property.type}`)} ·{" "}
+          {localize(property.location.district)}
         </Typography>
         <Typography
           variant="h4"
           fontWeight={800}
           sx={{ mt: 0.5, mb: 1.5, lineHeight: 1.2 }}
         >
-          {property.title}
+          {localize(property.title)}
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
           <LocationOnRounded sx={{ fontSize: 18, color: "text.secondary" }} />
           <Typography variant="body2" color="text.secondary">
-            {property.location.address}, {property.location.district},{" "}
-            {property.location.city}
-            {property.location.zipCode && ` · ${property.location.zipCode}`}
+            {localize(property.location.address)},{" "}
+            {localize(property.location.district)},{" "}
+            {localize(property.location.city)}
+            {property.location.zipCode &&
+              ` · ${
+                isRTL
+                  ? toPersianDigits(property.location.zipCode)
+                  : property.location.zipCode
+              }`}
           </Typography>
         </Box>
       </Box>
@@ -90,7 +102,7 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
             icon={<BedRounded color="primary" />}
             label={t("property.bedrooms")}
             value={
-              isRTL ? toPersianNumber(property.bedrooms) : property.bedrooms
+              isRTL ? toPersianDigits(property.bedrooms) : property.bedrooms
             }
           />
         )}
@@ -99,7 +111,7 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
             icon={<BathtubRounded color="primary" />}
             label={t("property.bathrooms")}
             value={
-              isRTL ? toPersianNumber(property.bathrooms) : property.bathrooms
+              isRTL ? toPersianDigits(property.bathrooms) : property.bathrooms
             }
           />
         )}
@@ -108,7 +120,7 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
           label={t("property.area")}
           value={
             isRTL
-              ? toPersianNumber(formatArea(property.area))
+              ? toPersianDigits(formatArea(property.area))
               : formatArea(property.area)
           }
         />
@@ -118,7 +130,7 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
             label={t("property.parking")}
             value={
               isRTL
-                ? toPersianNumber(property.parkingSpots)
+                ? toPersianDigits(property.parkingSpots)
                 : property.parkingSpots
             }
           />
@@ -126,14 +138,18 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
         {property.floor !== undefined && (
           <StatItem
             label={t("property.floor")}
-            value={`${isRTL ? toPersianNumber(property.floor) : property.floor} / ${isRTL ? toPersianNumber(property.totalFloors) : property.totalFloors}`}
+            value={
+              isRTL
+                ? `${toPersianDigits(property.floor)} / ${toPersianDigits(property.totalFloors ?? 0)}`
+                : `${property.floor} / ${property.totalFloors}`
+            }
           />
         )}
         {property.yearBuilt && (
           <StatItem
             label={t("property.yearBuilt")}
             value={
-              isRTL ? toPersianNumber(property.yearBuilt) : property.yearBuilt
+              isRTL ? toPersianDigits(property.yearBuilt) : property.yearBuilt
             }
           />
         )}
@@ -151,7 +167,7 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
           color="text.secondary"
           sx={{ lineHeight: 1.8 }}
         >
-          {property.description}
+          {isRTL ? toPersianNumber(localize(property.description)) : localize(property.description)}
         </Typography>
       </Box>
 
@@ -164,13 +180,17 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
             sx={{ fontSize: 16, color: "text.secondary" }}
           />
           <Typography variant="caption" color="text.secondary">
-            Listed {timeAgo(property.createdAt)}
+            {isRTL
+              ? `ثبت شده ${formatRelativeTime(property.createdAt, lang)}`
+              : `Listed ${formatRelativeTime(property.createdAt, lang)}`}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
           <VisibilityRounded sx={{ fontSize: 16, color: "text.secondary" }} />
           <Typography variant="caption" color="text.secondary">
-            {property.viewCount.toLocaleString()} views
+            {isRTL
+              ? `${toPersianDigits(property.viewCount.toLocaleString())} بازدید`
+              : `${property.viewCount.toLocaleString()} views`}
           </Typography>
         </Box>
       </Box>
@@ -178,13 +198,13 @@ export function PropertyInfo({ property }: PropertyInfoProps) {
   );
 }
 
-interface StatItemProps {
+interface IStatItemProps {
   icon?: React.ReactNode;
   label: string;
   value: string | number;
 }
 
-function StatItem({ icon, label, value }: StatItemProps) {
+function StatItem({ icon, label, value }: IStatItemProps) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
       {icon}
