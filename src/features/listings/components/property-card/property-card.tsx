@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector, selectIsFavorited } from "@/store";
 import { favoritesActions, uiActions } from "@/store/slices";
 import { PropertyCardGrid } from "./property-card-grid";
 import { PropertyCardList } from "./property-card-list";
-import type { PropertyCardProps } from "./property-card.types";
+import type { IPropertyCardProps } from "./property-card.types";
 
 export const PropertyCard = memo(function PropertyCard({
   property,
@@ -14,7 +14,7 @@ export const PropertyCard = memo(function PropertyCard({
   index = 0,
   onSelect,
   isFavorited: isFavoritedProp,
-}: PropertyCardProps & { isFavorited?: boolean }) {
+}: IPropertyCardProps & { isFavorited?: boolean }) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const isFavoritedFromStore = useAppSelector(selectIsFavorited(property.id));

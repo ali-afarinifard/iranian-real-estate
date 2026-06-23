@@ -23,7 +23,7 @@
  *    and is converted to Jalali for display only.
  */
 
-import type { LocalizedString, Language } from "@/types";
+import type { ILocalizedString, Language } from "@/types";
 
 const DEFAULT_LANG: Language = "fa";
 
@@ -35,7 +35,7 @@ const DEFAULT_LANG: Language = "fa";
  * Defaults to "fa" when no language is passed (e.g. server-side, no i18n context).
  */
 export function localize(
-  field: LocalizedString,
+  field: ILocalizedString,
   lang: Language = DEFAULT_LANG,
 ): string {
   if (lang === "en" && field.en) return field.en;
@@ -123,7 +123,7 @@ export function toPersianDigits(value: string | number): string {
  * Searches both fa and en values so filters work regardless of UI language.
  */
 export function localizedIncludes(
-  field: LocalizedString,
+  field: ILocalizedString,
   query: string,
 ): boolean {
   const q = query.toLowerCase();

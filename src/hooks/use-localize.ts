@@ -15,13 +15,13 @@
  */
 
 import { useTranslation } from "react-i18next";
-import type { LocalizedString, Language } from "@/types";
+import type { ILocalizedString, Language } from "@/types";
 
 export function useLocalize() {
   const { i18n } = useTranslation();
   const lang = i18n.language as Language;
 
-  return (field: LocalizedString): string => {
+  return (field: ILocalizedString): string => {
     if (lang === "en" && field.en) return field.en;
     return field.fa;
   };

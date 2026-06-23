@@ -11,18 +11,18 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { DashboardStatCard } from "./dashboard-stat-card";
 import { formatPrice, toPersianNumber } from "@/lib/utils";
-import { DashboardStats } from "../dashboard-stat.types";
+import { IDashboardStats } from "../dashboard-stat.types";
 import { useTranslation } from "react-i18next";
 
-interface DashboardStatsGridProps {
-  stats: DashboardStats | undefined;
+interface IDashboardStatsGridProps {
+  stats: IDashboardStats | undefined;
   isLoading: boolean;
 }
 
 export function DashboardStatsGrid({
   stats,
   isLoading,
-}: DashboardStatsGridProps) {
+}: IDashboardStatsGridProps) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
 

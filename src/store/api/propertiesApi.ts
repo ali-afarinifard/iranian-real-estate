@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
-  Property,
-  PropertySummary,
-  MapProperty,
-  PaginatedResponse,
-  GetPropertiesArgs,
+  IProperty,
+  IPropertySummary,
+  IMapProperty,
+  IPaginatedResponse,
+  IGetPropertiesArgs,
 } from "@/types";
 import { API_BASE_URL, PER_PAGE } from "@/lib/constants";
 import { filtersToQueryString } from "@/lib/utils";
@@ -23,8 +23,8 @@ export const propertiesApi = createApi({
   endpoints: (builder) => ({
     // Paginated, filtered list
     getProperties: builder.query<
-      PaginatedResponse<PropertySummary>,
-      GetPropertiesArgs
+      IPaginatedResponse<IPropertySummary>,
+      IGetPropertiesArgs
     >({
       query: ({ filters = {}, page = 1, perPage = PER_PAGE }) => {
         const qs = filtersToQueryString(filters);
@@ -57,13 +57,13 @@ export const propertiesApi = createApi({
     }),
 
     // Featured properties for hero section
-    getFeaturedProperties: builder.query<{ data: PropertySummary[] }, void>({
+    getFeaturedProperties: builder.query<{ data: IPropertySummary[] }, void>({
       query: () => "/properties/featured",
       providesTags: [{ type: "FeaturedProperties", id: "FEATURED" }],
     }),
 
     // Map data — lightweight, only MapProperty fields
-    getMapProperties: builder.query<{ data: MapProperty[] }, { city?: string }>(
+    getMapProperties: builder.query<{ data: IMapProperty[] }, { city?: string }>(
       {
         query: ({ city }) => `/properties/map${city ? `?city=${city}` : ""}`,
         providesTags: [{ type: "MapProperties", id: "MAP" }],
@@ -71,13 +71,13 @@ export const propertiesApi = createApi({
     ),
 
     // Single property by slug or id
-    getPropertyBySlug: builder.query<Property, string>({
+    getPropertyBySlug: builder.query<IProperty, string>({
       query: (slug) => `/properties/${slug}`,
       providesTags: (_, __, slug) => [{ type: "Property", id: slug }],
     }),
 
     // Similar properties
-    getSimilarProperties: builder.query<{ data: PropertySummary[] }, string>({
+    getSimilarProperties: builder.query<{ data: IPropertySummary[] }, string>({
       query: (id) => `/properties/${id}/similar`,
       providesTags: (_, __, id) => [{ type: "Property", id: `similar-${id}` }],
     }),
@@ -97,9 +97,8 @@ export const propertiesApi = createApi({
       query: () => "/stats",
       providesTags: [{ type: "Stats", id: "STATS" }],
     }),
-
-    // Favorites — فقط برای initial sync استفاده میشه
-    getFavorites: builder.query<{ data: PropertySummary[] }, void>({
+    
+    getFavorites: builder.query<{ data: IPropertySummary[] }, void>({
       query: () => "/favorites",
       providesTags: [{ type: "Favorites", id: "LIST" }],
     }),

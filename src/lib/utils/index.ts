@@ -1,4 +1,4 @@
-import type { PropertyFilters } from "@/types";
+import type { IPropertyFilters } from "@/types";
 
 const numberFormatCache = new Map<string, Intl.NumberFormat>();
 
@@ -40,26 +40,26 @@ export function formatArea(area: number, locale = "en-NL"): string {
 }
 
 // ── URL / Filter Helpers
-const ARRAY_FILTER_KEYS = new Set<keyof PropertyFilters>([
+const ARRAY_FILTER_KEYS = new Set<keyof IPropertyFilters>([
   "type",
   "bedrooms",
   "bathrooms",
   "features",
 ]);
-const NUMBER_FILTER_KEYS = new Set<keyof PropertyFilters>([
+const NUMBER_FILTER_KEYS = new Set<keyof IPropertyFilters>([
   "priceMin",
   "priceMax",
   "areaMin",
   "areaMax",
 ]);
 
-export function filtersToQueryString(filters: PropertyFilters): string {
+export function filtersToQueryString(filters: IPropertyFilters): string {
   const params = new URLSearchParams();
 
   (
     Object.entries(filters) as [
-      keyof PropertyFilters,
-      PropertyFilters[keyof PropertyFilters],
+      keyof IPropertyFilters,
+      IPropertyFilters[keyof IPropertyFilters],
     ][]
   ).forEach(([key, value]) => {
     if (value === undefined || value === null || value === "") return;
@@ -73,12 +73,12 @@ export function filtersToQueryString(filters: PropertyFilters): string {
   return params.toString();
 }
 
-export function queryStringToFilters(search: string): PropertyFilters {
+export function queryStringToFilters(search: string): IPropertyFilters {
   const params = new URLSearchParams(search);
-  const filters: PropertyFilters = {};
+  const filters: IPropertyFilters = {};
 
   params.forEach((value, rawKey) => {
-    const key = rawKey as keyof PropertyFilters;
+    const key = rawKey as keyof IPropertyFilters;
 
     if (ARRAY_FILTER_KEYS.has(key)) {
       (filters[key] as string[]) = value.split(",");
@@ -95,11 +95,11 @@ export function queryStringToFilters(search: string): PropertyFilters {
   return filters;
 }
 
-export function countActiveFilters(filters: PropertyFilters): number {
+export function countActiveFilters(filters: IPropertyFilters): number {
   return (
     Object.entries(filters) as [
-      keyof PropertyFilters,
-      PropertyFilters[keyof PropertyFilters],
+      keyof IPropertyFilters,
+      IPropertyFilters[keyof IPropertyFilters],
     ][]
   ).filter(([key, value]) => {
     if (key === "sortBy") return false;

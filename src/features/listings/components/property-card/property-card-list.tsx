@@ -28,7 +28,7 @@ import { useTranslation } from "react-i18next";
 import { formatArea } from "@/lib/utils";
 import { formatTomanPrice, toPersianDigits } from "@/lib/localize";
 import { TYPE_LABEL_KEYS, CARD_IMAGE_SIZES } from "./property-card.constants";
-import type { PropertyCardProps } from "./property-card.types";
+import type { IPropertyCardProps } from "./property-card.types";
 import type { Language } from "@/types";
 import { useLocalize } from "@/hooks/use-localize";
 
@@ -42,7 +42,7 @@ export const PropertyCardList = memo(function PropertyCardList({
   onSelect,
   isFavorited,
   onFavorite,
-}: PropertyCardProps & {
+}: IPropertyCardProps & {
   isFavorited: boolean;
   onFavorite: (e: React.MouseEvent) => void;
 }) {

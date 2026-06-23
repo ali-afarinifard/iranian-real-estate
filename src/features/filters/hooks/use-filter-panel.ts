@@ -10,7 +10,7 @@ import {
 } from "@/store";
 import { filtersActions, selectIsFiltersDirty, uiActions } from "@/store/slices";
 import { countActiveFilters } from "@/lib/utils";
-import type { PropertyFilters } from "@/types";
+import type { IPropertyFilters } from "@/types";
 
 export function useFilterPanel() {
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ export function useFilterPanel() {
   const isRTL = i18n.dir() === "rtl";
 
   const update = useCallback(
-    (patch: Partial<PropertyFilters>) => {
+    (patch: Partial<IPropertyFilters>) => {
       dispatch(filtersActions.setFilter(patch));
     },
     [dispatch],

@@ -6,6 +6,7 @@ import { useAppSelector, selectFavoriteIds } from "@/store";
 import { FavoritesGrid } from "./favorites-grid";
 import { useTranslation } from "react-i18next";
 import { useGetPropertiesQuery } from "@/store/api/propertiesApi";
+import type { IPropertySummary } from "@/types";
 
 export function FavoritesClient() {
   const { t } = useTranslation();
@@ -16,8 +17,9 @@ export function FavoritesClient() {
     perPage: 100,
   });
 
-  const favoriteProperties =
-    data?.data.filter((p) => favoriteIds.includes(p.id)) ?? [];
+  const favoriteProperties: IPropertySummary[] =
+    data?.data.filter((p: IPropertySummary) => favoriteIds.includes(p.id)) ??
+    [];
 
   return (
     <>
@@ -32,6 +34,7 @@ export function FavoritesClient() {
           {t("listings.error")}
         </Alert>
       )}
+
       <FavoritesGrid properties={favoriteProperties} isLoading={isLoading} />
     </>
   );

@@ -1,6 +1,6 @@
 import { http, HttpResponse, delay } from "msw";
 import { MOCK_PROPERTIES, MOCK_PROPERTY_SUMMARIES } from "./data";
-import { PropertyFilters, PropertySummary } from "@/types";
+import { IPropertyFilters, IPropertySummary } from "@/types";
 import { localizedIncludes } from "@/lib/localize";
 import { MSW_DELAY, PER_PAGE } from "@/lib/constants";
 
@@ -12,9 +12,9 @@ const favoritedIds = new Set<string>(
 // ─── Filter helper
 
 function applyFilters(
-  properties: PropertySummary[],
-  filters: PropertyFilters,
-): PropertySummary[] {
+  properties: IPropertySummary[],
+  filters: IPropertyFilters,
+): IPropertySummary[] {
   return properties.filter((p) => {
     if (filters.listingType && p.listingType !== filters.listingType)
       return false;
@@ -57,9 +57,9 @@ function applyFilters(
 // ─── Sort helper
 
 function applySort(
-  properties: PropertySummary[],
+  properties: IPropertySummary[],
   sortBy?: string,
-): PropertySummary[] {
+): IPropertySummary[] {
   const sorted = [...properties];
   switch (sortBy) {
     case "price_asc":
@@ -93,16 +93,16 @@ export const handlers = [
     const page = Number(url.searchParams.get("page") ?? "1");
     const perPage = Number(url.searchParams.get("perPage") ?? String(PER_PAGE));
 
-    const filters: PropertyFilters = {
+    const filters: IPropertyFilters = {
       query: url.searchParams.get("query") ?? undefined,
       listingType:
         (url.searchParams.get(
           "listingType",
-        ) as PropertyFilters["listingType"]) ?? undefined,
+        ) as IPropertyFilters["listingType"]) ?? undefined,
       city: url.searchParams.get("city") ?? undefined,
       district: url.searchParams.get("district") ?? undefined,
       type:
-        (url.searchParams.get("type")?.split(",") as PropertyFilters["type"]) ??
+        (url.searchParams.get("type")?.split(",") as IPropertyFilters["type"]) ??
         undefined,
       priceMin: url.searchParams.get("priceMin")
         ? Number(url.searchParams.get("priceMin"))
@@ -119,7 +119,7 @@ export const handlers = [
       bedrooms:
         url.searchParams.get("bedrooms")?.split(",").map(Number) ?? undefined,
       sortBy:
-        (url.searchParams.get("sortBy") as PropertyFilters["sortBy"]) ??
+        (url.searchParams.get("sortBy") as IPropertyFilters["sortBy"]) ??
         undefined,
     };
 

@@ -16,7 +16,7 @@ import { MapLoadingOverlay } from "./map-loading-overlay";
 import { MapErrorOverlay } from "./map-error-overlay";
 import { MapLegend } from "./map-legend";
 import { MapHoverCard } from "./map-hover-card";
-import { MapProperty } from "@/types";
+import { IMapProperty } from "@/types";
 
 const LeafletMap = dynamic(
   () => import("@/features/map/components/leaflet-map/leaflet-map"),
@@ -34,21 +34,21 @@ export function MapClient() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [selectedProperty, setSelectedProperty] = useState<MapProperty | null>(null);
-  const [hoveredProperty, setHoveredProperty] = useState<MapProperty | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<IMapProperty | null>(null);
+  const [hoveredProperty, setHoveredProperty] = useState<IMapProperty | null>(null);
   const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
   const mapBoxRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, isError, refetch } = useGetMapPropertiesQuery({ city: undefined });
   const properties = data?.data ?? [];
 
-  const handleSelect = useCallback((property: MapProperty) => {
+  const handleSelect = useCallback((property: IMapProperty) => {
     setSelectedProperty(property);
     setHoveredProperty(null);
   }, []);
 
   const handleClose = useCallback(() => setSelectedProperty(null), []);
-  const handleHover = useCallback((property: MapProperty | null) => setHoveredProperty(property), []);
+  const handleHover = useCallback((property: IMapProperty | null) => setHoveredProperty(property), []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const rect = mapBoxRef.current?.getBoundingClientRect();
