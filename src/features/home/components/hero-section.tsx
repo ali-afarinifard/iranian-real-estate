@@ -78,7 +78,12 @@ export const HeroSection = memo(function HeroSection() {
 
       <Container
         maxWidth="xl"
-        sx={{ position: "relative", zIndex: 1, py: { xs: 8, md: 12 } }}
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          py: { xs: 8, md: 12 },
+          overflow: "hidden",
+        }}
       >
         <Grid container spacing={4} alignItems="center">
           {/* headline + CTA */}
@@ -168,7 +173,7 @@ export const HeroSection = memo(function HeroSection() {
                       "& .MuiChip-label": {
                         position: "relative",
                         top: !isRTL ? "1px" : undefined,
-                      }
+                      },
                     }}
                   />
                 ))}
@@ -176,7 +181,6 @@ export const HeroSection = memo(function HeroSection() {
 
               <Stack
                 direction={{ xs: "column", sm: "row" }}
-                spacing={2}
                 gap={isRTL ? 2 : undefined}
               >
                 <Button
