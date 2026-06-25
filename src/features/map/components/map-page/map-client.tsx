@@ -23,7 +23,14 @@ const LeafletMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
         <CircularProgress />
       </Box>
     ),
@@ -34,12 +41,18 @@ export function MapClient() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [selectedProperty, setSelectedProperty] = useState<IMapProperty | null>(null);
-  const [hoveredProperty, setHoveredProperty] = useState<IMapProperty | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<IMapProperty | null>(
+    null,
+  );
+  const [hoveredProperty, setHoveredProperty] = useState<IMapProperty | null>(
+    null,
+  );
   const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
   const mapBoxRef = useRef<HTMLDivElement>(null);
 
-  const { data, isLoading, isError, refetch } = useGetMapPropertiesQuery({ city: undefined });
+  const { data, isLoading, isError, refetch } = useGetMapPropertiesQuery({
+    city: undefined,
+  });
   const properties = data?.data ?? [];
 
   const handleSelect = useCallback((property: IMapProperty) => {
@@ -48,7 +61,10 @@ export function MapClient() {
   }, []);
 
   const handleClose = useCallback(() => setSelectedProperty(null), []);
-  const handleHover = useCallback((property: IMapProperty | null) => setHoveredProperty(property), []);
+  const handleHover = useCallback(
+    (property: IMapProperty | null) => setHoveredProperty(property),
+    [],
+  );
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const rect = mapBoxRef.current?.getBoundingClientRect();
@@ -57,9 +73,20 @@ export function MapClient() {
   }, []);
 
   return (
-    <Box sx={{ height: "calc(100vh - 64px)", display: "flex", position: "relative", overflow: "hidden" }}>
+    <Box
+      sx={{
+        height: "calc(100vh - 64px)",
+        display: "flex",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       {/* Map container */}
-      <Box ref={mapBoxRef} sx={{ flex: 1, position: "relative" }} onMouseMove={handleMouseMove}>
+      <Box
+        ref={mapBoxRef}
+        sx={{ flex: 1, position: "relative" }}
+        onMouseMove={handleMouseMove}
+      >
         {isLoading && <MapLoadingOverlay />}
         {isError && <MapErrorOverlay onRetry={refetch} />}
 
@@ -88,7 +115,7 @@ export function MapClient() {
           )}
         </AnimatePresence>
 
-        <MapLegend count={properties.length} />
+        {!isMobile && <MapLegend count={properties.length} />}
       </Box>
 
       {/* Desktop sidebar */}
@@ -103,9 +130,17 @@ export function MapClient() {
               width: { type: "tween", duration: 0.22, ease: [0.4, 0, 0.2, 1] },
               opacity: { duration: 0.15 },
             }}
-            style={{ zIndex: 10, height: "100%", flexShrink: 0, overflow: "hidden" }}
+            style={{
+              zIndex: 10,
+              height: "100%",
+              flexShrink: 0,
+              overflow: "hidden",
+            }}
           >
-            <MapPropertyPanel property={selectedProperty} onClose={handleClose} />
+            <MapPropertyPanel
+              property={selectedProperty}
+              onClose={handleClose}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -116,7 +151,9 @@ export function MapClient() {
           anchor="bottom"
           open={!!selectedProperty}
           onClose={handleClose}
-          PaperProps={{ sx: { borderRadius: "20px 20px 0 0", maxHeight: "70vh" } }}
+          PaperProps={{
+            sx: { borderRadius: "20px 20px 0 0", maxHeight: "70vh" },
+          }}
         >
           <AnimatePresence>
             {selectedProperty && (
@@ -126,7 +163,11 @@ export function MapClient() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <MapPropertyPanel property={selectedProperty} onClose={handleClose} mobile />
+                <MapPropertyPanel
+                  property={selectedProperty}
+                  onClose={handleClose}
+                  mobile
+                />
               </motion.div>
             )}
           </AnimatePresence>

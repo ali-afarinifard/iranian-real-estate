@@ -95,7 +95,6 @@ export default function LeafletMap({
   const tileLayerRef = useRef<{ setUrl: (url: string) => void } | null>(null);
   const readyRef = useRef(false);
   const hasFittedRef = useRef(false);
-
   const { i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
   const lang = i18n.language as Language;
@@ -198,6 +197,15 @@ export default function LeafletMap({
       });
 
       L.control.zoom({ position: "bottomright" }).addTo(map);
+
+      const isMobile = window.innerWidth < 900;
+      const zoomStyle = document.createElement("style");
+      zoomStyle.textContent = `
+      .leaflet-bottom.leaflet-right .leaflet-control-zoom {
+        margin-bottom: ${isMobile ? "100px" : "10px"} !important;
+      }
+    `;
+      containerRef.current.appendChild(zoomStyle);
 
       const tileLayer = L.tileLayer(TILE_URLS[colorModeRef.current], {
         attribution: "© OpenStreetMap © CartoDB",
