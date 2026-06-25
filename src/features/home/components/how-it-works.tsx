@@ -46,7 +46,7 @@ export const HowItWorks = memo(function HowItWorks() {
           spacing={4}
           component="ol"
           aria-label="Steps to find a property"
-          sx={{ listStyle: "none", p: 0, m: 0 }}
+          sx={{ listStyle: "none", }}
         >
           {HOW_IT_WORKS_STEPS.map((item) => {
             const color = STEP_COLORS[item.colorKey];

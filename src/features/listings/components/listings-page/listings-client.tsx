@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, Box, Typography } from "@mui/material";
+import { Alert, Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useAppSelector, selectViewMode } from "@/store";
 import { useListings } from "../../hooks/use-listings";
 import { ListingsToolbar } from "./listings-toolbar";
@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 
 export function ListingsClient() {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const viewMode = useAppSelector(selectViewMode);
   const {
     properties,
@@ -31,8 +33,12 @@ export function ListingsClient() {
         </Typography>
       </Box>
 
-      <ListingsToolbar />
-      <ListingsFilterChips />
+      {!isMobile && (
+        <>
+          <ListingsToolbar />
+          <ListingsFilterChips />
+        </>
+      )}
 
       {isError && (
         <Alert severity="error" sx={{ mb: 3 }}>

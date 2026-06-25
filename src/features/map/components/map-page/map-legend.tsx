@@ -39,15 +39,19 @@ export function MapLegend({ count }: IMapLegendProps) {
         position: "absolute",
         bottom: 24,
         left: 16,
+        right: 16,
         zIndex: 1000,
         px: 2,
         py: 1.25,
         borderRadius: 2.5,
         display: "flex",
         alignItems: "center",
+        flexWrap: "wrap",
         gap: 2,
         backdropFilter: "blur(8px)",
         bgcolor: alpha(theme.palette.background.paper, 0.9),
+        width: "fit-content",
+        maxWidth: "calc(100% - 32px)",
       }}
     >
       <LegendDot color="#1463C7" label={t("dashboard.forSale")} />

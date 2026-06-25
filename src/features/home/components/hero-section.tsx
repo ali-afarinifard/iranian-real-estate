@@ -181,7 +181,7 @@ export const HeroSection = memo(function HeroSection() {
 
               <Stack
                 direction={{ xs: "column", sm: "row" }}
-                gap={isRTL ? 2 : undefined}
+                gap={2}
               >
                 <Button
                   component={NextLink}

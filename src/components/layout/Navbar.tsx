@@ -410,7 +410,9 @@ export function Navbar() {
                 primaryTypographyProps={{ fontWeight: 600 }}
               />
               {link.href === "/favorites" && favoriteCount > 0 && (
-                <Badge badgeContent={favoriteCount} color="secondary" />
+                <Box sx={{ position: 'absolute', right: '3rem', }}>
+                  <Badge badgeContent={isRTL ? toPersianNumber(favoriteCount) : favoriteCount} color="secondary" />
+                </Box>
               )}
             </ListItemButton>
           ))}
@@ -425,7 +427,7 @@ export function Navbar() {
               fullWidth
               onClick={() => setMobileOpen(false)}
             >
-              Sign In
+              {t("nav.signIn")}
             </Button>
           )}
         </Box>
