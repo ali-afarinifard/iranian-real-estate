@@ -89,10 +89,19 @@ export function FeaturedSection() {
           <Button
             component={NextLink}
             href="/listings"
-            endIcon={<ArrowForwardRounded />}
+            startIcon={isRTL ? <ArrowForwardRounded /> : undefined}
+            endIcon={isRTL ? undefined : <ArrowForwardRounded />}
             variant="outlined"
+            sx={{
+              "& .MuiButton-startIcon": {
+                "[dir='rtl'] &": {
+                  marginRight: "-2px",
+                  marginLeft: "6px",
+                },
+              },
+            }}
           >
-            View All Properties
+            {t("listings.viewAllProperties")}
           </Button>
         </Box>
       </Container>

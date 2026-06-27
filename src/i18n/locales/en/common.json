@@ -176,7 +176,8 @@
   },
   "listings": {
     "heading": "Browse Properties",
-    "error": "Failed to load properties. Please try again."
+    "error": "Failed to load properties. Please try again.",
+    "viewAllProperties": "View All Properties"
   },
   "map": {
     "clickDetails": "Click for details",
