@@ -18,7 +18,7 @@ import NextImage from "next/image";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { HeroStats } from "./hero-stats";
-import { QUICK_FILTERS } from "../home.constants";
+import { QUICK_FILTERS } from "../constants/home.constants";
 
 const HERO_ANIMATION = {
   initial: { opacity: 0, y: 40 },

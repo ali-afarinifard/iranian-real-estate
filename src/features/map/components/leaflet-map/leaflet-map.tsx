@@ -6,7 +6,7 @@ import { MAP_CONFIG } from "@/lib/constants";
 import { formatTomanPrice } from "@/lib/localize";
 import type { IMapProperty, Language } from "@/types";
 import type { Map, LayerGroup } from "leaflet";
-import { ILeafletContainer, ILeafletModule } from "./leaflet-map.types";
+import { ILeafletContainer, ILeafletModule } from "./types/leaflet-map.types";
 
 interface ILeafletMapProps {
   properties: IMapProperty[];

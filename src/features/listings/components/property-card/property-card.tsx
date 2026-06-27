@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector, selectIsFavorited } from "@/store";
 import { favoritesActions, uiActions } from "@/store/slices";
 import { PropertyCardGrid } from "./property-card-grid";
 import { PropertyCardList } from "./property-card-list";
-import type { IPropertyCardProps } from "./property-card.types";
+import type { IPropertyCardProps } from "./types/property-card.types";
 
 export const PropertyCard = memo(function PropertyCard({
   property,

@@ -2,9 +2,9 @@
 import React from "react";
 import { Box, LinearProgress, Paper, Typography, alpha } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { IDashboardStats } from "../dashboard-stat.types";
 import { useTranslation } from "react-i18next";
 import { toPersianNumber } from "@/lib/utils";
+import { IDashboardStats } from "../types/dashboard-stat.types";
 
 interface DashboardMarketDistributionProps {
   stats: IDashboardStats;

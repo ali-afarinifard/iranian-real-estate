@@ -3,8 +3,8 @@
 import React, { memo } from "react";
 import { Box, Paper, Typography, Grid, useTheme, alpha } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { HERO_STATS } from "../home.constants";
 import { toPersianNumber } from "@/lib/utils";
+import { HERO_STATS } from "../constants/home.constants";
 
 export const HeroStats = memo(function HeroStats() {
   const theme = useTheme();

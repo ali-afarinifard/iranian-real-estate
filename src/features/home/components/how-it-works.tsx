@@ -3,7 +3,7 @@
 import React, { memo } from "react";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { HOW_IT_WORKS_STEPS } from "../home.constants";
+import { HOW_IT_WORKS_STEPS } from "../constants/home.constants";
 
 const STEP_COLORS: Record<string, string> = {
   primary: "#1E40AF",

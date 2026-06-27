@@ -31,7 +31,7 @@ import {
   toPersianDigits,
 } from "@/lib/localize";
 import { TYPE_LABEL_KEYS, CARD_IMAGE_SIZES } from "./property-card.constants";
-import type { IPropertyCardProps } from "./property-card.types";
+import type { IPropertyCardProps } from "./types/property-card.types";
 import type { Language } from "@/types";
 import { useLocalize } from "@/hooks/use-localize";
 import { useRouter } from "next/navigation";

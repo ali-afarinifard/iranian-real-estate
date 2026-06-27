@@ -5,7 +5,6 @@ import { useFilterPanel } from "../hooks/use-filter-panel";
 import { FilterTriggerButton } from "./filter-trigger-button";
 import { FilterPanelHeader } from "./filter-panel-header";
 import { FilterPanelActions } from "./filter-panel-actions";
-import { FilterPropertyType } from "./filter-property-type";
 import { FilterCitySelect } from "./filter-city-select";
 import { FilterPriceRange } from "./filter-price-range";
 import { FilterAreaRange } from "./filter-area-range";
@@ -13,6 +12,7 @@ import { FilterBedroomSelector } from "./filter-bedroom-selector";
 import { FilterFeatures } from "./filter-features";
 import { FilterSortSelect } from "./filter-sort-select";
 import { FilterListingType } from "./filter-listing-type";
+import { FilterPropertyType } from "../types/filter-property-type";
 
 export function FilterPanel() {
   const {
