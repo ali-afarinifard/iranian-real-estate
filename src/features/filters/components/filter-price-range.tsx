@@ -3,9 +3,8 @@
 import { Box, Typography, Slider } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type { IPropertyFilters } from "@/types";
-
-const PRICE_MAX_SALE = 5_000_000;
-const PRICE_MAX_RENT = 10_000;
+import { PRICE_SLIDER } from "@/lib/constants";
+import { formatPrice } from "@/lib/utils";
 
 interface IFilterPriceRangeProps {
   priceMin: IPropertyFilters["priceMin"];
@@ -20,8 +19,16 @@ export function FilterPriceRange({
   isRent,
   onChange,
 }: IFilterPriceRangeProps) {
-  const { t } = useTranslation();
-  const maxLimit = isRent ? PRICE_MAX_RENT : PRICE_MAX_SALE;
+  const { t, i18n } = useTranslation();
+  const { min, max, step } = PRICE_SLIDER[isRent ? "rent" : "sale"];
+
+  const isRTL = i18n.dir() === "rtl";
+  const locale = isRTL ? "fa-IR" : "en-US";
+
+  const currentMin = priceMin ?? min;
+  const currentMax = priceMax ?? max;
+
+  const fmt = (v: number) => formatPrice(v, "IRR", locale);
 
   return (
     <Box>
@@ -39,24 +46,23 @@ export function FilterPriceRange({
         color="text.secondary"
         sx={{ mb: 2, display: "block" }}
       >
-        €{(priceMin ?? 0).toLocaleString()} — €
-        {(priceMax ?? maxLimit).toLocaleString()}
-        {isRent && "/mo"}
+        {fmt(currentMin)} — {fmt(currentMax)} {isRTL ? "تومان" : "T"}
+        {isRent && ` / ${t("common.perMonth")}`}
       </Typography>
       <Slider
-        value={[priceMin ?? 0, priceMax ?? maxLimit]}
-        min={0}
-        max={maxLimit}
-        step={isRent ? 200 : 10_000}
+        value={[currentMin, currentMax]}
+        min={min}
+        max={max}
+        step={step}
         onChange={(_, val) => {
-          const [min, max] = val as number[];
+          const [newMin, newMax] = val as number[];
           onChange({
-            priceMin: min || undefined,
-            priceMax: max === maxLimit ? undefined : max,
+            priceMin: newMin > min ? newMin : undefined,
+            priceMax: newMax < max ? newMax : undefined,
           });
         }}
         valueLabelDisplay="auto"
-        valueLabelFormat={(v) => `€${(v / 1000).toFixed(0)}k`}
+        valueLabelFormat={fmt}
         disableSwap
         sx={{ color: "primary.main" }}
       />

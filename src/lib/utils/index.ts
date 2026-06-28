@@ -20,9 +20,8 @@ export function formatPrice(
   locale = "en-NL",
 ): string {
   if (currency === "IRR") {
-    return getNumberFormat("fa-IR", {
-      style: "currency",
-      currency: "IRR",
+    return getNumberFormat(locale, {
+      style: "decimal",
       maximumFractionDigits: 0,
     }).format(price);
   }

@@ -65,18 +65,29 @@ export const SORT_OPTIONS = [
 
 export const PRICE_RANGES = {
   sale: [
-    { min: 0, max: 250000, label: "Under €250K" },
-    { min: 250000, max: 500000, label: "€250K - €500K" },
-    { min: 500000, max: 1000000, label: "€500K - €1M" },
-    { min: 1000000, max: 2000000, label: "€1M - €2M" },
-    { min: 2000000, max: undefined, label: "Over €2M" },
+    { min: 0, max: 2_000_000_000, label: "زیر ۲ میلیارد" },
+    { min: 2_000_000_000, max: 4_000_000_000, label: "۲ - ۴ میلیارد" },
+    { min: 4_000_000_000, max: 7_000_000_000, label: "۴ - ۷ میلیارد" },
+    { min: 7_000_000_000, max: 10_000_000_000, label: "۷ - ۱۰ میلیارد" },
+    { min: 10_000_000_000, max: undefined, label: "بالای ۱۰ میلیارد" },
   ],
   rent: [
-    { min: 0, max: 1000, label: "Under €1,000/mo" },
-    { min: 1000, max: 2000, label: "€1,000 - €2,000" },
-    { min: 2000, max: 4000, label: "€2,000 - €4,000" },
-    { min: 4000, max: undefined, label: "Over €4,000" },
+    { min: 0, max: 20_000_000, label: "زیر ۲۰ میلیون" },
+    { min: 20_000_000, max: 30_000_000, label: "۲۰ - ۳۰ میلیون" },
+    { min: 30_000_000, max: 40_000_000, label: "۳۰ - ۴۰ میلیون" },
+    { min: 40_000_000, max: undefined, label: "بالای ۴۰ میلیون" },
   ],
+};
+
+export const PRICE_SLIDER = {
+  sale: { min: 0, max: 10_000_000_000, step: 500_000_000 },
+  rent: { min: 0, max: 60_000_000, step: 4_000_000 },
+};
+
+export const AREA_SLIDER = {
+  min: 0,
+  max: 2_000,
+  step: 10,
 };
 
 export const PER_PAGE = 12;

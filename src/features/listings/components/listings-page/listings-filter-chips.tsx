@@ -49,14 +49,6 @@ export function ListingsFilterChips() {
         />
       )}
 
-      {(filters.priceMin || filters.priceMax) && (
-        <Chip
-          label={`€${(filters.priceMin ?? 0).toLocaleString()} – €${(filters.priceMax ?? 0).toLocaleString()}`}
-          size="small"
-          onDelete={() => removeFilter({ priceMin: undefined, priceMax: undefined })}
-        />
-      )}
-
       <Chip
         label={t("filters.clearAll")}
         size="small"
